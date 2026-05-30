@@ -19,6 +19,10 @@ id_rsa*
 credentials*.json
 *.credentials
 
+# Artefatos Python (bytecode gerado ao validar/rodar os scripts)
+__pycache__/
+*.pyc
+
 # Lixo de SO / editor
 .DS_Store
 Thumbs.db
