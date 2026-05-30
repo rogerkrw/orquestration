@@ -113,8 +113,7 @@ Layout SvelteKit padrão, adaptado para aplicações full-stack com camada de IA
 ## **Agentes e Skills**
 
 
-O **Senior SWE** (sessão principal) orquestra **8 subagentes especializados** e consome **skills** (conhecimento técnico) on-demand. Esta seção indica o pareamento contextual para projetos TS; o protocolo geral está no contexto global do CLI (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`).
-
+O **Senior SWE** (sessão principal) orquestra **8 subagentes especializados** e consome **15 skills de engenharia** on-demand — todos provisionados pelo repositório [`orquestration`](https://github.com/rogerkrw/orquestration) e sincronizados em `~/.claude`, `~/.codex` e `~/.gemini`. São a **base padrão de todo projeto** do TPM; não reinvente o que já existe — consuma antes de implementar qualquer solução ad-hoc. O protocolo completo de orquestração está no contexto global do CLI (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`).
 
 **Subagentes disponíveis** (invocação via `@nome` ou auto-routing):
 
@@ -149,8 +148,28 @@ O **Senior SWE** (sessão principal) orquestra **8 subagentes especializados** e
 
 * Tarefa bem-definida, isolável e potencialmente verbosa em raciocínio → delega.
 * Tarefa trivial (1 arquivo, 1 mudança) → faz direto na sessão principal.
-* Decisão envolve direção de produto → reporta ao TPM antes.
+* Decisão envolve direção de produto → reporta ao TPM antes (não delega ao `pm-senior` sem ouvir o TPM primeiro).
 * Pré-deploy em produção → sempre passa por `devsecops` (modo AUDIT) e `code-reviewer`.
+
+**Receitas de uso proativo dos agents:**
+
+```text
+DISCOVERY (problem space — antes de construir)
+  ux-senior   → valida premissa, mapeia fluxos e friction do usuário
+  pm-senior   → pressure-test da decisão, blind spots, kill/build
+  ↓ TPM lê os dois reports e decide
+
+DELIVERY (solution space — construção e entrega)
+  swe-backend     → implementa server-side: services, DB, integrações, Mastra
+  swe-frontend    → monta UI, rotas SvelteKit, componentes
+  qa-tester       → testes + evals (antes ou junto à implementação)
+  ux-ui-designer  → refino visual antes do merge
+  code-reviewer   → revisa pré-merge (padrão: implementa → /rigorous-code-review → fixes)
+  devsecops       → AUDIT pré-deploy; EXECUTE com confirmação do TPM
+```
+
+* **Skills transversais** (`clean-code-principles`, `senior-swe-intuition`): ativas em qualquer tarefa. Se o problema for de design ou julgamento — não só sintaxe — invocar explicitamente.
+* **Skills de segurança** (`cybersecurity`, `llm-security`): carregam automaticamente no `devsecops` e `code-reviewer`; invocar explicitamente em qualquer feature que toque autenticação, PII ou LLM externo.
 
 
 ## **Processo de trabalho**
