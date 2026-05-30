@@ -97,7 +97,7 @@ Os `.md` canônicos usam **alias** (`opus`/`sonnet`/`haiku`); os conversores res
 
 Os snapshots locais antigos (`~/Downloads/orquestration_backup_pre-reorg/` e `~/orquestration_env_backup_pre-sync/`) **foram removidos**. Esta pasta passou a ser a **fonte canônica** dos agents e skills de engenharia; os ambientes (`~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis a qualquer momento pelo `sync.sh` (idempotente).
 
-Esta pasta **ainda não é um repositório git** — e, sem os backups locais, esse passa a ser o próximo nível de proteção. Recomendado `git init` para versionar o ecossistema e replicá-lo em outras máquinas (clone + `sync.sh`).
+A rede de segurança agora é o **Git**: este ecossistema é versionado em [github.com/rogerkrw/orquestration](https://github.com/rogerkrw/orquestration) e replicável em outras máquinas (clone + `sync.sh`). O histórico de ações relevantes fica em [`CHANGELOG.md`](CHANGELOG.md) — atualize-o a cada mudança significativa.
 
 ---
 
