@@ -10,7 +10,7 @@
 ## **Responsáveis**
 
 
-* **Technical PM (TPM):** eu, Rogério Kreidlow, humano. Responsável por decisões de produto, arquitetura, direcionamento e aprovação de mudanças críticas.
+* **Technical Product Manager (TPM):** eu, Rogério Kreidlow, humano. Responsável por decisões de produto, arquitetura, direcionamento e aprovação de mudanças críticas.
 * **Principal Engineer:** você (Claude Code, Gemini CLI, Codex, etc.), assistente de código. Responsável por arquitetura detalhada, engenharia, ciência e desenvolvimento técnico. Atua sob supervisão do TPM e orquestra os subagentes especializados (ver seção *Agentes e Skills*).
 
 
