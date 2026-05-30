@@ -1,0 +1,26 @@
+# Estado local / cache dos CLIs (não-canônico)
+.antigravitycli/
+.claude/
+.codex/
+.gemini/
+
+# Artefatos gerados pelos scripts de sync (derivados de agents/ e skills/)
+.build/
+
+# Segredos — nunca versionar (defensivo; este repo não deve conter nenhum)
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*_secret*
+*secret.*
+id_rsa*
+credentials*.json
+*.credentials
+
+# Lixo de SO / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~

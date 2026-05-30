@@ -1,0 +1,20 @@
+{
+  "skill_name": "senior-swe-intuition",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Here's my service that sends invoice emails to customers. It works fine in testing. What do you think?\n\n```python\ndef send_invoices(customer_ids):\n    for cid in customer_ids:\n        customer = db.query(f\"SELECT * FROM customers WHERE id = {cid}\")\n        invoice = generate_invoice(customer)\n        email_client.send(customer['email'], invoice)\n        db.execute(f\"UPDATE customers SET last_invoice = NOW() WHERE id = {cid}\")\n```",
+      "expected_output": "Should identify: SQL injection in both queries, N+1 query pattern, no error handling (one failure kills the whole batch), no transaction / partial failure risk, no logging/observability, synchronous send blocking the loop, no retry logic on email failure."
+    },
+    {
+      "id": 2,
+      "prompt": "Should I use microservices or a monolith for my new SaaS startup? We have 2 developers and we're pre-launch.",
+      "expected_output": "Should push back on the framing, advocate strongly for monolith at this stage, explain the operational overhead of microservices, cite the famous 'majestic monolith' tradeoff, mention premature distribution as a known failure mode."
+    },
+    {
+      "id": 3,
+      "prompt": "I want to add a feature that caches every database query result in Redis with a 5-minute TTL. This way the app will be way faster. Here's my plan: wrap every db.query() call with a cache check first.",
+      "expected_output": "Should identify: cache invalidation complexity, stale data risks (especially for financial or user-sensitive data), cache stampede under load, increased operational surface (Redis as new dependency), debugging difficulty with caching layers, that this is a solution in search of a problem without profiling first — premature optimization."
+    }
+  ]
+}
