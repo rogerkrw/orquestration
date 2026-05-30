@@ -29,8 +29,7 @@ agents/   8 subagentes .md (canônico)   → todos os ambientes
 skills/   15 skills (pasta/SKILL.md)     → todos os ambientes
 scripts/sync.sh       instalador idempotente
 scripts/*.py          geradores de variantes Codex/Gemini
-PLAYBOOK.md           operação do time de agentes
-PY.md / TS.md         templates de novos projetos
+templates/            python.md / typescript.md (bootstrap de projeto novo)
 ```
 
 ## Mapeamento de modelos (alias → engine)
@@ -60,4 +59,4 @@ Diretiva TPM (mai/2026): no Codex usar só `gpt-5.5` (supervisão) e `gpt-5.3-co
 - Antigravity lê de `~/.gemini` (skills compartilhadas em `~/.gemini/skills`, agentes do CLI em `~/.gemini/antigravity-cli/agents`). **Não** usa `~/.antigravity`. Migração Gemini→Antigravity: prazo 18/jun/2026 (não-enterprise).
 - Há um hook `rtk` que às vezes engole/corrompe a saída do shell. Workaround: prefixar comandos com `RTK_DISABLE=1` e usar heredoc `<<'EOF'`.
 
-Para operação detalhada (quando chamar cada agente, receitas de orquestração), leia **PLAYBOOK.md**.
+Para operação detalhada (quando chamar cada agente, receitas de orquestração), veja a seção **"Como operar o time no dia a dia"** no **README.md**.

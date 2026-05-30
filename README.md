@@ -18,8 +18,7 @@ orquestration/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
 │   ├── md-to-codex-toml.py     # gera variantes .toml (Codex)
 │   └── md-to-gemini-md.py      # gera variantes .md (Gemini/Antigravity)
-├── PLAYBOOK.md           # como operar o time de agentes no dia a dia
-├── PY.md / TS.md         # templates de CLAUDE.md/AGENTS.md para novos projetos (Python / TypeScript)
+├── templates/            # templates de CLAUDE.md/AGENTS.md p/ novos projetos (python.md, typescript.md)
 ├── CLAUDE.md             # instruções para o agente que abrir ESTA pasta
 ├── AGENTS.md             # (mesmo conteúdo de CLAUDE.md; lido por Codex/Antigravity)
 └── GEMINI.md             # (mesmo conteúdo de CLAUDE.md; lido por Gemini CLI)
@@ -101,4 +100,119 @@ A rede de segurança agora é o **Git**: este ecossistema é versionado em [gith
 
 ---
 
-Para o detalhamento operacional (quando chamar cada agente, receitas de orquestração, escalação), veja **[PLAYBOOK.md](PLAYBOOK.md)**.
+## Como operar o time no dia a dia
+
+### Arquitetura mental
+
+```text
+PROBLEM SPACE                            SOLUTION SPACE
+─────────────                            ──────────────
+você (PM/TPM master) ────────────┐
+swe-senior (sessão principal)  ◄─┤────► swe-senior (orquestra)
+                                 │      ├── swe-backend
+ux-senior        (opus)          │      ├── swe-frontend
+pm-senior        (opus)          │      ├── ux-ui-designer
+                                 │      ├── code-reviewer
+                                 │      ├── qa-tester
+                                 │      └── devsecops
+```
+
+- **swe-senior NÃO é um arquivo de subagente.** É a própria sessão principal (Claude Code / Codex / Gemini / agy), instanciada pelo `CLAUDE.md`/`AGENTS.md`/`GEMINI.md` do projeto. Você fala com ela; ela despacha aos subagentes.
+- **Você é o orquestrador máximo.** O swe-senior decide tecnicamente; você decide prioridade, aceitação, escalação.
+- **Subagentes têm contexto isolado.** O histórico verboso do agente fica isolado — só o resumo volta para a sessão principal.
+
+### Quando chamar cada papel
+
+**Problem space** (planejamento, discovery, estratégia):
+
+| Quem | Quando chamar | Tier |
+|---|---|---|
+| **você (TPM)** | Sempre — direção, prioridade, aceitação | humano |
+| **swe-senior** | Sempre — interlocutor técnico, orquestrador (sessão principal) | opus |
+| **ux-senior** | Discovery, validar premissa, mapear fluxos, friction | opus |
+| **pm-senior** | Pressure-test de decisão, blind spots, kill/build | opus |
+
+**Solution space** (implementação):
+
+| Quem | Quando chamar | Tier |
+|---|---|---|
+| **swe-backend** | API, modelo de dados, lógica de negócio, integrações, jobs | sonnet |
+| **swe-frontend** | Componentes, rotas, forms, state, fetch | sonnet |
+| **ux-ui-designer** | Refino visual, ARIA, contraste, estados, CWV, responsivo | sonnet |
+| **code-reviewer** | Pós-feature, pré-merge, read-only, "o que pode dar errado?" | sonnet |
+| **qa-tester** | Escrever testes faltantes, rodar suite, investigar falhas | sonnet |
+| **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
+
+> **Escalação para incidente / PR crítico:** subagentes têm tier fixo no arquivo. Para raciocínio mais profundo (incidente de produção, security review de alto risco, PR complexo) — **não delegue ao subagente**; trate na sessão principal (`swe-senior` em opus), que invoca as mesmas skills com mais capacidade de inferência.
+
+### Como invocar (por ferramenta)
+
+| Ferramenta | Auto-routing | Explícito | Gerenciar |
+|---|---|---|---|
+| **Claude Code** | descreve a tarefa, swe-senior delega pela `description` | `@swe-backend ...` | `/agents` |
+| **Gemini CLI** | idem | `@code-reviewer ...` | `/agents` |
+| **Codex CLI** | match por descrição | spawn no prompt | `/agent` (switch) |
+| **Antigravity (agy)** | idem | — | `/agents`, `/skills` |
+
+### Receitas de orquestração
+
+#### A. Feature nova (do zero ao merge)
+
+```text
+você → swe-senior
+        ├─ (opc) ux-senior   "valida se faz sentido pro usuário antes"
+        ├─ (opc) pm-senior   "o que estou perdendo aqui?"
+        ├─ swe-backend       "implementa o que decidimos"
+        ├─ swe-frontend      "monta a UI"
+        ├─ ux-ui-designer    "refine antes de merge"
+        ├─ qa-tester         "testes do golden path + 2 edge cases"
+        └─ code-reviewer     "revisa antes de merge"
+```
+
+#### B. Bug em produção
+
+```text
+você → swe-senior: "está caindo X no prod, [logs]"
+swe-senior → devsecops (AUDIT)    "investiga, sem alterar nada"
+           → swe-backend           "fix"
+           → qa-tester             "teste que reproduz o bug + verifica o fix"
+           → code-reviewer         "revisa o fix"
+           → devsecops (EXECUTE)   "deploy com confirmação"
+```
+
+#### C. Decisão de produto importante
+
+```text
+você → swe-senior: "estou pensando em [decisão]"
+swe-senior → pm-senior   "steelman the case against"
+           → ux-senior   "evidência de fluxos / friction"
+              ↓ você lê os dois reports e decide
+```
+
+#### D. Auditoria de segurança pré-launch
+
+```text
+você → swe-senior: "vamos pra prod amanhã, audita"
+swe-senior → devsecops (AUDIT)   "roda audit-checklist + cybersecurity/llm-security"
+           → code-reviewer       "diff completo com lente de segurança"
+              ↓ você recebe relatório priorizado go/no-go
+```
+
+### Quando NÃO usar agentes
+
+- Tarefa trivial de um arquivo só → faça direto na sessão principal.
+- Exploração ambígua ("o que tem aqui?") → você precisa do contexto na sessão principal.
+- Iteração visual rápida → overhead de spawning não compensa.
+
+Regra prática: delegue quando a tarefa é (1) bem-definida, (2) isolável, (3) potencialmente verbosa em raciocínio. Falhou em um? → sessão principal.
+
+### Resumo do dia a dia
+
+1. Abre o projeto → o CLI lê o `CLAUDE.md`/`AGENTS.md`/`GEMINI.md` → você conversa com o swe-senior.
+2. Você descreve em **linguagem de produto** o que precisa.
+3. swe-senior decide se delega ou resolve sozinho.
+4. Subagentes trabalham em paralelo quando faz sentido (backend + frontend simultâneos).
+5. code-reviewer e qa-tester rodam antes de qualquer "considera pronto".
+6. devsecops em **AUDIT** antes de deploy; **EXECUTE** com confirmação explícita.
+7. pm-senior e ux-senior entram quando você precisa de segunda cabeça, não rotineiramente.
+8. Você intervém em decisão de produto, escalação técnica que vira produto, ou trade-off que merece aprovação.

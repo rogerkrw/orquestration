@@ -32,8 +32,22 @@ um repositório de configuração de IA, não um produto de software com release
   será desligado em 2026-07-09). Aplicado nos geradores
   (`scripts/md-to-codex-toml.py`, `scripts/md-to-gemini-md.py`) e nas tabelas de
   `CLAUDE.md`/`AGENTS.md`/`GEMINI.md`/`README.md`/`PLAYBOOK.md`.
+- **Consolidação de docs (fim do dia).** O `PLAYBOOK.md` foi **fundido no
+  `README.md`**: o conteúdo operacional único (arquitetura mental problem/solution
+  space, quando chamar cada papel, invocação por ferramenta, as 4 receitas de
+  orquestração, quando NÃO delegar, resumo do dia a dia) virou a seção **"Como
+  operar o time no dia a dia"**. A duplicação que existia entre os dois (estrutura
+  de pastas, tabela de modelos, regras de autoria, nota Antigravity) **não** foi
+  reintroduzida. As referências a `PLAYBOOK.md` em `CLAUDE.md`/`AGENTS.md`/`GEMINI.md`
+  passaram a apontar para a seção do README.
+- **Templates de bootstrap reunidos em `templates/`.** `PY.md` → `templates/python.md`
+  e `TS.md` → `templates/typescript.md` (via `git mv`, histórico preservado);
+  agrupá-los alinha com o padrão plural-por-função das demais pastas. O `sync.sh`
+  não referencia esses arquivos — a movimentação é inócua para a propagação.
 
 ### Removed
+- **`PLAYBOOK.md`.** Removido após a fusão do seu conteúdo no `README.md` (ver
+  *Changed*). O histórico permanece no Git.
 - **Backups locais pré-reorganização.** Excluídos `~/Downloads/orquestration_backup_pre-reorg/`
   (snapshot pré-reorg, 86 arquivos) e `~/orquestration_env_backup_pre-sync/`
   (agents/skills dos 4 ambientes pré-primeiro-sync, ~2.9 MB). Antes da exclusão,
