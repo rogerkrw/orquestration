@@ -105,6 +105,7 @@ Layout SvelteKit padrão, adaptado para aplicações full-stack com camada de IA
 ├── TODO.md
 ├── HANDOFF.md
 ├── FUTURE.md
+├── FLOW.md
 └── [LLM].md                     # CLAUDE.md, AGENTS.md, GEMINI.md
 ```
 
@@ -186,6 +187,16 @@ Cada ciclo percorre obrigatoriamente:
 * **Maturidade:** com a base estável, o ciclo **Planejar → Construir → Medir** torna-se curto. A tarefa só é concluída após validação.
 
 
+### **4. Estimativa de Tempo — régua de agente, não de humano**
+
+Estimativas de prazo devem ser feitas em **tempo de agente**, não em tempo humano. Separar sempre as duas naturezas:
+
+1. **Tempo de agente (código):** etapa bem-definida e isolável fecha em ~15–25 min de relógio, incluindo review e fixes. Não estimar em dias.
+2. **Tempo não-comprimível** — rotular explicitamente à parte: build/CI, testes E2E (Playwright), OAuth e consentimento humano, **decisões de produto que dependem do TPM** (o gargalo real do relógio).
+
+Ao fechar cada etapa, medir o tempo real (carimbar T₀ na delegação e T_fim no commit) e reportar a razão estimado/real, para calibrar o planejamento seguinte.
+
+
 ## **Regras e Padrões Operacionais**
 
 
@@ -197,6 +208,13 @@ Cada ciclo percorre obrigatoriamente:
 * **Schemas como contrato:** Zod no boundary (entrada/saída de API, validação de form, parse de input externo). Tipos derivados dos schemas, não duplicados.
 * **Persistência:** migrations obrigatórias para qualquer alteração em `schema.ts`. Nunca editar tabelas direto via SQL no DB de prod.
 * **Minimalismo:** evitar *over-engineering* e *overfitting*, dependências e comentários desnecessários.
+* **Net-add zero:** nenhuma feature, tabela, rota ou componente novo entra sem deletar ou consolidar algo equivalente. Toda adição responde à pergunta "o que sai em troca?" — registrada no commit ou no doc-âncora da fase. Exceções exigem aprovação explícita do TPM.
+* **Smoke manual obrigatório pré-merge de UI/rotas:** toda mudança em componentes de UI ou rotas SvelteKit exige passada manual no browser com dado real antes do merge — testes e type-check verdes não bastam.
+* **Governo de mudanças:**
+  * *Local* (ajuste de prompt, bug fix pequeno, estilo de componente): autonomia total; evidência: testes passando, sem regressão.
+  * *Relevante* (afeta comportamento de usuário, métrica, custo, latência ou cobertura): evidência obrigatória — testes + eval antes/depois.
+  * *Crítica* (arquitetura, modelo champion, schema de banco, deploy, segurança, fluxo OAuth): consulta obrigatória ao TPM antes de implementar; proposta com contexto, riscos e alternativas.
+  * Em dúvida, classificar pelo maior impacto plausível e escalar cedo.
 
 
 ### **Git**
@@ -228,6 +246,7 @@ Regras ao criar/configurar qualquer remote para o TPM:
 * **Código:** Inglês técnico (docstrings, variáveis, comentários).
 * **Gestão:** Português do Brasil (documentos, conversas com TPM, relatórios).
 * **Decisões:** Nunca tomar decisões críticas sem o TPM. Em ambiguidade, pergunte antes de agir.
+* **Clareza com o TPM (humano, não engenheiro de código):** ao reportar progresso, conclusões ou bugs, traduza o que cada mudança *significa para o produto*, não só o que mudou no código. Padrão: (1) uma frase em português simples no nível do produto; (2) se houver decisão pendente, opções com trade-off em uma linha cada; (3) só mencionar arquivo/commit/função quando o TPM pedir inspeção técnica explícita. Sinal de alerta: 3+ termos de jargão sem definir → reescrever em humano antes de enviar.
 
 
 ### **Medição e Auditoria**
@@ -265,7 +284,8 @@ Detalhar diretrizes específicas em `data/docs/` quando o projeto tocar PII.
 * **CLAUDE/AGENTS/GEMINI.md:** documentos perenes. Alterações exigem autorização do TPM. Use `cp` para mantê-los idênticos.
 * **TODO.md:** documento de planejamento por fases, etapas e tarefas (checklists); assinalar o checklist a cada conclusão de etapa.
 * **HANDOFF.md:** resumo enxuto de transição, atualizado apenas ao fim da sessão de trabalho, sob demanda.
-* **FUTURE.md:** documentação de itens futuros, ainda não planejados; anotar com título e um parágrafo de comentário para memória.
+* **FUTURE.md:** registro acumulativo de itens fora do escopo atual. Formato: título + parágrafo de contexto (o porquê do adiamento, o que seria necessário para viabilizar). Nunca promovido para `TODO.md` sem aprovação explícita do TPM. Não é lista de desejos — é memória de decisão.
+* **FLOW.md:** diagramas Mermaid do sistema — fluxo de navegação, arquitetura, ERD, integrações. Atualizado **apenas por comando explícito do TPM**, não a cada entrega. Registra a última data de atualização e o commit de referência no cabeçalho. Pode ter múltiplas seções (visão alvo, estado atual, schema do banco, subsistemas).
 * **Relatórios:** gerar em `data/docs/` ao fim de cada etapa do `TODO.md` antes do commit, neste formato:
 
 

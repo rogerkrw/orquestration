@@ -85,6 +85,8 @@ Usamos layout `src` para a arquitetura do projeto. Adaptar a sugestão à seguir
 ├── README.md
 ├── TODO.md
 ├── HANDOFF.md
+├── FUTURE.md
+├── FLOW.md
 └── [LLM].md                     # CLAUDE.md, AGENTS.md, etc.
 ```
 
@@ -167,6 +169,16 @@ Cada ciclo percorre obrigatoriamente:
 * **Maturidade:** com a base estável, o ciclo **Planejar -> Construir -> Medir** torna-se curto. A tarefa só é concluída após validação científica.
 
 
+### **4. Estimativa de Tempo — régua de agente, não de humano**
+
+Estimativas de prazo devem ser feitas em **tempo de agente**, não em tempo humano. Separar sempre as duas naturezas:
+
+1. **Tempo de agente (código):** etapa bem-definida e isolável fecha em ~15–25 min de relógio, incluindo review e fixes. Não estimar em dias.
+2. **Tempo não-comprimível** — rotular explicitamente à parte: runs de eval/LLM (dominados por latência e rate-limit), OAuth e consentimento humano, **decisões de produto que dependem do TPM** (o gargalo real do relógio).
+
+Ao fechar cada etapa, medir o tempo real (carimbar T₀ na delegação e T_fim no commit) e reportar a razão estimado/real, para calibrar o planejamento seguinte.
+
+
 ## **Regras e Padrões Operacionais**
 
 
@@ -175,6 +187,13 @@ Cada ciclo percorre obrigatoriamente:
 
 * **TDD/EDD:** obrigatório. Escrever testes e/ou evals antes da implementação para evitar regressões.
 * **Minimalismo:** evitar *over-engineering* e *overfitting*, dependências e comentários desnecessários.
+* **Net-add zero:** nenhuma feature, tabela, comando CLI ou módulo novo entra sem deletar ou consolidar algo equivalente. Toda adição responde à pergunta "o que sai em troca?" — registrada no commit ou no doc-âncora da fase. Exceções exigem aprovação explícita do TPM.
+* **Smoke manual obrigatório pré-merge de CLI/UI:** toda mudança em comandos CLI ou interface de chat exige passada manual com dado real antes do merge — `ruff` + `pytest` verdes não bastam.
+* **Governo de mudanças:**
+  * *Local* (ajuste de prompt, bug fix pequeno, tuning de hiperparâmetro): autonomia total; evidência: testes passando, sem regressão.
+  * *Relevante* (afeta comportamento de usuário, métrica, custo, latência ou cobertura): evidência obrigatória — testes + eval antes/depois.
+  * *Crítica* (arquitetura, modelo champion, contratos principais, deploy, segurança): consulta obrigatória ao TPM antes de implementar; proposta com contexto, riscos e alternativas.
+  * Em dúvida, classificar pelo maior impacto plausível e escalar cedo.
 
 
 ### **Git**
@@ -183,7 +202,22 @@ Cada ciclo percorre obrigatoriamente:
 * **GitHub Flow:** `main` estável + branches de trabalho (Conventional Commits).
 * **Commits:** constantes, por bloco de ação lógica (etapas do `TODO.md`), e com descrições ricas para auditoria.
    * **Assinatura:** adicionar ao fim da mensagem: `Co-authored-by: [Nome do Agente]`.
-* **Ignorar:** ignorar no `.gitignore` `.env` e pastas de pacotes/geradas por ferramentas, toda a pasta `data/`, arquivos `.md` da raiz, exceto `README.md`. 
+* **`.md` da raiz são TRACKED** (`README.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `TODO.md`, `HANDOFF.md`, `FUTURE.md`, `FLOW.md`). Ignorar no `.gitignore`: `.env`, pastas de pacotes/caches/geradas por ferramentas, toda a pasta `data/`.
+* **Auditoria antes do primeiro push:** varrer histórico por padrões de chave real (`AIza*`, `sk-*`, `sk-ant-*`, `xkeysib-*`, `ghp_*`, `gho_*`, `github_pat_*`, `Bearer ...`). Confirmar zero hits em todos os blobs.
+
+#### GitHub multi-account SSH (vinculante para qualquer assistente)
+
+O TPM tem 2 contas GitHub com chaves SSH separadas, registradas com host aliases em `~/.ssh/config`:
+
+* **Pessoal `rogerkrw`** → host alias `github.com-personal` → chave `~/.ssh/id_ed25519_personal`
+* **Profissional (BeTalent)** → host alias `github.com-work` → chave `~/.ssh/id_ed25519_work`
+
+Regras ao criar/configurar qualquer remote:
+
+1. Identificar a conta dona do repo. Em dúvida, perguntar.
+2. **Nunca** usar `git@github.com:<owner>/<repo>.git` (host default). Sempre o alias correspondente.
+3. Após `gh repo create`, conferir `git remote -v` e corrigir com `git remote set-url origin …` antes de qualquer push. O `gh` configura o host default, que cai na chave errada.
+4. Sintoma típico do erro: push falha com `ERROR: Repository not found.` — não é problema de criação, é chave SSH errada.
 
 
 ### **Idiomas e Comunicação**
@@ -192,6 +226,7 @@ Cada ciclo percorre obrigatoriamente:
 * **Código:** Inglês técnico (docstrings, variáveis, comentários).
 * **Gestão:** Português do Brasil (documentos, conversas com TPM, relatórios).
 * **Decisões:** Nunca tomar decisões críticas sem o TPM. Em ambiguidade, pergunte antes de agir.
+* **Clareza com o TPM (humano, não engenheiro de código):** ao reportar progresso, conclusões ou bugs, traduza o que cada mudança *significa para o produto*, não só o que mudou no código. Padrão: (1) uma frase em português simples no nível do produto; (2) se houver decisão pendente, opções com trade-off em uma linha cada; (3) só mencionar arquivo/commit/função quando o TPM pedir inspeção técnica explícita. Sinal de alerta: 3+ termos de jargão sem definir → reescrever em humano antes de enviar.
 
 
 ### **Medição e Auditoria**
@@ -215,7 +250,8 @@ Cada ciclo percorre obrigatoriamente:
 * **CLAUDE/AGENTS/GEMINI.md:** Documentos perenes. Alterações exigem autorização do TPM. Use `cp` para mantê-los idênticos.
 * **TODO.md:** documento de planejamento por fases, etapas e tarefas (checklists); assinalar o checklist a cada conclusão de etapa.
 * **HANDOFF.md:** resumo enxuto de transição, atualizado apenas ao fim da sessão de trabalho, sob demanda.
-* **FUTURE.md:** documentação de itens futuros, ainda não planejados; anotar contítulo e um parágrafo de comentário para memória.
+* **FUTURE.md:** registro acumulativo de itens fora do escopo atual. Formato: título + parágrafo de contexto (o porquê do adiamento, o que seria necessário para viabilizar). Nunca promovido para `TODO.md` sem aprovação explícita do TPM. Não é lista de desejos — é memória de decisão.
+* **FLOW.md:** diagramas Mermaid do sistema — fluxo de navegação, arquitetura, ERD, integrações. Atualizado **apenas por comando explícito do TPM**, não a cada entrega. Registra a última data de atualização e o commit de referência no cabeçalho. Pode ter múltiplas seções (visão alvo, estado atual, schema do banco, subsistemas).
 * **Relatórios:** gerar em `data/docs/` ao fim de cada etapa do `TODO.md` antes do commit, neste formato:
 
 
