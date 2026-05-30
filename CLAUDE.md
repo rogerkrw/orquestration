@@ -37,9 +37,9 @@ PY.md / TS.md         templates de novos projetos
 
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
-| `opus` | Opus 4.8 | gpt-5.5 | gemini-3-pro |
-| `sonnet` | Sonnet 4.6 | gpt-5.3-codex | gemini-3-flash |
-| `haiku` | Haiku 4.5 | gpt-5.3-codex (low) | gemini-3-flash-lite |
+| `opus` | Opus 4.8 | gpt-5.5 | gemini-3.1-pro-preview |
+| `sonnet` | Sonnet 4.6 | gpt-5.3-codex (high) | gemini-3.5-flash |
+| `haiku` | Haiku 4.5 | gpt-5.3-codex (low) | gemini-3.1-flash-lite |
 
 Diretiva TPM (mai/2026): no Codex usar só `gpt-5.5` (supervisão) e `gpt-5.3-codex` (execução).
 

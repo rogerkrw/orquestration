@@ -20,9 +20,9 @@ Tool name mapping (Claude → Gemini):
   WebSearch  -> web_search
 
 Model mapping (Claude alias → Gemini model, per TPM directive May 2026):
-  opus    -> gemini-3-pro          (highest capability for supervision/challenger roles)
-  sonnet  -> gemini-3-flash        (mid-tier, fast, default executor)
-  haiku   -> gemini-3-flash-lite   (cheapest, low-latency)
+  opus    -> gemini-3.1-pro-preview   (highest capability for supervision/challenger roles)
+  sonnet  -> gemini-3.5-flash         (mid-tier, fast, default executor)
+  haiku   -> gemini-3.1-flash-lite    (cheapest, low-latency; GA — preview shut down 2026-07-09)
 
 Adjust MODEL_MAP if Google changes model IDs.
 """
@@ -42,9 +42,9 @@ TOOL_MAP = {
 }
 
 MODEL_MAP = {
-    "opus": "gemini-3-pro",
-    "sonnet": "gemini-3-flash",
-    "haiku": "gemini-3-flash-lite",
+    "opus": "gemini-3.1-pro-preview",
+    "sonnet": "gemini-3.5-flash",
+    "haiku": "gemini-3.1-flash-lite",
 }
 
 

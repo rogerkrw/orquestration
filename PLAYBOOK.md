@@ -67,9 +67,9 @@ Os `.md` canônicos usam **alias** (`opus`/`sonnet`/`haiku`). Os conversores map
 
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
-| `opus` | Opus 4.8 | gpt-5.5 (effort high) | gemini-3-pro |
-| `sonnet` | Sonnet 4.6 | gpt-5.3-codex (medium) | gemini-3-flash |
-| `haiku` | Haiku 4.5 | gpt-5.3-codex (low) | gemini-3-flash-lite |
+| `opus` | Opus 4.8 | gpt-5.5 (effort high) | gemini-3.1-pro-preview |
+| `sonnet` | Sonnet 4.6 | gpt-5.3-codex (high) | gemini-3.5-flash |
+| `haiku` | Haiku 4.5 | gpt-5.3-codex (low) | gemini-3.1-flash-lite |
 
 > Diretiva TPM (mai/2026): só dois tiers ativos no Codex — `gpt-5.5` (supervisão/problem space) e `gpt-5.3-codex` (execução). Ignorar gpt-5.4/5.4-mini/5.2-codex.
 

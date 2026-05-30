@@ -20,7 +20,7 @@ We map the .md `tools` field to sandbox_mode using a heuristic:
 
 Model mapping (Claude alias → Codex model, per TPM directive May 2026):
     opus    → gpt-5.5         (frontier — supervision, problem space, critical reasoning)
-    sonnet  → gpt-5.3-codex   (coding specialist — execution work)
+    sonnet  → gpt-5.3-codex   (coding specialist — execution work, high reasoning_effort by default)
     haiku   → gpt-5.3-codex   (same coding model with low reasoning_effort)
 
 TPM directive: ignore gpt-5.4 / gpt-5.4-mini tiers. Only use:
@@ -43,7 +43,7 @@ MODEL_MAP = {
 
 REASONING_MAP = {
     "opus": "high",
-    "sonnet": "medium",
+    "sonnet": "high",
     "haiku": "low",
 }
 

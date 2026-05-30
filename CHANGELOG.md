@@ -24,6 +24,14 @@ um repositório de configuração de IA, não um produto de software com release
   `README.md` foram atualizados: esta pasta é declarada a **fonte canônica** e os
   ambientes (`~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis via
   `sync.sh`. O Git passa a ser a rede de segurança no lugar dos backups locais.
+- **Mapeamento de modelos por engine atualizado** (diretiva TPM). Codex: alias
+  `sonnet` sobe de `reasoning_effort` *medium* → **high** (executor padrão mais
+  capaz); `opus` segue em `gpt-5.5`, `haiku` em low. Gemini/Antigravity: IDs
+  atualizados para os atuais — `gemini-3.1-pro-preview` (opus),
+  `gemini-3.5-flash` (sonnet) e `gemini-3.1-flash-lite` (haiku, GA; o *preview*
+  será desligado em 2026-07-09). Aplicado nos geradores
+  (`scripts/md-to-codex-toml.py`, `scripts/md-to-gemini-md.py`) e nas tabelas de
+  `CLAUDE.md`/`AGENTS.md`/`GEMINI.md`/`README.md`/`PLAYBOOK.md`.
 
 ### Removed
 - **Backups locais pré-reorganização.** Excluídos `~/Downloads/orquestration_backup_pre-reorg/`
