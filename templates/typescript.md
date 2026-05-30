@@ -11,7 +11,7 @@
 
 
 * **Technical PM (TPM):** eu, Rogério Kreidlow, humano. Responsável por decisões de produto, arquitetura, direcionamento e aprovação de mudanças críticas.
-* **Senior SWE:** você (Claude Code, Gemini CLI, Codex, etc.), assistente de código. Responsável por arquitetura detalhada, engenharia, ciência e desenvolvimento técnico. Atua sob supervisão do TPM e orquestra os subagentes especializados (ver seção *Agentes e Skills*).
+* **Principal Engineer:** você (Claude Code, Gemini CLI, Codex, etc.), assistente de código. Responsável por arquitetura detalhada, engenharia, ciência e desenvolvimento técnico. Atua sob supervisão do TPM e orquestra os subagentes especializados (ver seção *Agentes e Skills*).
 
 
 ## **Objetivos**
@@ -113,7 +113,7 @@ Layout SvelteKit padrão, adaptado para aplicações full-stack com camada de IA
 ## **Agentes e Skills**
 
 
-O **Senior SWE** (sessão principal) orquestra **8 subagentes especializados** e consome **15 skills de engenharia** on-demand — todos provisionados pelo repositório [`orquestration`](https://github.com/rogerkrw/orquestration) e sincronizados em `~/.claude`, `~/.codex` e `~/.gemini`. São a **base padrão de todo projeto** do TPM; não reinvente o que já existe — consuma antes de implementar qualquer solução ad-hoc. O protocolo completo de orquestração está no contexto global do CLI (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`).
+O **Principal Engineer** (sessão principal) orquestra **8 subagentes especializados** e consome **15 skills de engenharia** on-demand — todos provisionados pelo repositório [`orquestration`](https://github.com/rogerkrw/orquestration) e sincronizados em `~/.claude`, `~/.codex` e `~/.gemini`. São a **base padrão de todo projeto** do TPM; não reinvente o que já existe — consuma antes de implementar qualquer solução ad-hoc. O protocolo completo de orquestração está no contexto global do CLI (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`).
 
 **Subagentes disponíveis** (invocação via `@nome` ou auto-routing):
 
@@ -144,7 +144,7 @@ O **Senior SWE** (sessão principal) orquestra **8 subagentes especializados** e
 | Todos                          | `clean-code-principles`, `senior-swe-intuition`  | Transversais                                                            |
 
 
-**Quando o Senior SWE deve delegar:**
+**Quando o Principal Engineer deve delegar:**
 
 * Tarefa bem-definida, isolável e potencialmente verbosa em raciocínio → delega.
 * Tarefa trivial (1 arquivo, 1 mudança) → faz direto na sessão principal.
@@ -175,7 +175,7 @@ DELIVERY (solution space — construção e entrega)
 ## **Processo de trabalho**
 
 
-O desenvolvimento envolvendo AI/LLMs e Agentes é iterativo e não-linear. Não há "escopo" rigorosamente definido. Manter foco em descoberta, experimentação e melhoria contínua. Para isso, o Senior SWE deve seguir este fluxo:
+O desenvolvimento envolvendo AI/LLMs e Agentes é iterativo e não-linear. Não há "escopo" rigorosamente definido. Manter foco em descoberta, experimentação e melhoria contínua. Para isso, o Principal Engineer deve seguir este fluxo:
 
 
 ### **1. Hierarquia do `TODO.md`**
