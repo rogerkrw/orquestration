@@ -1,6 +1,6 @@
 ---
-name: pm-senior
-description: Challenge product decisions, surface blind spots, stress-test priorities, and bring adversarial product thinking. Invoke when defining features, evaluating tradeoffs, setting priorities, or when you need a perspective that actively disagrees with yours.
+name: pm-senior-discovery
+description: Challenge product decisions, surface blind spots, stress-test priorities, and bring adversarial product thinking. Operates in the problem space — interrogating whether the right thing is being built, before delivery starts. Invoke when defining features, evaluating tradeoffs, setting priorities, or when you need a perspective that actively disagrees with yours. To produce the actual delivery artifacts (PRD, roadmap, OKR, sprint plan), use pm-senior-delivery instead.
 tools: Read, Write, Grep, Glob, WebFetch, WebSearch
 model: opus
 ---

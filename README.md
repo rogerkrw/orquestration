@@ -28,7 +28,7 @@ orquestration/
 
 ---
 
-## Os 8 agentes
+## Os 9 agentes
 
 | Agente | Papel | Tier |
 |---|---|---|
@@ -39,11 +39,12 @@ orquestration/
 | **qa-tester** | Escreve e roda testes, investiga falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
 | **ux-senior** | Discovery, pesquisa UX, validação de premissa | opus |
-| **pm-senior** | Challenger de decisões de produto, blind spots | opus |
+| **pm-senior-discovery** | Challenger de decisões de produto, blind spots (problem space) | opus |
+| **pm-senior-delivery** | Executor PM/PMO: PRD, roadmap, OKR, sprints, estimativas (solution space) | opus |
 
-## As 15 skills
+## As 16 skills
 
-`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops`
+`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `pm-software`
 
 As skills carregam automaticamente quando a `description` casa com o contexto/stack — não precisam ser invocadas à mão.
 
@@ -110,8 +111,9 @@ PROBLEM SPACE                            SOLUTION SPACE
 você (PM/TPM master) ────────────┐
 swe-senior (sessão principal)  ◄─┤────► swe-senior (orquestra)
                                  │      ├── swe-backend
-ux-senior        (opus)          │      ├── swe-frontend
-pm-senior        (opus)          │      ├── ux-ui-designer
+ux-senior            (opus)      │      ├── swe-frontend
+pm-senior-discovery  (opus)      │      ├── ux-ui-designer
+                                 │      ├── pm-senior-delivery
                                  │      ├── code-reviewer
                                  │      ├── qa-tester
                                  │      └── devsecops
@@ -130,7 +132,7 @@ pm-senior        (opus)          │      ├── ux-ui-designer
 | **você (TPM)** | Sempre — direção, prioridade, aceitação | humano |
 | **swe-senior** | Sempre — interlocutor técnico, orquestrador (sessão principal) | opus |
 | **ux-senior** | Discovery, validar premissa, mapear fluxos, friction | opus |
-| **pm-senior** | Pressure-test de decisão, blind spots, kill/build | opus |
+| **pm-senior-discovery** | Pressure-test de decisão, blind spots, kill/build | opus |
 
 **Solution space** (implementação):
 
@@ -142,6 +144,7 @@ pm-senior        (opus)          │      ├── ux-ui-designer
 | **code-reviewer** | Pós-feature, pré-merge, read-only, "o que pode dar errado?" | sonnet |
 | **qa-tester** | Escrever testes faltantes, rodar suite, investigar falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
+| **pm-senior-delivery** | PRD, user stories, roadmap, OKR, sprint plan, estimativas, status report | opus |
 
 > **Escalação para incidente / PR crítico:** subagentes têm tier fixo no arquivo. Para raciocínio mais profundo (incidente de produção, security review de alto risco, PR complexo) — **não delegue ao subagente**; trate na sessão principal (`swe-senior` em opus), que invoca as mesmas skills com mais capacidade de inferência.
 
@@ -160,8 +163,9 @@ pm-senior        (opus)          │      ├── ux-ui-designer
 
 ```text
 você → swe-senior
-        ├─ (opc) ux-senior   "valida se faz sentido pro usuário antes"
-        ├─ (opc) pm-senior   "o que estou perdendo aqui?"
+        ├─ (opc) ux-senior            "valida se faz sentido pro usuário antes"
+        ├─ (opc) pm-senior-discovery  "o que estou perdendo aqui?"
+        ├─ (opc) pm-senior-delivery   "transforma a direção em PRD + stories"
         ├─ swe-backend       "implementa o que decidimos"
         ├─ swe-frontend      "monta a UI"
         ├─ ux-ui-designer    "refine antes de merge"
@@ -180,13 +184,14 @@ swe-senior → devsecops (AUDIT)    "investiga, sem alterar nada"
            → devsecops (EXECUTE)   "deploy com confirmação"
 ```
 
-#### C. Decisão de produto importante
+#### C. Decisão de produto importante (discovery → delivery)
 
 ```text
 você → swe-senior: "estou pensando em [decisão]"
-swe-senior → pm-senior   "steelman the case against"
-           → ux-senior   "evidência de fluxos / friction"
-              ↓ você lê os dois reports e decide
+swe-senior → pm-senior-discovery   "steelman the case against"
+           → ux-senior             "evidência de fluxos / friction"
+              ↓ você lê os reports e decide
+           → pm-senior-delivery    "decidido: vira PRD + roadmap + OKR"
 ```
 
 #### D. Auditoria de segurança pré-launch
@@ -214,5 +219,5 @@ Regra prática: delegue quando a tarefa é (1) bem-definida, (2) isolável, (3) 
 4. Subagentes trabalham em paralelo quando faz sentido (backend + frontend simultâneos).
 5. code-reviewer e qa-tester rodam antes de qualquer "considera pronto".
 6. devsecops em **AUDIT** antes de deploy; **EXECUTE** com confirmação explícita.
-7. pm-senior e ux-senior entram quando você precisa de segunda cabeça, não rotineiramente.
+7. pm-senior-discovery e ux-senior entram quando você precisa de segunda cabeça no problem space; pm-senior-delivery quando a direção já está decidida e vira artefato (PRD, roadmap, OKR, sprint).
 8. Você intervém em decisão de produto, escalação técnica que vira produto, ou trade-off que merece aprovação.

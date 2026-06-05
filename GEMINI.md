@@ -4,9 +4,9 @@
 
 ## O que é esta pasta
 
-`orquestration/` é a **fonte da verdade** da biblioteca de agentes e skills **de engenharia** de IA de Rogério Kreidlow. O conteúdo daqui é sincronizado, via `scripts/sync.sh`, para `~/.claude`, `~/.codex`, `~/.gemini` e Antigravity (`~/.gemini/antigravity-cli`). Não é um projeto de software — é um repositório de configuração de IA.
+`orquestration/` é a **fonte da verdade** da biblioteca de agentes e skills **de engenharia e da gestão de produto/projetos de software (PM/PMO/TPM)** de IA de Rogério Kreidlow. O conteúdo daqui é sincronizado, via `scripts/sync.sh`, para `~/.claude`, `~/.codex`, `~/.gemini` e Antigravity (`~/.gemini/antigravity-cli`). Não é um projeto de software — é um repositório de configuração de IA.
 
-> Escopo: **só engenharia.** Skills de negócio (BeTalent) e pessoais ficam no Claude Chat/Projects pessoal e de trabalho — não entram aqui nem nos CLIs de código.
+> Escopo: **engenharia + a camada de PM/PMO de software adjacente a ela** (discovery, delivery, roadmap, OKR, sprints — o que orbita a construção do produto). Skills de negócio puro (BeTalent) e pessoais ficam no Claude Chat/Projects pessoal e de trabalho — não entram aqui nem nos CLIs de código.
 
 ## Responsáveis
 
@@ -25,8 +25,8 @@
 ## Estrutura
 
 ```
-agents/   8 subagentes .md (canônico)   → todos os ambientes
-skills/   15 skills (pasta/SKILL.md)     → todos os ambientes
+agents/   9 subagentes .md (canônico)   → todos os ambientes
+skills/   16 skills (pasta/SKILL.md)     → todos os ambientes
 scripts/sync.sh       instalador idempotente
 scripts/*.py          geradores de variantes Codex/Gemini
 templates/            python.md / typescript.md (bootstrap de projeto novo)

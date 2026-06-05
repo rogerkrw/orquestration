@@ -7,6 +7,35 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-06-05]
+
+### Added
+- **Skill `pm-software`.** Base de conhecimento de Gestão de Produto (PM) e de
+  Projetos de Software (PMO/TPM): discovery, priorização (RICE/WSJF/MoSCoW), OST,
+  roadmap, OKR/North Star, PRD/User Stories/DoD/DoR, sprints, métricas e status
+  reports. `SKILL.md` (325 linhas) + 4 references (`artifacts`, `strategy`,
+  `metrics`, `discovery`). Skills passam de 15 → **16**.
+- **Agente `pm-senior-delivery`** (opus). Executor PM/PMO no **solution space**:
+  transforma direção de produto já decidida em artefatos (PRD, user stories,
+  roadmap, OKR, sprint plan, estimativas, status report) consumindo a skill
+  `pm-software`. `tools: Read, Write, Edit, Grep, Glob, WebFetch, WebSearch`.
+  Subagentes passam de 8 → **9**.
+
+### Changed
+- **`pm-senior` → `pm-senior-discovery`** (via `git mv`, histórico preservado).
+  A renomeação explicita o eixo problem/solution space: `discovery` segue como
+  challenger adversarial no **problem space** (questiona *se* é a coisa certa);
+  o novo `delivery` opera no **solution space** (*como/quando* entregar).
+  `description` do `discovery` atualizada para apontar o par.
+- **Escopo da pasta ampliado** em `CLAUDE.md`/`AGENTS.md`/`GEMINI.md`: de "só
+  engenharia" para "**engenharia + a camada de PM/PMO de software adjacente**"
+  (discovery, delivery, roadmap, OKR, sprints). Negócio puro (BeTalent) e
+  pessoal seguem fora de escopo.
+- **Referências atualizadas** ao par discovery/delivery e às novas contagens
+  (9 agentes, 16 skills) em `README.md` (tabelas, diagrama mental, receitas A e C,
+  resumo), `templates/python.md` e `templates/typescript.md` (tabela de delegação,
+  regra de delegação, receitas DISCOVERY/DELIVERY).
+
 ## [2026-05-30]
 
 ### Added
