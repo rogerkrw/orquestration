@@ -39,7 +39,7 @@ orquestration/
 | **qa-tester** | Escreve e roda testes, investiga falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
 | **ux-senior** | Discovery, pesquisa UX, validação de premissa | opus |
-| **pm-senior-discovery** | Challenger de decisões de produto, blind spots (problem space) | opus |
+| **pm-senior** | Challenger de decisões de produto, blind spots (problem space) | opus |
 | **pm-senior-delivery** | Executor PM/PMO: PRD, roadmap, OKR, sprints, estimativas (solution space) | opus |
 
 ## As 16 skills
@@ -112,7 +112,7 @@ você (PM/TPM master) ────────────┐
 swe-senior (sessão principal)  ◄─┤────► swe-senior (orquestra)
                                  │      ├── swe-backend
 ux-senior            (opus)      │      ├── swe-frontend
-pm-senior-discovery  (opus)      │      ├── ux-ui-designer
+pm-senior            (opus)      │      ├── ux-ui-designer
                                  │      ├── pm-senior-delivery
                                  │      ├── code-reviewer
                                  │      ├── qa-tester
@@ -132,7 +132,7 @@ pm-senior-discovery  (opus)      │      ├── ux-ui-designer
 | **você (TPM)** | Sempre — direção, prioridade, aceitação | humano |
 | **swe-senior** | Sempre — interlocutor técnico, orquestrador (sessão principal) | opus |
 | **ux-senior** | Discovery, validar premissa, mapear fluxos, friction | opus |
-| **pm-senior-discovery** | Pressure-test de decisão, blind spots, kill/build | opus |
+| **pm-senior** | Pressure-test de decisão, blind spots, kill/build | opus |
 
 **Solution space** (implementação):
 
@@ -164,7 +164,7 @@ pm-senior-discovery  (opus)      │      ├── ux-ui-designer
 ```text
 você → swe-senior
         ├─ (opc) ux-senior            "valida se faz sentido pro usuário antes"
-        ├─ (opc) pm-senior-discovery  "o que estou perdendo aqui?"
+        ├─ (opc) pm-senior  "o que estou perdendo aqui?"
         ├─ (opc) pm-senior-delivery   "transforma a direção em PRD + stories"
         ├─ swe-backend       "implementa o que decidimos"
         ├─ swe-frontend      "monta a UI"
@@ -188,7 +188,7 @@ swe-senior → devsecops (AUDIT)    "investiga, sem alterar nada"
 
 ```text
 você → swe-senior: "estou pensando em [decisão]"
-swe-senior → pm-senior-discovery   "steelman the case against"
+swe-senior → pm-senior   "steelman the case against"
            → ux-senior             "evidência de fluxos / friction"
               ↓ você lê os reports e decide
            → pm-senior-delivery    "decidido: vira PRD + roadmap + OKR"
@@ -219,5 +219,5 @@ Regra prática: delegue quando a tarefa é (1) bem-definida, (2) isolável, (3) 
 4. Subagentes trabalham em paralelo quando faz sentido (backend + frontend simultâneos).
 5. code-reviewer e qa-tester rodam antes de qualquer "considera pronto".
 6. devsecops em **AUDIT** antes de deploy; **EXECUTE** com confirmação explícita.
-7. pm-senior-discovery e ux-senior entram quando você precisa de segunda cabeça no problem space; pm-senior-delivery quando a direção já está decidida e vira artefato (PRD, roadmap, OKR, sprint).
+7. pm-senior e ux-senior entram quando você precisa de segunda cabeça no problem space; pm-senior-delivery quando a direção já está decidida e vira artefato (PRD, roadmap, OKR, sprint).
 8. Você intervém em decisão de produto, escalação técnica que vira produto, ou trade-off que merece aprovação.

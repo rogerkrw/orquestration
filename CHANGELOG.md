@@ -36,6 +36,14 @@ um repositório de configuração de IA, não um produto de software com release
   resumo), `templates/python.md` e `templates/typescript.md` (tabela de delegação,
   regra de delegação, receitas DISCOVERY/DELIVERY).
 
+### Reverted
+- **`pm-senior-discovery` → `pm-senior`** (decisão do TPM, ainda em 2026-06-05).
+  A renomeação do challenger foi desfeita: o agente voltou ao nome e ao conteúdo
+  originais (`pm-senior`, problem space). O **par permanece** — agora `pm-senior`
+  (problem) + `pm-senior-delivery` (solution); apenas o sufixo `-discovery` saiu.
+  `pm-senior-delivery`, a skill `pm-software` e a ampliação de escopo **foram
+  mantidos**. Referências em `README.md`/`templates/` reapontadas para `pm-senior`.
+
 ## [2026-05-30]
 
 ### Added

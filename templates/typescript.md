@@ -117,17 +117,17 @@ O **Principal Engineer** (sessão principal) orquestra **8 subagentes especializ
 
 **Subagentes disponíveis** (invocação via `@nome` ou auto-routing):
 
-| Subagente             | Quando o SWE deve delegar                                               |
-| --------------------- | ----------------------------------------------------------------------- |
-| `swe-backend`         | Server-side: services, DB, integrações, workflows Mastra, endpoints     |
-| `swe-frontend`        | UI: componentes Svelte, rotas, forms, state, fetch                      |
-| `code-reviewer`       | Pós-feature, pré-merge, "o que pode dar errado aqui?" (read-only)       |
-| `qa-tester`           | Vitest + Playwright + evals (Mastra), investigação de falhas            |
-| `devsecops`           | Deploy, infra, secrets, auditoria de segurança, incidentes              |
-| `ux-ui-designer`      | Refino visual: ARIA, contraste, estados, Core Web Vitals, responsivo    |
-| `ux-senior`           | Discovery, validação de premissa, fluxos, friction (problem space)      |
-| `pm-senior-discovery` | Pressure-test de decisão, blind spots, kill/build (problem space)       |
-| `pm-senior-delivery`  | PRD, user stories, roadmap, OKR, sprints, estimativas (solution space)  |
+| Subagente            | Quando o SWE deve delegar                                              |
+| -------------------- | ---------------------------------------------------------------------- |
+| `swe-backend`        | Server-side: services, DB, integrações, workflows Mastra, endpoints    |
+| `swe-frontend`       | UI: componentes Svelte, rotas, forms, state, fetch                     |
+| `code-reviewer`      | Pós-feature, pré-merge, "o que pode dar errado aqui?" (read-only)      |
+| `qa-tester`          | Vitest + Playwright + evals (Mastra), investigação de falhas           |
+| `devsecops`          | Deploy, infra, secrets, auditoria de segurança, incidentes             |
+| `ux-ui-designer`     | Refino visual: ARIA, contraste, estados, Core Web Vitals, responsivo   |
+| `ux-senior`          | Discovery, validação de premissa, fluxos, friction (problem space)     |
+| `pm-senior`          | Pressure-test de decisão, blind spots, kill/build (problem space)      |
+| `pm-senior-delivery` | PRD, user stories, roadmap, OKR, sprints, estimativas (solution space) |
 
 
 **Skills mais relevantes para o stack TS** (SvelteKit + Mastra + Drizzle):
@@ -149,7 +149,7 @@ O **Principal Engineer** (sessão principal) orquestra **8 subagentes especializ
 
 * Tarefa bem-definida, isolável e potencialmente verbosa em raciocínio → delega.
 * Tarefa trivial (1 arquivo, 1 mudança) → faz direto na sessão principal.
-* Decisão envolve direção de produto → reporta ao TPM antes (não delega ao `pm-senior-discovery` sem ouvir o TPM primeiro).
+* Decisão envolve direção de produto → reporta ao TPM antes (não delega ao `pm-senior` sem ouvir o TPM primeiro).
 * Pré-deploy em produção → sempre passa por `devsecops` (modo AUDIT) e `code-reviewer`.
 
 **Receitas de uso proativo dos agents:**
@@ -157,7 +157,7 @@ O **Principal Engineer** (sessão principal) orquestra **8 subagentes especializ
 ```text
 DISCOVERY (problem space — antes de construir)
   ux-senior            → valida premissa, mapeia fluxos e friction do usuário
-  pm-senior-discovery  → pressure-test da decisão, blind spots, kill/build
+  pm-senior            → pressure-test da decisão, blind spots, kill/build
   ↓ TPM lê os dois reports e decide
 
 DELIVERY (solution space — construção e entrega)
