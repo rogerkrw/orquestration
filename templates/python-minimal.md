@@ -52,8 +52,11 @@ Layout flat — mínimo de estrutura, máximo de velocidade de mudança. Persist
 ├── others/                       # Dados, artefatos e docs (gitignored)
 │   ├── ad-hoc/                   # Scripts one-off e experimentos descartáveis
 │   ├── artifacts/                # Requisitos, specs, chats do TPM
-│   ├── db/                       # JSONs / SQLite local (fase experimental)
-│   └── docs/                     # Relatórios e TODOs arquivados
+│   ├── db/                       # Persistência local
+│   │   ├── json/                 # Fase experimental: arquivos JSON simples
+│   │   └── sqlite/               # Fase seguinte: arquivo .db SQLite
+│   ├── docs/                     # Relatórios técnicos e TODOs arquivados
+│   └── evals/                    # Outputs das execuções de evals
 ├── .env
 ├── pyproject.toml
 ├── README.md
