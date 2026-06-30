@@ -65,48 +65,55 @@
 ## **Arquitetura Base**
 
 
-Layout SvelteKit padrão, adaptado para aplicações full-stack com camada de IA:
+Layout padrão com separação `api/` + `web/` + `docker/` + `others/`. Nem todo projeto precisa das 4 pastas — projetos monolíticos (ex.: SvelteKit full-stack) podem usar só `api/` com `others/`, `web/` aparece quando há UI separada da API, e `docker/` entra quando o projeto usa infraestrutura containerizada (Postgres, Redis, etc.).
 
 ```
 [nome-do-projeto]/
-├── src/
-│   ├── lib/                     # Core Business Logic (Domain)
-│   │   ├── server/              # Lógica de servidor (privada — nunca chega ao client)
-│   │   │   ├── ai/              # Módulos de IA (Mastra)
-│   │   │   │   ├── agents/      # Agents com escopo definido
-│   │   │   │   ├── tools/       # Tools tipadas (DB, APIs externas)
-│   │   │   │   └── workflows/   # Grafos de estados / orquestrações
-│   │   │   ├── db/              # Persistência (Drizzle)
-│   │   │   │   ├── schema.ts    # Modelagem relacional
-│   │   │   │   └── client.ts    # Instância do DB + extensões
-│   │   │   ├── integrations/    # APIs externas (Google, Stripe, etc.)
-│   │   │   └── services/        # Serviços de domínio (use cases)
-│   │   ├── shared/              # DTOs, schemas Zod, tipos isomórficos
-│   │   └── components/          # UI Components (Svelte + shadcn-svelte)
-│   ├── routes/                  # Controller layer (SvelteKit Routes)
-│   │   ├── api/                 # REST endpoints e webhooks
-│   │   └── (app)/               # Rotas agrupadas por contexto
-│   ├── hooks.server.ts          # Middleware global
-│   └── app.d.ts                 # Tipagens globais
-├── tests/                       # Testes de software (unit + E2E)
-├── evals/                       # QA para componentes de IA (matcher, summarizer, judge)
-├── data/                        # Persistência local e documentação técnica
-│   ├── artifacts/               # Requisitos e especificações do TPM
-│   ├── docs/                    # Relatórios técnicos e TODOs arquivados
-│   └── evals/                   # Outputs das execuções de evals
-├── static/                      # Assets estáticos
-├── .env                         # Configurações de ambiente e secrets
-├── biome.json                   # Linter + formatter
-├── drizzle.config.ts            # Configuração de migrations
-├── package.json
-├── tsconfig.json
-├── svelte.config.js
+├── api/                          # SvelteKit full-stack ou API standalone
+│   ├── src/
+│   │   ├── lib/                  # Core Business Logic (Domain)
+│   │   │   ├── server/           # Lógica de servidor (privada)
+│   │   │   │   ├── ai/           # Módulos de IA (Mastra)
+│   │   │   │   │   ├── agents/
+│   │   │   │   │   ├── tools/
+│   │   │   │   │   └── workflows/
+│   │   │   │   ├── db/           # Persistência (Drizzle)
+│   │   │   │   ├── integrations/ # APIs externas
+│   │   │   │   └── services/     # Serviços de domínio (use cases)
+│   │   │   ├── shared/           # DTOs, schemas Zod, tipos isomórficos
+│   │   │   └── components/       # UI Components (Svelte + shadcn-svelte)
+│   │   ├── routes/               # Controller layer (SvelteKit Routes)
+│   │   ├── hooks.server.ts
+│   │   └── app.d.ts
+│   ├── tests/                    # Testes de software (unit + E2E)
+│   ├── evals/                    # QA para componentes de IA
+│   ├── static/
+│   ├── .env
+│   ├── biome.json
+│   ├── drizzle.config.ts
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── svelte.config.js
+├── web/                          # Quando UI é separada da API
+│   └── ...                       # Stack a definir por projeto
+├── docker/                       # Infraestrutura containerizada (orquestra todo o projeto)
+│   ├── compose.yml               # Sobe api + web + postgres + outros serviços
+│   ├── api.Dockerfile            # Build da API/SvelteKit (multi-stage: base → dev → prod)
+│   ├── web.Dockerfile            # Build da UI (quando web/ existir)
+│   └── postgres/                 # Config e init scripts do banco
+│       └── init.sql              # Schema inicial / extensões (ex.: uuid-ossp, pgvector)
+├── others/                       # Dados, artefatos e docs (gitignored)
+│   ├── ad-hoc/                   # Scripts one-off e experimentos descartáveis
+│   ├── artifacts/                # Requisitos, specs, chats do TPM
+│   ├── docs/                     # Relatórios técnicos e TODOs arquivados
+│   ├── db_snapshots/             # Dumps e backups de banco
+│   └── evals/                    # Outputs das execuções de evals
 ├── README.md
 ├── TODO.md
 ├── HANDOFF.md
 ├── FUTURE.md
 ├── FLOW.md
-└── [LLM].md                     # CLAUDE.md, AGENTS.md, GEMINI.md
+└── [LLM].md                      # CLAUDE.md, AGENTS.md, GEMINI.md
 ```
 
 
@@ -204,7 +211,7 @@ Cada ciclo percorre obrigatoriamente:
 ### **3. Transição de Contexto**
 
 
-* **Arquivamento:** ao concluir o que consta no arquivo, mova o `TODO.md` para `data/docs/` com o prefixo `%Y%m%d_%H%M%S_`. Gere um novo `TODO.md` limpo para a próxima fase.
+* **Arquivamento:** ao concluir o que consta no arquivo, mova o `TODO.md` para `others/docs/` com o prefixo `%Y%m%d_%H%M%S_`. Gere um novo `TODO.md` limpo para a próxima fase.
 * **Maturidade:** com a base estável, o ciclo **Planejar → Construir → Medir** torna-se curto. A tarefa só é concluída após validação.
 
 
@@ -244,7 +251,7 @@ Ao fechar cada etapa, medir o tempo real (carimbar T₀ na delegação e T_fim n
 * **GitHub Flow:** `main` estável + branches de trabalho.
 * **Commits:** no padrão Conventional Commits, constantes, por bloco de ação lógica (etapas do `TODO.md`), e com descrições ricas para auditoria.
    * **Assinatura:** adicionar ao fim da mensagem: `Co-authored-by: [Nome do Agente]`.
-* **Ignorar:** ignorar no `.gitignore` `.env` e pastas geradas (`node_modules/`, `.svelte-kit/`, `build/`), toda a pasta `data/`. Markdowns da raiz (`README.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `TODO.md`, `HANDOFF.md`, `FUTURE.md`) são versionados.
+* **Ignorar:** ignorar no `.gitignore` `.env` e pastas geradas (`node_modules/`, `.svelte-kit/`, `build/`), toda a pasta `others/`. Markdowns da raiz (`README.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `TODO.md`, `HANDOFF.md`, `FUTURE.md`) são versionados.
 
 #### GitHub multi-account SSH (vinculante para qualquer assistente)
 
@@ -273,11 +280,11 @@ Regras ao criar/configurar qualquer remote para o TPM:
 ### **Medição e Auditoria**
 
 
-* **Timestamps:** arquivos em `data/` devem portar o prefixo `%Y%m%d_%H%M%S_` (Brasília) e **nunca** serem sobrescritos.
+* **Timestamps:** arquivos em `others/` devem portar o prefixo `%Y%m%d_%H%M%S_` (Brasília) e **nunca** serem sobrescritos.
 * **Pesquisa Web:** obrigatório pesquisar documentações oficiais e versões estáveis antes de implementar novas tecnologias.
 * **Baselines:** toda melhoria deve ser comparada com um baseline usando métricas explícitas.
 * **Métricas:** elaborar e perseguir **Índice de Qualidade (%)**, rastreando sempre tokens (input/output/cached), latência e custo.
-* **Auditoria:** salvar resultados de evals em pastas nomeadas por timestamp `%Y%m%d_%H%M%S` em `data/evals`; criar no código dos evals processo para gerar dentro dessas pastas os seguintes artefatos obrigatórios:
+* **Auditoria:** salvar resultados de evals em pastas nomeadas por timestamp `%Y%m%d_%H%M%S` em `others/evals`; criar no código dos evals processo para gerar dentro dessas pastas os seguintes artefatos obrigatórios:
    * `summary.json`: métricas agregadas, configuração da run e performance de gates;
    * `cases.json`: resultados detalhados por caso, uso de tokens, latência e status dos gates;
    * `judge_results.json`: vereditos e justificativas do LLM-as-a-judge;
@@ -296,7 +303,7 @@ Se o projeto lida com dados pessoais de residentes no Brasil:
 4. **Consentimento versionado:** persistir `policy_version + timestamp + ip + user_agent` na tabela de consents.
 5. **Decisão automatizada por LLM (art. 20)** nunca dispara comunicação ao titular sem revisão humana documentada em log de auditoria.
 
-Detalhar diretrizes específicas em `data/docs/` quando o projeto tocar PII.
+Detalhar diretrizes específicas em `others/docs/` quando o projeto tocar PII.
 
 
 ## **Protocolo de Documentação**
@@ -307,7 +314,7 @@ Detalhar diretrizes específicas em `data/docs/` quando o projeto tocar PII.
 * **HANDOFF.md:** resumo enxuto de transição, atualizado apenas ao fim da sessão de trabalho, sob demanda.
 * **FUTURE.md:** registro acumulativo de itens fora do escopo atual. Formato: título + parágrafo de contexto (o porquê do adiamento, o que seria necessário para viabilizar). Nunca promovido para `TODO.md` sem aprovação explícita do TPM. Não é lista de desejos — é memória de decisão.
 * **FLOW.md:** diagramas Mermaid do sistema — fluxo de navegação, arquitetura, ERD, integrações. Atualizado **apenas por comando explícito do TPM**, não a cada entrega. Registra a última data de atualização e o commit de referência no cabeçalho. Pode ter múltiplas seções (visão alvo, estado atual, schema do banco, subsistemas).
-* **Relatórios:** gerar em `data/docs/` ao fim de cada etapa do `TODO.md` antes do commit, neste formato:
+* **Relatórios:** gerar em `others/docs/` ao fim de cada etapa do `TODO.md` antes do commit, neste formato:
 
 
 ```

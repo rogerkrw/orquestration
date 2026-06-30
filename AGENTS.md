@@ -32,6 +32,8 @@ scripts/*.py          geradores de variantes Codex/Gemini
 templates/            python.md / typescript.md (bootstrap de projeto novo)
 ```
 
+> **Templates de projeto:** ao criar o `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` de um projeto novo, usar `templates/python.md` ou `templates/typescript.md` como base conforme o stack. Adaptar ao projeto; não copiar cegamente. Os configs globais (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`) já orientam os agentes a consultarem esses templates.
+
 ## Mapeamento de modelos (alias → engine)
 
 | Alias | Claude | Codex | Gemini / Antigravity |

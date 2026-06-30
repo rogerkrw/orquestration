@@ -46,48 +46,51 @@
 - [`Chainlit`](https://docs.chainlit.io/get-started/overview): user interface chat.
 
 
-> **Nota:** Modelos proprietários, se introduzidos, o serão sob decisão do Technical AI PM. O projeto vindo a ganhar separação de backend (api) e frontend (ui), stack e arquitetura base serão alterados por orientação do Technical AI PM.
+> **Nota:** Modelos proprietários, se introduzidos, o serão sob decisão do Technical AI PM. O projeto vindo a ganhar separação de API (`api/`) e UI (`web/`), stack e arquitetura base serão alterados por orientação do Technical AI PM.
 
 
 ## **Arquitetura Base**
 
 
-Usamos layout `src` para a arquitetura do projeto. Adaptar a sugestão à seguir para o que usaremos de fato.
+Layout padrão com separação `api/` + `web/` + `docker/` + `others/`. Nem todo projeto precisa das 4 pastas — projetos simples podem usar só `api/` com `others/`, `web/` aparece quando há UI separada da API, e `docker/` entra quando o projeto usa infraestrutura containerizada (Postgres, Redis, etc.).
 
 
 ```
 [nome-do-projeto]/
-├── src/
-│   └── app/                     # Pacote principal (substitua por 'nome_do_projeto')
-│       ├── __init__.py
-│       ├── main.py              # Entry point
-│       ├── agents/              # Definições Pydantic AI
-│       │   ├── __init__.py
-│       │   └── research.py
-│       ├── tools/               # Funções/ferramentas dos agentes
-│       │   ├── __init__.py
-│       │   └── db_tools.py
-│       ├── database/            # Lógica de conexão SQLite/SQLModel
-│       │   └── session.py
-│       └── ui/                  # Código frontend
-│           └── app_ui.py
-├── tests/                       # Testes determinísticos
-│   ├── unit/
-│   └── integration/
-│   └── evals/                   # Benchmarks e avaliações de LLM
-├── data/                        # Persistência e arquivos
-│   ├── artifacts/               # Artefatos do Technical AI PM
-│   ├── artifacts/               # Artefatos do Technical AI PM
-│   ├── docs/                    # RAG docs ou memória técnica
-│   └── evals/                   # Outputs de métricas
-├── .env                         # Chaves de API e configs sensíveis
-├── pyproject.toml               # Configuração moderna (uv, poetry ou hatch)
+├── api/                          # API + lógica de negócio
+│   ├── app/                      # Pacote principal (substitua pelo nome do projeto)
+│   │   ├── __init__.py
+│   │   ├── main.py               # Entry point
+│   │   ├── agents/               # Definições Pydantic AI
+│   │   ├── tools/                # Funções/ferramentas dos agentes
+│   │   ├── database/             # Persistência (SQLModel/SQLAlchemy)
+│   │   └── services/             # Lógica de domínio (use cases)
+│   ├── tests/                    # Testes determinísticos
+│   │   ├── unit/
+│   │   ├── integration/
+│   │   └── evals/                # Benchmarks e avaliações de LLM
+│   ├── pyproject.toml            # Configuração moderna (uv)
+│   └── .env                      # Chaves de API e configs sensíveis
+├── web/                          # UI (quando separada da API)
+│   └── ...                       # Stack a definir por projeto (Chainlit, SvelteKit, etc.)
+├── docker/                       # Infraestrutura containerizada (orquestra todo o projeto)
+│   ├── compose.yml               # Sobe api + web + postgres + outros serviços
+│   ├── api.Dockerfile            # Build da API (multi-stage: base → dev → prod)
+│   ├── web.Dockerfile            # Build da UI (quando web/ existir)
+│   └── postgres/                 # Config e init scripts do banco
+│       └── init.sql              # Schema inicial / extensões (ex.: uuid-ossp, pgvector)
+├── others/                       # Dados, artefatos e docs (gitignored)
+│   ├── ad-hoc/                   # Scripts one-off e experimentos descartáveis
+│   ├── artifacts/                # Requisitos, specs, chats do TPM
+│   ├── docs/                     # Relatórios técnicos e TODOs arquivados
+│   ├── db_snapshots/             # Dumps e backups de banco
+│   └── evals/                    # Outputs das execuções de evals
 ├── README.md
 ├── TODO.md
 ├── HANDOFF.md
 ├── FUTURE.md
 ├── FLOW.md
-└── [LLM].md                     # CLAUDE.md, AGENTS.md, etc.
+└── [LLM].md                      # CLAUDE.md, AGENTS.md, etc.
 ```
 
 
@@ -187,7 +190,7 @@ Cada ciclo percorre obrigatoriamente:
 ### **3. Transição de Contexto**
 
 
-* **Arquivamento:** ao concluir o que consta no arquivo, mova o `TODO.md` para `data/docs/` com o prefixo `%Y%m%d_%H%M%S_`. Gere um novo `TODO.md` limpo para a próxima fase.
+* **Arquivamento:** ao concluir o que consta no arquivo, mova o `TODO.md` para `others/docs/` com o prefixo `%Y%m%d_%H%M%S_`. Gere um novo `TODO.md` limpo para a próxima fase.
 * **Maturidade:** com a base estável, o ciclo **Planejar -> Construir -> Medir** torna-se curto. A tarefa só é concluída após validação científica.
 
 
@@ -224,7 +227,7 @@ Ao fechar cada etapa, medir o tempo real (carimbar T₀ na delegação e T_fim n
 * **GitHub Flow:** `main` estável + branches de trabalho (Conventional Commits).
 * **Commits:** constantes, por bloco de ação lógica (etapas do `TODO.md`), e com descrições ricas para auditoria.
    * **Assinatura:** adicionar ao fim da mensagem: `Co-authored-by: [Nome do Agente]`.
-* **`.md` da raiz são TRACKED** (`README.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `TODO.md`, `HANDOFF.md`, `FUTURE.md`, `FLOW.md`). Ignorar no `.gitignore`: `.env`, pastas de pacotes/caches/geradas por ferramentas, toda a pasta `data/`.
+* **`.md` da raiz são TRACKED** (`README.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `TODO.md`, `HANDOFF.md`, `FUTURE.md`, `FLOW.md`). Ignorar no `.gitignore`: `.env`, pastas de pacotes/caches/geradas por ferramentas, toda a pasta `others/`.
 * **Auditoria antes do primeiro push:** varrer histórico por padrões de chave real (`AIza*`, `sk-*`, `sk-ant-*`, `xkeysib-*`, `ghp_*`, `gho_*`, `github_pat_*`, `Bearer ...`). Confirmar zero hits em todos os blobs.
 
 #### GitHub multi-account SSH (vinculante para qualquer assistente)
@@ -254,11 +257,11 @@ Regras ao criar/configurar qualquer remote:
 ### **Medição e Auditoria**
 
 
-* **Timestamps:** Arquivos em `data/` devem portar o prefixo `%Y%m%d_%H%M%S_` (Brasília) e **nunca** serem sobrescritos.
+* **Timestamps:** Arquivos em `others/` devem portar o prefixo `%Y%m%d_%H%M%S_` (Brasília) e **nunca** serem sobrescritos.
 * **Pesquisa Web:** Obrigatório pesquisar documentações oficiais e versões estáveis antes de implementar novas tecnologias.
 * **Baselines:** Toda melhoria deve ser comparada com um baseline usando métricas explícitas.
 * **Métricas:** elaborar e perseguir **Índice de Qualidade (%)**, rastreando sempre tokens (input/output/cached), latência e custo.
-* **Auditoria:** salvar resultados de evals em pastas nomeadas por timestamp `%Y%m%d_%H%M%S` em `data/evals`; criar no código dos evals processo para gerar dentro dessas pastas os seguintes artefatos obrigatórios: 
+* **Auditoria:** salvar resultados de evals em pastas nomeadas por timestamp `%Y%m%d_%H%M%S` em `others/evals`; criar no código dos evals processo para gerar dentro dessas pastas os seguintes artefatos obrigatórios: 
   * `summary.json`: métricas agregadas, configuração da run e performance de gates;
   * `cases.json`: resultados detalhados por caso, uso de tokens, latência e status dos gates;
   * `judge_results.json`: vereditos e justificativas do LLM-as-a-judge;
@@ -274,7 +277,7 @@ Regras ao criar/configurar qualquer remote:
 * **HANDOFF.md:** resumo enxuto de transição, atualizado apenas ao fim da sessão de trabalho, sob demanda.
 * **FUTURE.md:** registro acumulativo de itens fora do escopo atual. Formato: título + parágrafo de contexto (o porquê do adiamento, o que seria necessário para viabilizar). Nunca promovido para `TODO.md` sem aprovação explícita do TPM. Não é lista de desejos — é memória de decisão.
 * **FLOW.md:** diagramas Mermaid do sistema — fluxo de navegação, arquitetura, ERD, integrações. Atualizado **apenas por comando explícito do TPM**, não a cada entrega. Registra a última data de atualização e o commit de referência no cabeçalho. Pode ter múltiplas seções (visão alvo, estado atual, schema do banco, subsistemas).
-* **Relatórios:** gerar em `data/docs/` ao fim de cada etapa do `TODO.md` antes do commit, neste formato:
+* **Relatórios:** gerar em `others/docs/` ao fim de cada etapa do `TODO.md` antes do commit, neste formato:
 
 
 ```

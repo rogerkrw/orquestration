@@ -10,7 +10,7 @@ Por padrão, Railway procura na **raiz do repo**:
 - `railway.toml`, ou
 - `railway.json`
 
-Em **Service Settings**, dá pra apontar para um path customizado (ex: `/backend/railway.toml`). Útil em monorepos.
+Em **Service Settings**, dá pra apontar para um path customizado (ex: `/api/railway.toml`). Útil em monorepos.
 
 Em VSCode, para JSON, adicione no topo:
 ```json
