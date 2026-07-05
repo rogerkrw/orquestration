@@ -76,7 +76,7 @@ Os `.md` canônicos usam **alias** (`opus`/`sonnet`/`haiku`); os conversores res
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
 | `opus` | Opus 4.8 | gpt-5.5 | gemini-3.1-pro-preview |
-| `sonnet` | Sonnet 4.6 | gpt-5.3-codex (high effort) | gemini-3.5-flash |
+| `sonnet` | Sonnet 5 | gpt-5.3-codex (high effort) | gemini-3.5-flash |
 | `haiku` | Haiku 4.5 | gpt-5.3-codex (low effort) | gemini-3.1-flash-lite |
 
 ---

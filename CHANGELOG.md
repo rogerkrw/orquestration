@@ -7,6 +7,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-07-05]
+
+### Changed
+- **Alias `sonnet` → Sonnet 5.** Atualizada a tabela de mapeamento (alias → engine) em `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` e `README.md` de "Sonnet 4.6" para "Sonnet 5", após o lançamento do modelo. Mudança puramente documental: os 9 agentes já usam o alias `sonnet` e os scripts geradores resolvem o alias por engine — nenhum arquivo de agente ou gerador precisou mudar.
+
 ## [2026-06-05]
 
 ### Added
