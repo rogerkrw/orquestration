@@ -45,16 +45,17 @@ Cobrança é **por minuto de consumo real**, não pelo limite alocado. Se sua ap
 
 ## Limites máximos por plano
 
-Estes são os **tetos** por serviço (depois de multiplicação por replicas, no caso de replicas).
+O limite que você realmente configura é **por réplica** (RAM/vCPU máx por instância). As colunas "total" abaixo são só `por réplica × nº de réplicas` — não é um pool que uma única instância possa consumir. **Confirme na doc atual** (`docs.railway.com/pricing/plans`): os tetos por réplica do Pro foram reduzidos recentemente (32 → 24 GB em alguns relatos).
 
-| Plano         | Replicas | RAM máx    | CPU máx       | Ephemeral Storage | Volume Storage | Image Size  |
-| ------------- | -------- | ---------- | ------------- | ----------------- | -------------- | ----------- |
-| Trial         | 2        | 1 GB       | 2 vCPU        | 1 GB              | 0.5 GB         | 4 GB        |
-| Free          | 1        | 0.5 GB     | 1 vCPU        | 1 GB              | 0.5 GB         | 4 GB        |
-| Hobby         | 6        | 48 GB      | 48 vCPU       | 100 GB            | 5 GB           | 100 GB      |
-| Pro           | 42       | 1 TB       | 1.000 vCPU    | 100 GB            | 1 TB *         | Unlimited   |
-| Enterprise    | 50       | 2.4 TB     | 2.400 vCPU    | 100 GB            | 5 TB *         | Unlimited   |
+| Plano         | Replicas | RAM/réplica    | vCPU/réplica    | (Total RAM)  | Ephemeral Storage | Volume Storage | Image Size  |
+| ------------- | -------- | -------------- | --------------- | ------------ | ----------------- | -------------- | ----------- |
+| Trial         | 2        | 1 GB           | 2 vCPU          | 2 GB         | 1 GB              | 0.5 GB         | 4 GB        |
+| Free          | 1        | 0.5 GB         | 1 vCPU          | 0.5 GB       | 1 GB              | 0.5 GB         | 4 GB        |
+| Hobby         | 6        | 8 GB           | 8 vCPU          | 48 GB        | 100 GB            | 5 GB           | 100 GB      |
+| Pro           | 42       | 32 GB †        | 32 vCPU †       | ~1 TB        | 100 GB            | 1 TB *         | Unlimited   |
+| Enterprise    | 50       | custom         | custom          | custom       | 100 GB            | 5 TB *         | Unlimited   |
 
+† Pro: teto por réplica ~32 GB / 32 vCPU (há relatos de redução para 24 GB — confirmar na doc). O total "~1 TB" é o agregado entre réplicas, não um limite de instância única.
 \* Volume: Pro pode self-serve até 1 TB; acima precisa contato. Enterprise sobe até 5 TB.
 
 ## Política de retenção de imagem

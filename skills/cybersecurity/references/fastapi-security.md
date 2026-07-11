@@ -5,13 +5,14 @@
 ```python
 from datetime import datetime, timedelta, UTC
 from fastapi import Depends, FastAPI, HTTPException, Response, Cookie
-from jose import jwt, JWTError
-from passlib.context import CryptContext
+import jwt
+from jwt import PyJWTError
+from pwdlib import PasswordHash
 from pydantic import BaseModel
 
 SECRET = settings.jwt_secret  # from pydantic-settings, never hardcoded
 ALGO = "HS256"
-pwd = CryptContext(schemes=["argon2"])  # NOT bcrypt — 72-byte truncation
+pwd = PasswordHash.recommended()  # argon2id — NOT bcrypt (72-byte truncation)
 
 def hash_pw(p: str) -> str: return pwd.hash(p)
 def verify_pw(p: str, h: str) -> bool: return pwd.verify(p, h)
@@ -25,7 +26,7 @@ async def current_user(session: str | None = Cookie(default=None)) -> User:
         raise HTTPException(401, "Not authenticated")
     try:
         payload = jwt.decode(session, SECRET, algorithms=[ALGO])
-    except JWTError:
+    except PyJWTError:
         raise HTTPException(401, "Invalid token")
     user = await User.get(payload["sub"])
     if not user:

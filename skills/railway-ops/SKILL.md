@@ -300,7 +300,7 @@ Para qualquer pergunta de custo, billing ou otimização, abra `references/prici
   - Network egress: $0.05/GB
   - Volume storage: $0.15/GB/mês
 - **Planos:** Free ($0), Hobby ($5/mês), Pro ($20/mês), Enterprise (custom).
-- **Limites por replica e por serviço** dependem do plano (Hobby: até 6 replicas, 48GB RAM, 48 vCPU; Pro: até 42 replicas, 1TB RAM, 1000 vCPU). Detalhes na referência.
+- **Limites por replica** dependem do plano — é o teto por instância que você configura (Hobby: 8 GB RAM / 8 vCPU por réplica, até 6 replicas; Pro: ~32 GB / 32 vCPU por réplica — confirmar, houve redução recente —, até 42 replicas). Os "totais" citados por aí são `por réplica × replicas`, não limite de instância única. Detalhes e ressalvas na referência.
 - **Cost control:** usage limits (alerta + hard limit) por billing cycle; replica limits (CPU/RAM máximo por replica); serverless (sleep quando inativo); private networking (zera egress entre serviços).
 
 Pra estimar custo de um workload: pegue CPU e RAM alocados em média (não os picos), multiplique pela tarifa e some egress. Reduções fáceis: ativar serverless em serviços não-críticos, usar private networking para DB e service-to-service, e setar replica limits para evitar surpresa em picos.

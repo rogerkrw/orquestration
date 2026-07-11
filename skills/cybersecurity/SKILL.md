@@ -11,16 +11,16 @@ Consumed by `devsecops` (primary) and `code-reviewer` (for security-focused revi
 
 | # | Category | Stack-specific watchouts |
 |---|---|---|
-| 1 | **Broken Access Control** (now includes SSRF) | FastAPI: every endpoint needs an auth dependency; never trust `user_id` from request body. SvelteKit: check `locals.user` in `+page.server.ts` load + actions. SSRF: validate any URL the server fetches. |
-| 2 | Cryptographic Failures | Don't roll your own crypto. Use `passlib[argon2]` (Python) or `@node-rs/argon2` (TS) for passwords. TLS 1.3 only at the edge. |
-| 3 | **Supply Chain Failures** ⬆ | Pin dependencies. Audit `uv.lock`/`package-lock.json` regularly. `pip-audit` and `npm audit` in CI. |
-| 4 | Injection | Use parametrized queries always — SQLAlchemy `text()` with bindparams, never f-strings into SQL. Validate user input with Pydantic / Zod at the boundary. |
-| 5 | Insecure Design | Threat-model before shipping. Default-deny on all auth checks. |
-| 6 | Security Misconfiguration | No debug mode in prod. Set security headers (see below). Disable docs (`docs_url=None`) in prod or auth-gate them. |
-| 7 | Identification & Auth Failures | Rate-limit login. Lockout after N failures. MFA where it matters. Session fixation prevention. |
-| 8 | Software & Data Integrity | SRI for third-party scripts. Verify webhooks with HMAC. Sign release artifacts. |
-| 9 | Security Logging & Monitoring | Log auth events, admin actions, data access. Logfire for traces; PII redaction at log time. |
-| 10 | SSRF | Now folded into #1. Validate URLs server fetches against an allowlist. |
+| 1 | **Broken Access Control** (now includes SSRF) | FastAPI: every endpoint needs an auth dependency; never trust `user_id` from request body. SvelteKit: check `locals.user` in `+page.server.ts` load + actions. SSRF: validate any URL the server fetches against an allowlist. |
+| 2 | **Security Misconfiguration** ⬆ | No debug mode in prod. Set security headers (see below). Disable docs (`docs_url=None`) in prod or auth-gate them. |
+| 3 | **Software Supply Chain Failures** ⬆ (new) | Pin dependencies. Audit `uv.lock`/`package-lock.json` regularly. `pip-audit` and `npm audit` in CI. Broader than "vulnerable components": build systems and tooling too. |
+| 4 | Cryptographic Failures ⬇ | Don't roll your own crypto. Use `pwdlib` w/ Argon2 (Python) or `@node-rs/argon2` (TS) for passwords. TLS 1.3 only at the edge. |
+| 5 | Injection ⬇ | Use parametrized queries always — SQLAlchemy `text()` with bindparams, never f-strings into SQL. Validate user input with Pydantic / Zod at the boundary. |
+| 6 | Insecure Design | Threat-model before shipping. Default-deny on all auth checks. |
+| 7 | Authentication Failures | Rate-limit login. Lockout after N failures. MFA where it matters. Session fixation prevention. |
+| 8 | Software & Data Integrity Failures | SRI for third-party scripts. Verify webhooks with HMAC. Sign release artifacts. |
+| 9 | Logging & Alerting Failures | Log auth events, admin actions, data access — and alert on them. Logfire for traces; PII redaction at log time. |
+| 10 | Mishandling of Exceptional Conditions (new) | Don't "fail open": an unhandled exception must deny, not bypass. Custom exception handlers return generic messages; no stack traces to the client. Consistent error paths. |
 
 ## Core rules (always apply)
 1. **Validate at the boundary.** Pydantic models / Zod schemas on every request body, query, path param. No raw dicts past the boundary.
@@ -32,7 +32,7 @@ Consumed by `devsecops` (primary) and `code-reviewer` (for security-focused revi
 ## Top 5 gotchas
 1. **`allow_origins=["*"]` + `allow_credentials=True`.** Silently ignored by browsers, but devs think it works. The right answer is an explicit origin list.
 2. **JWT in localStorage.** XSS-readable. Prefer `httpOnly` cookies; if you must use JWT in JS, accept the XSS risk explicitly and harden everywhere else.
-3. **Password hashing with bcrypt's 72-byte limit.** bcrypt silently truncates passwords > 72 bytes. Use Argon2 (`passlib[argon2]`).
+3. **Password hashing with bcrypt's 72-byte limit.** bcrypt silently truncates passwords > 72 bytes. Use Argon2 via `pwdlib` — `PasswordHash.recommended()` gives argon2id out of the box. (`passlib` is unmaintained since 2020 and breaks with bcrypt 4.x; keep it only to read legacy hashes.)
 4. **SvelteKit form actions without CSRF awareness.** SvelteKit checks origin by default for actions, but if you accept JSON POSTs to `+server.ts`, you must implement CSRF protection (double-submit cookie or `SameSite=strict`).
 5. **Verbose error messages in production.** FastAPI default exception responses include stack info in dev; ensure prod uses a custom exception handler that returns generic messages.
 
