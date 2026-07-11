@@ -23,6 +23,9 @@ um repositório de configuração de IA, não um produto de software com release
 
 ### Changed (templates)
 - **Templates adotam versionamento `-vN`.** Os 3 templates de bootstrap foram renomeados para carregar sufixo de versão: `python-minimal.md` → `python-minimal-v0.md`, `python-complete.md` → `python-complete-v0.md`, `typescript.md` → `typescript-v0.md`. `-v0` é a base preservada; revisões significativas criam um novo `-vN` (N+1) sem sobrescrever o anterior, e a maior `-vN` é a versão ativa. Renomeações puras (conteúdo idêntico).
+- **Nomenclatura enxuta `py-{min,med,max}` / `ts-max`.** Os `-v0` foram renomeados para o padrão min/med/max: `python-minimal-v0` → `py-min-v0`, `python-complete-v0` → `py-max-v0`, `typescript-v0` → `ts-max-v0`. O par min/max explicita o eixo de complexidade (min = experimental descartável; max = projeto profissional com api/web/docker separados).
+- **Novos perfis Python v1 (`py-min-v1`, `py-med-v1`).** `py-min-v1`: descoberta pura — só Typer, persistência em arquivo (JSON/MD), sem testes/evals/banco; SQLite/web/testes são gatilho de promoção para `py-med`. `py-med-v1` (cavalo de batalha do TPM): monorepo Python único `NiceGUI → core Python → SQLite (SQLModel)`, um processo/um deploy (Railway single service opcional), TDD/EDD leve, docs README+TODO+HANDOFF. Mantém o espírito incremental/experimental do min, mas já pronto para rodar via web. Versões ancoradas ao estável atual (jul/2026): Pydantic AI `>=2.9`, SQLModel `>=0.0.39`, NiceGUI `>=3.14`, Typer `>=0.26`, pytest `>=8.4`.
+- **Ponteiros de templates atualizados.** Referências a `python.md`/`typescript.md` substituídas pela nova nomenclatura (`py-min`/`py-med`/`py-max`/`ts-max`, com nota descrevendo cada perfil e a regra da maior `-vN`) em `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `README.md` e no global `~/.claude/CLAUDE.md` (fora do repo).
 
 ## [2026-07-05]
 
