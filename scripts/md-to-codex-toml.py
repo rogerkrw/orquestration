@@ -18,17 +18,17 @@ We map the .md `tools` field to sandbox_mode using a heuristic:
     - Includes Write/Edit but no Bash → workspace-write
     - Includes Bash → workspace-write (devsecops Execute mode still requires explicit confirmation in prompt)
 
-Model mapping (Claude alias → Codex model, per TPM directive May 2026):
-    opus    → gpt-5.5         (frontier — supervision, problem space, critical reasoning)
-    sonnet  → gpt-5.3-codex   (coding specialist — execution work, high reasoning_effort by default)
-    haiku   → gpt-5.3-codex   (same coding model with low reasoning_effort)
+Model mapping (Claude alias → Codex model, per TPM directive Jul 2026):
+    opus    → gpt-5.6-sol   (flagship GPT-5.6 tier — supervision, problem space)   [low effort]
+    sonnet  → gpt-5.6-luna  (fast/cheap GPT-5.6 tier — execution work)             [low effort]
 
-TPM directive: ignore gpt-5.4 / gpt-5.4-mini tiers. Only use:
-  - gpt-5.5 for supervision (problem space + devsecops incidents)
-  - gpt-5.3-codex for trivial / executor tasks (solution space)
+TPM directive (Jul 2026): only two aliases remain (opus, sonnet); `haiku`
+retired. Codex runs the GPT-5.6 family (GA 2026-07-09) at low reasoning_effort:
+  - gpt-5.6-sol  for supervision (problem space + devsecops incidents)
+  - gpt-5.6-luna for execution tasks (solution space)
 
-Reasoning effort levels (verified, Codex CLI docs):
-  minimal | low | medium | high | xhigh
+Reasoning effort levels (GPT-5.6, verified Codex CLI docs):
+  none | low | medium | high | xhigh | max
 UI label "Altíssimo" maps to `xhigh` (NOT `very-high`).
 """
 from pathlib import Path
@@ -36,15 +36,13 @@ import re
 import sys
 
 MODEL_MAP = {
-    "opus": "gpt-5.5",
-    "sonnet": "gpt-5.3-codex",
-    "haiku": "gpt-5.3-codex",
+    "opus": "gpt-5.6-sol",
+    "sonnet": "gpt-5.6-luna",
 }
 
 REASONING_MAP = {
-    "opus": "high",
-    "sonnet": "high",
-    "haiku": "low",
+    "opus": "low",
+    "sonnet": "low",
 }
 
 
@@ -80,7 +78,7 @@ def convert(md_path: Path, out_dir: Path) -> Path:
     description = fm["description"]
     model_alias = fm.get("model", "sonnet")
     model = MODEL_MAP.get(model_alias, model_alias)
-    reasoning = REASONING_MAP.get(model_alias, "medium")
+    reasoning = REASONING_MAP.get(model_alias, "low")
     sandbox = derive_sandbox(fm.get("tools", "Read, Grep, Glob"))
 
     toml_lines = [

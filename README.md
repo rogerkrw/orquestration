@@ -71,13 +71,12 @@ O sync é idempotente (usa `rsync --delete` por skill e regenera as variantes po
 
 ## Modelos por engine
 
-Os `.md` canônicos usam **alias** (`opus`/`sonnet`/`haiku`); os conversores resolvem para o modelo real de cada ferramenta:
+Os `.md` canônicos usam **alias** (`opus`/`sonnet`); os conversores resolvem para o modelo real de cada ferramenta. O valor entre parênteses é o reasoning effort (emitido no `.toml` do Codex; documental no Claude e no Gemini):
 
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
-| `opus` | Opus 4.8 | gpt-5.5 | gemini-3.1-pro-preview |
-| `sonnet` | Sonnet 5 | gpt-5.3-codex (high effort) | gemini-3.5-flash |
-| `haiku` | Haiku 4.5 | gpt-5.3-codex (low effort) | gemini-3.1-flash-lite |
+| `opus` | Opus 4.8 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
+| `sonnet` | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
 
 ---
 

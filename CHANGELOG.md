@@ -7,6 +7,23 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-07-11]
+
+### Changed
+- **Mapa de modelos reduzido a 2 aliases + família GPT-5.6/Gemini 3.5 atualizada.** Diretiva TPM (jul/2026): manter só `opus` e `sonnet` (alias `haiku` removido) e rodar tudo em **low reasoning effort**. Novo mapa alias→engine:
+  - `opus` → Opus 4.8 (low) · Codex `gpt-5.6-sol` (low) · Gemini `gemini-3.5-flash` (high)
+  - `sonnet` → Sonnet 5 (low) · Codex `gpt-5.6-luna` (low) · Gemini `gemini-3.5-flash` (low)
+  Aposentados `gpt-5.5`/`gpt-5.3-codex` (Codex) e `gemini-3.1-pro-preview`/`gemini-3.1-flash-lite` (Gemini). `gpt-5.6-sol`/`luna` são os tiers flagship/fast da família GPT-5.6 (GA 09/jul/2026). O reasoning effort é emitido no `.toml` do Codex (`REASONING_MAP`); no Claude e no Gemini fica só documentado (sem campo de effort por subagente confiável). Atualizados `scripts/md-to-codex-toml.py` e `scripts/md-to-gemini-md.py` (`MODEL_MAP`/`REASONING_MAP`, docstrings) e a tabela alias→engine + regra 4 + diretiva TPM em `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` e `README.md`. Nenhum frontmatter de agente mudou (segue por alias); Claude `sonnet` → `claude-sonnet-5`.
+
+### Fixed
+- **Skill `cybersecurity`: OWASP Top 10:2025 reordenado para a lista oficial.** A tabela estava com ordenação incorreta (Cryptographic em #2, SSRF como #10 próprio). Corrigida para a edição oficial: A02 Security Misconfiguration, A03 Software Supply Chain Failures, A04 Cryptographic, A05 Injection, …, A10 Mishandling of Exceptional Conditions (novo). A ordenação de `rigorous-code-review` já estava correta e serviu de referência cruzada.
+- **Skill `cybersecurity`: `python-jose`/`passlib` → `PyJWT`/`pwdlib`.** Ambas as libs estão sem manutenção (python-jose com CVEs; passlib parado desde 2020 e quebrando com bcrypt 4.x). Snippet em `references/fastapi-security.md` migrado para `import jwt` (PyJWT) + `PasswordHash.recommended()` (pwdlib, argon2id), conforme recomendação oficial atual do FastAPI. Gotcha #3 e tabela do `SKILL.md` atualizados.
+- **Skill `railway-ops`: limites de recurso por plano reformulados.** A tabela apresentava 48 GB/48 vCPU (Hobby) e 1 TB/1000 vCPU (Pro) como se fossem limite de instância — na verdade são `por réplica × replicas`. Reformulada para destacar o teto **por réplica** (Hobby 8 GB/8 vCPU; Pro ~32 GB/32 vCPU, com ressalva de redução recente) em `references/pricing-and-costs.md` e `SKILL.md`.
+- **Agentes `swe-backend`/`swe-frontend`: detecção de stack atualizada.** `PydanticAI` → `Pydantic AI` (branding atual). Frontend: instrução de checar `tailwind.config` trocada por `@theme`/`app.css` (Tailwind v4 é CSS-first, sem `tailwind.config.js`) e detecção SvelteKit passa a assumir Svelte 5 runes salvo `export let` legado — alinhando com as skills `sveltekit`/`sveltekit-ui`.
+
+### Changed (templates)
+- **Templates adotam versionamento `-vN`.** Os 3 templates de bootstrap foram renomeados para carregar sufixo de versão: `python-minimal.md` → `python-minimal-v0.md`, `python-complete.md` → `python-complete-v0.md`, `typescript.md` → `typescript-v0.md`. `-v0` é a base preservada; revisões significativas criam um novo `-vN` (N+1) sem sobrescrever o anterior, e a maior `-vN` é a versão ativa. Renomeações puras (conteúdo idêntico).
+
 ## [2026-07-05]
 
 ### Changed

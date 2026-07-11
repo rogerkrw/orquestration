@@ -19,10 +19,15 @@ Tool name mapping (Claude → Gemini):
   WebFetch   -> web_fetch
   WebSearch  -> web_search
 
-Model mapping (Claude alias → Gemini model, per TPM directive May 2026):
-  opus    -> gemini-3.1-pro-preview   (highest capability for supervision/challenger roles)
-  sonnet  -> gemini-3.5-flash         (mid-tier, fast, default executor)
-  haiku   -> gemini-3.1-flash-lite    (cheapest, low-latency; GA — preview shut down 2026-07-09)
+Model mapping (Claude alias → Gemini model, per TPM directive Jul 2026):
+  opus    -> gemini-3.5-flash   (supervision/challenger; high thinking_level)
+  sonnet  -> gemini-3.5-flash   (executor; low thinking_level)
+
+Only two aliases remain (opus, sonnet); `haiku` retired. Both map to
+gemini-3.5-flash — the per-alias reasoning effort (opus=high, sonnet=low) is
+documented in the alias→engine table but not emitted here: the Gemini CLI
+subagent frontmatter has no verified effort field (unknown keys are ignored
+silently), so effort stays out of the generated .md.
 
 Adjust MODEL_MAP if Google changes model IDs.
 """
@@ -42,9 +47,8 @@ TOOL_MAP = {
 }
 
 MODEL_MAP = {
-    "opus": "gemini-3.1-pro-preview",
+    "opus": "gemini-3.5-flash",
     "sonnet": "gemini-3.5-flash",
-    "haiku": "gemini-3.1-flash-lite",
 }
 
 

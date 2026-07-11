@@ -18,7 +18,7 @@
 1. **A fonte canônica é `agents/*.md` e `skills/*/`.** Nunca edite as cópias em `~/.claude`, `~/.codex`, `~/.gemini` — elas são geradas e serão sobrescritas pelo próximo sync.
 2. **Os `.toml` (Codex) e os `.md` de Gemini/Antigravity são GERADOS** pelos scripts em `scripts/`. Não edite à mão; edite o `.md` canônico em `agents/` e rode o sync.
 3. **`name:` no frontmatter == nome da pasta/arquivo.** Divergência faz o Antigravity ignorar a skill/agente em silêncio. Exceção intencional e única: `pydantic-ai` usa `name: building-pydantic-ai-agents` (nome upstream; idêntico nos 3 ambientes — não "consertar").
-4. **`model:` sempre por alias** (`opus`/`sonnet`/`haiku`), nunca ID completo — os conversores dependem do alias para mapear por engine. ID hardcoded quebra a geração multi-CLI.
+4. **`model:` sempre por alias** (`opus`/`sonnet`), nunca ID completo — os conversores dependem do alias para mapear por engine. ID hardcoded quebra a geração multi-CLI.
 5. **Antes de propor sync ou mudança ampla, reporte ao TPM** em linguagem de produto/comportamento. Mudança em agente/skill afeta 4 ferramentas de uma vez.
 6. **Não há mais backup local.** Os snapshots pré-reorg/pré-sync foram removidos — **esta pasta é a fonte canônica** e os ambientes (`~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis via `sync.sh` (idempotente). Em mudança destrutiva, confirme com o TPM antes; o versionamento de longo prazo deve vir de `git init` (ainda pendente).
 
@@ -38,11 +38,10 @@ templates/            python.md / typescript.md (bootstrap de projeto novo)
 
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
-| `opus` | Opus 4.8 | gpt-5.5 | gemini-3.1-pro-preview |
-| `sonnet` | Sonnet 5 | gpt-5.3-codex (high) | gemini-3.5-flash |
-| `haiku` | Haiku 4.5 | gpt-5.3-codex (low) | gemini-3.1-flash-lite |
+| `opus` | Opus 4.8 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
+| `sonnet` | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
 
-Diretiva TPM (mai/2026): no Codex usar só `gpt-5.5` (supervisão) e `gpt-5.3-codex` (execução).
+Diretiva TPM (jul/2026): só dois aliases — `opus` (supervisão) e `sonnet` (execução); `haiku` foi removido. O valor entre parênteses é o reasoning effort. No Codex ele é emitido no `.toml`; no Claude e no Gemini fica só documentado (não há campo de effort por subagente que possamos setar com segurança).
 
 ## Fluxo de mudança
 
