@@ -18,7 +18,7 @@ orquestration/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
 │   ├── md-to-codex-toml.py     # gera variantes .toml (Codex)
 │   └── md-to-gemini-md.py      # gera variantes .md (Gemini/Antigravity)
-├── templates/            # templates de CLAUDE.md/AGENTS.md p/ novos projetos (python.md, typescript.md)
+├── templates/            # templates de CLAUDE.md/AGENTS.md p/ novos projetos (py-{min,med,max}, ts-max; versionados -vN)
 ├── CLAUDE.md             # instruções para o agente que abrir ESTA pasta
 ├── AGENTS.md             # (mesmo conteúdo de CLAUDE.md; lido por Codex/Antigravity)
 └── GEMINI.md             # (mesmo conteúdo de CLAUDE.md; lido por Gemini CLI)

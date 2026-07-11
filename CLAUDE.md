@@ -29,10 +29,10 @@ agents/   9 subagentes .md (canônico)   → todos os ambientes
 skills/   16 skills (pasta/SKILL.md)     → todos os ambientes
 scripts/sync.sh       instalador idempotente
 scripts/*.py          geradores de variantes Codex/Gemini
-templates/            python.md / typescript.md (bootstrap de projeto novo)
+templates/            py-{min,med,max} / ts-max (bootstrap de projeto novo, versionados -vN)
 ```
 
-> **Templates de projeto:** ao criar o `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` de um projeto novo, usar `templates/python.md` ou `templates/typescript.md` como base conforme o stack. Adaptar ao projeto; não copiar cegamente. Os configs globais (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`) já orientam os agentes a consultarem esses templates.
+> **Templates de projeto:** ao criar o `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` de um projeto novo, usar como base o template do stack e perfil adequados (maior `-vN` é a versão ativa): `py-min` (descoberta pura — Typer, JSON/MD, sem testes/banco), `py-med` (padrão — monorepo NiceGUI→core→SQLite, testes/EDD leve, Railway opcional), `py-max` (projeto profissional/de terceiro — api/web/docker separados) ou `ts-max` (stack TypeScript). Adaptar ao projeto; não copiar cegamente. Os configs globais (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`) já orientam os agentes a consultarem esses templates.
 
 ## Mapeamento de modelos (alias → engine)
 
