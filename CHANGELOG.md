@@ -7,6 +7,17 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-07-12]
+
+### Added
+- **`utils/RAILWAY.md` — manual generalista de deploy no Railway.** Destilado do `RAILWAY.md` real do projeto `sales-crm`, removendo tudo específico (IDs, URLs, senhas, Brevo, seed admin) e preservando as armadilhas vividas: auth de CLI não-interativa (mesmo `$HOME` = sessão compartilhada com o agente), monorepo → `railway up --path-as-root`, cookie cross-domain → proxy no front, TCP proxy do Postgres não habilitado em projeto ressubido (criar via GraphQL), cron dry-run→live com protocolo de ativação segura, e armadilhas de build/deploy. Nomenclatura de serviços alinhada ao padrão de pastas (`api`/`web`/`Postgres`/`cron`). Novo diretório `utils/` para manuais copiáveis (distintos de skills). O template `py-max-v1` instrui copiá-lo para a raiz do projeto ao subir no Railway.
+
+### Changed (templates)
+- **`py-max-v1` — revisão de consistência e reestruturação de pastas.** Novo perfil v1 do template profissional, revisado em várias frentes:
+  - **Layout de topo `api`/`web`/`docs`/`docker`/`others`** (volta à nomenclatura `api`/`web` do v0; `backend`/`frontend` renomeados). Nova pasta `docs/` na raiz = documentação **perene e pública** (versionada, curada à mão pelo TPM). `others/` volta a ser **100% gitignored** (workspace local do TPM); subpasta `docs/` interna renomeada para `others/memories/` (desambiguação com a `docs/` da raiz). Curadoria por opt-in: o que merece histórico, o TPM promove de `others/` para `docs/`.
+  - **`docs/RAILWAY.md`** citado no Protocolo de Documentação, apontando o caminho absoluto `~/dev/orquestration/utils/RAILWAY.md` (evita referência órfã — o template vira o CLAUDE.md do projeto novo, sem memória de `orquestration`). Tabela de **utilitários** separada da de skills.
+  - **Regras suavizadas/corrigidas:** `net-add zero` de gate rígido → heurística anti-inchaço que não bloqueia entrega; timestamp `%Y%m%d_%H%M%S_` cobre documentação/auditoria/resultados exportados (código versionado isento); assinatura de commit exige modelo+esforço explícitos (auditoria); CLI removido como camada de UI (SvelteKit é a UI; Typer só como auxiliar opcional de teste). Correções factuais (links Pydantic, contagem 9 subagentes/16 skills, invocação `@nome`, `llm-security` na tabela) e enxugamento de reforços retóricos "é X, não Y".
+
 ## [2026-07-11]
 
 ### Changed
