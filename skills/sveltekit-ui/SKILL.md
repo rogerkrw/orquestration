@@ -5,7 +5,7 @@ description: shadcn-svelte component system on SvelteKit + Svelte 5 runes + Tail
 
 # SvelteKit UI — shadcn-svelte + Tailwind v4
 
-The frontend visual layer for SvelteKit projects. Pairs with the `sveltekit` skill (routing/SSR) and is consumed by `swe-frontend` and `ux-ui-designer`.
+The frontend visual layer for SvelteKit projects. Pairs with the `sveltekit` skill (routing/SSR) and is consumed by `swe-frontend` and `ux-designer`. For design rules, review checklists, copy and PT-BR conventions, pair with the `ux-ui-design` skill.
 
 ## Stack assumptions
 - **Svelte 5** with runes (`$state`, `$derived`, `$effect`, `$props`)

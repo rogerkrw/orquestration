@@ -15,7 +15,7 @@ Before writing, identify the project stack: `svelte.config.js` or `@sveltejs/kit
 Work by principle:
 - Read before building — understand existing components before creating new ones; reuse what exists
 - Use design system tokens only — Tailwind utility classes mapped to the theme tokens (`@theme` in Tailwind v4), not arbitrary values
-- Semantic HTML as baseline — correct elements for correct roles; ux-ui-designer will audit ARIA and WCAG
+- Semantic HTML as baseline — correct elements for correct roles; ux-designer will audit ARIA and WCAG
 - Minimal diff — implement what was scoped; do not refactor adjacent components opportunistically
 - Verify before reporting — component renders, interactions work, no console errors
 

@@ -5,7 +5,7 @@ description: Build UIs in Python — NiceGUI, Gradio, or Chainlit. Use when the 
 
 # Python UI — NiceGUI / Gradio / Chainlit
 
-For Python-first projects (FastAPI backends, AI demos, data tools, internal apps) where a separate TS frontend would be overhead. Consumed by `swe-backend` and `ux-ui-designer`.
+For Python-first projects (FastAPI backends, AI demos, data tools, internal apps) where a separate TS frontend would be overhead. Consumed by `swe-backend` and `ux-designer`.
 
 ## Framework selection — decide before coding
 

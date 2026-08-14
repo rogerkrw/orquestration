@@ -25,20 +25,20 @@
 ## Estrutura
 
 ```
-agents/   9 subagentes .md (canônico)   → todos os ambientes
-skills/   16 skills (pasta/SKILL.md)     → todos os ambientes
+agents/   7 subagentes .md (canônico)   → todos os ambientes
+skills/   17 skills (pasta/SKILL.md)     → todos os ambientes
 scripts/sync.sh       instalador idempotente
 scripts/*.py          geradores de variantes Codex/Gemini
-templates/            py-{min,med,max} / ts-max (bootstrap de projeto novo, versionados -vN)
+templates/            BASE.md + py.md / ts.md (bootstrap de projeto novo)
 ```
 
-> **Templates de projeto:** ao criar o `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` de um projeto novo, usar como base o template do stack e perfil adequados (maior `-vN` é a versão ativa): `py-min` (descoberta pura — Typer, JSON/MD, sem testes/banco), `py-med` (padrão — monorepo NiceGUI→core→SQLite, testes/EDD leve, Railway opcional), `py-max` (projeto profissional/de terceiro — api/web/docker separados) ou `ts-max` (stack TypeScript). Adaptar ao projeto; não copiar cegamente. Os configs globais (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`) já orientam os agentes a consultarem esses templates.
+> **Templates de projeto:** ao criar o `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` de um projeto novo, concatenar `BASE.md` (parte comum a todo projeto: processo, regras, git, documentação) com o bloco de stack — `py.md` ou `ts.md` — na seção do perfil adequado: `min` (descoberta e experimentação, estrutura enxuta + `xyz/`) ou `max` (projeto profissional/de terceiro, `api/`+`web/`+`docker/`+`xyz/`). Adaptar ao projeto; não copiar cegamente. Os configs globais (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`) já orientam os agentes a consultarem esses templates.
 
 ## Mapeamento de modelos (alias → engine)
 
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
-| `opus` | Opus 4.8 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
+| `opus` | Opus 5 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
 | `sonnet` | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
 
 Diretiva TPM (jul/2026): só dois aliases — `opus` (supervisão) e `sonnet` (execução); `haiku` foi removido. O valor entre parênteses é o reasoning effort. No Codex ele é emitido no `.toml`; no Claude e no Gemini fica só documentado (não há campo de effort por subagente que possamos setar com segurança).

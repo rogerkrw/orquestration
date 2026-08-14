@@ -12,13 +12,13 @@ Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada de
 
 ```
 orquestration/
-├── agents/               # 8 subagentes (.md, formato canônico Claude)
-├── skills/               # 15 skills (pasta/SKILL.md + references/)
+├── agents/               # 7 subagentes (.md, formato canônico Claude)
+├── skills/               # 17 skills (pasta/SKILL.md + references/)
 ├── scripts/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
 │   ├── md-to-codex-toml.py     # gera variantes .toml (Codex)
 │   └── md-to-gemini-md.py      # gera variantes .md (Gemini/Antigravity)
-├── templates/            # templates de CLAUDE.md/AGENTS.md p/ novos projetos (py-{min,med,max}, ts-max; versionados -vN)
+├── templates/            # bootstrap de projeto novo: BASE.md + py.md / ts.md (perfis min/max)
 ├── CLAUDE.md             # instruções para o agente que abrir ESTA pasta
 ├── AGENTS.md             # (mesmo conteúdo de CLAUDE.md; lido por Codex/Antigravity)
 └── GEMINI.md             # (mesmo conteúdo de CLAUDE.md; lido por Gemini CLI)
@@ -28,23 +28,21 @@ orquestration/
 
 ---
 
-## Os 9 agentes
+## Os 7 agentes
 
 | Agente | Papel | Tier |
 |---|---|---|
 | **swe-backend** | API, modelos de dados, lógica de negócio, integrações, jobs | sonnet |
 | **swe-frontend** | Componentes, rotas, forms, state, data fetching | sonnet |
-| **ux-ui-designer** | Refino visual: design system, ARIA, contraste, CWV | sonnet |
+| **ux-designer** | UX/UI ponta a ponta: discovery, direção visual, copy, auditoria | opus |
 | **code-reviewer** | Review pós-feature / pré-merge, read-only | sonnet |
 | **qa-tester** | Escreve e roda testes, investiga falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
-| **ux-senior** | Discovery, pesquisa UX, validação de premissa | opus |
-| **pm-senior** | Challenger de decisões de produto, blind spots (problem space) | opus |
-| **pm-senior-delivery** | Executor PM/PMO: PRD, roadmap, OKR, sprints, estimativas (solution space) | opus |
+| **product-manager** | Produto ponta a ponta: premissa, viabilidade de negócio, PRD, roadmap, OKR, sprints | opus |
 
-## As 16 skills
+## As 17 skills
 
-`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `pm-software`
+`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `product-management`
 
 As skills carregam automaticamente quando a `description` casa com o contexto/stack — não precisam ser invocadas à mão.
 
@@ -75,7 +73,7 @@ Os `.md` canônicos usam **alias** (`opus`/`sonnet`); os conversores resolvem pa
 
 | Alias | Claude | Codex | Gemini / Antigravity |
 |---|---|---|---|
-| `opus` | Opus 4.8 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
+| `opus` | Opus 5 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
 | `sonnet` | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
 
 ---
@@ -110,9 +108,8 @@ PROBLEM SPACE                            SOLUTION SPACE
 você (PM/TPM master) ────────────┐
 swe-senior (sessão principal)  ◄─┤────► swe-senior (orquestra)
                                  │      ├── swe-backend
-ux-senior            (opus)      │      ├── swe-frontend
-pm-senior            (opus)      │      ├── ux-ui-designer
-                                 │      ├── pm-senior-delivery
+ux-designer          (opus)      │      ├── swe-frontend
+product-manager      (opus)      │      ├── ux-designer
                                  │      ├── code-reviewer
                                  │      ├── qa-tester
                                  │      └── devsecops
@@ -130,8 +127,8 @@ pm-senior            (opus)      │      ├── ux-ui-designer
 |---|---|---|
 | **você (TPM)** | Sempre — direção, prioridade, aceitação | humano |
 | **swe-senior** | Sempre — interlocutor técnico, orquestrador (sessão principal) | opus |
-| **ux-senior** | Discovery, validar premissa, mapear fluxos, friction | opus |
-| **pm-senior** | Pressure-test de decisão, blind spots, kill/build | opus |
+| **ux-designer** | Discovery, direção visual, copy de interface, auditoria de UI | opus |
+| **product-manager** | Premissa, viabilidade de negócio, PRD, roadmap, OKR, sprint, status report | opus |
 
 **Solution space** (implementação):
 
@@ -139,11 +136,9 @@ pm-senior            (opus)      │      ├── ux-ui-designer
 |---|---|---|
 | **swe-backend** | API, modelo de dados, lógica de negócio, integrações, jobs | sonnet |
 | **swe-frontend** | Componentes, rotas, forms, state, fetch | sonnet |
-| **ux-ui-designer** | Refino visual, ARIA, contraste, estados, CWV, responsivo | sonnet |
 | **code-reviewer** | Pós-feature, pré-merge, read-only, "o que pode dar errado?" | sonnet |
 | **qa-tester** | Escrever testes faltantes, rodar suite, investigar falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
-| **pm-senior-delivery** | PRD, user stories, roadmap, OKR, sprint plan, estimativas, status report | opus |
 
 > **Escalação para incidente / PR crítico:** subagentes têm tier fixo no arquivo. Para raciocínio mais profundo (incidente de produção, security review de alto risco, PR complexo) — **não delegue ao subagente**; trate na sessão principal (`swe-senior` em opus), que invoca as mesmas skills com mais capacidade de inferência.
 
@@ -162,12 +157,11 @@ pm-senior            (opus)      │      ├── ux-ui-designer
 
 ```text
 você → swe-senior
-        ├─ (opc) ux-senior            "valida se faz sentido pro usuário antes"
-        ├─ (opc) pm-senior  "o que estou perdendo aqui?"
-        ├─ (opc) pm-senior-delivery   "transforma a direção em PRD + stories"
+        ├─ (opc) ux-designer          "valida se faz sentido pro usuário antes"
+        ├─ (opc) product-manager  "o que estou perdendo aqui?" / "vira PRD + stories"
         ├─ swe-backend       "implementa o que decidimos"
         ├─ swe-frontend      "monta a UI"
-        ├─ ux-ui-designer    "refine antes de merge"
+        ├─ ux-designer       "refine antes de merge"
         ├─ qa-tester         "testes do golden path + 2 edge cases"
         └─ code-reviewer     "revisa antes de merge"
 ```
@@ -187,10 +181,10 @@ swe-senior → devsecops (AUDIT)    "investiga, sem alterar nada"
 
 ```text
 você → swe-senior: "estou pensando em [decisão]"
-swe-senior → pm-senior   "steelman the case against"
-           → ux-senior             "evidência de fluxos / friction"
+swe-senior → product-manager   "steelman the case against"
+           → ux-designer           "evidência de fluxos / friction"
               ↓ você lê os reports e decide
-           → pm-senior-delivery    "decidido: vira PRD + roadmap + OKR"
+           → product-manager       "decidido: vira PRD + roadmap + OKR"
 ```
 
 #### D. Auditoria de segurança pré-launch
@@ -218,5 +212,5 @@ Regra prática: delegue quando a tarefa é (1) bem-definida, (2) isolável, (3) 
 4. Subagentes trabalham em paralelo quando faz sentido (backend + frontend simultâneos).
 5. code-reviewer e qa-tester rodam antes de qualquer "considera pronto".
 6. devsecops em **AUDIT** antes de deploy; **EXECUTE** com confirmação explícita.
-7. pm-senior e ux-senior entram quando você precisa de segunda cabeça no problem space; pm-senior-delivery quando a direção já está decidida e vira artefato (PRD, roadmap, OKR, sprint).
+7. product-manager e ux-designer entram quando você precisa de segunda cabeça no problem space; o mesmo product-manager transforma a direção decidida em artefato (PRD, roadmap, OKR, sprint).
 8. Você intervém em decisão de produto, escalação técnica que vira produto, ou trade-off que merece aprovação.

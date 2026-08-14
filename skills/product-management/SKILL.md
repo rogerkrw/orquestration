@@ -1,20 +1,28 @@
 ---
-name: pm-software
+name: product-management
 description: >
-  Gestão de Produto (PM) e Gestão de Projetos de Software (PMO/TPM) — do estratégico ao operacional.
-  Acione para: discovery de produto, priorização de backlog (RICE, WSJF, MoSCoW), roadmap, OKRs, North Star Metric,
-  gestão de sprints, cerimônias ágeis, stakeholder management, MVP/MLP, PRD, User Stories, DoD, DoR,
-  análise de riscos, status reports, retrospectivas, gestão de portfólio, estimativas, métricas de produto e time.
-  Acionar também para: "o que priorizar", "como estruturar o roadmap", "como alinhar stakeholders",
-  "como conduzir a discovery", "o que vai no PRD", "como medir o sucesso do produto", "como gerenciar o sprint",
-  "como aplicar RICE ou WSJF", "como montar OKR", "como estimar story points", "como fazer retrospectiva",
-  "como definir critérios de aceite", "como calcular velocity", "como estruturar um status report".
+  Gestão de produto de ponta a ponta — do problema ao entregue, com lente de negócio.
+  Acione para: discovery e entrevistas, validação de premissa, priorização (RICE, WSJF, MoSCoW, Kano),
+  roadmap, OKR e North Star, PRD, user stories, critérios de aceite, DoR/DoD, sprints e cerimônias,
+  estimativas, risk log, status report, retrospectiva e métricas de produto e de time.
+  Acione também para a camada de negócio: unit economics (CAC, LTV, payback, churn, NRR, Rule of 40),
+  pricing e empacotamento, TAM/SAM/SOM, análise competitiva, posicionamento, JTBD e case de negócio.
+  Gatilhos: "o que priorizar", "vale a pena construir isso", "como estruturar o roadmap",
+  "o que vai no PRD", "como medir o sucesso", "quanto custa e quanto retorna", "como precificar",
+  "qual o tamanho desse mercado", "como montar OKR", "como fazer retrospectiva", "como estimar".
 ---
 
-# PM Software — Gestão de Produto e Projetos de Software
+# Product Management
 
-Skill unificada cobrindo **Product Management (PM)** e **Project Management (PMO/TPM)** para times de software.
-Distingue os dois domínios e oferece frameworks, artefatos e decisões para cada contexto.
+Gestão de produto e de projetos de software, do problema ao entregue. Cobre três camadas, e a maior parte das decisões ruins vem de tratar uma como se fosse a outra:
+
+| Camada | Pergunta | Onde está |
+| --- | --- | --- |
+| **Problema** | vale a pena resolver isso, para quem, agora? | seções 2.1-2.2 + `references/discovery.md` |
+| **Negócio** | isso se paga? cabe no mercado? por que nós? | `references/business.md` |
+| **Entrega** | como e quando entregar? | seções 3-4 + `references/artifacts.md` |
+
+**Sequência que importa:** problema validado → viabilidade de negócio → entrega planejada. Pular a do meio é o erro mais caro: feature bem construída, para problema real, que não se paga nem tem como ser vendida.
 
 ---
 
@@ -323,3 +331,4 @@ Para detalhes adicionais, leia os arquivos em `references/`:
 | `references/strategy.md` | Montar OKR, visão, estratégia de produto |
 | `references/artifacts.md` | Templates de PRD, User Story, DoD, DoR |
 | `references/metrics.md` | North Star, AARRR, métricas de saúde de time |
+| `references/business.md` | Unit economics, pricing, TAM/SAM/SOM, competitivo, posicionamento, case de negócio |

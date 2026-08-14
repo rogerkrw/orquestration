@@ -4,8 +4,8 @@
 # Idempotent — safe to run multiple times.
 #
 # CANONICAL SOURCE LAYOUT (this repo):
-#   agents/*.md       <- 8 agents, Claude .md format (PascalCase tools, alias model)
-#   skills/<name>/    <- 15 skills, expanded folders (SKILL.md + references/)
+#   agents/*.md       <- 7 agents, Claude .md format (PascalCase tools, alias model)
+#   skills/<name>/    <- 17 skills, expanded folders (SKILL.md + references/)
 #
 # Per-CLI agent variants (Codex .toml, Gemini .md) are GENERATED into .build/ at sync time.
 set -euo pipefail
@@ -48,6 +48,13 @@ for tool_dir in ~/.claude/skills ~/.codex/skills ~/.gemini/skills; do
   for skill in "$SKILLS"/*/; do
     [ -d "$skill" ] || continue
     rsync -a --delete "$skill" "$tool_dir/$(basename "$skill")/"
+  done
+  # Remove skills that no longer exist in the canonical source (renamed/retired).
+  # Without this, a renamed skill lingers in the destination as an orphan copy.
+  for installed in "$tool_dir"/*/; do
+    [ -d "$installed" ] || continue
+    name="$(basename "$installed")"
+    [ -d "$SKILLS/$name" ] || { echo "  - removing stale skill: $name ($tool_dir)"; rm -rf "$installed"; }
   done
 done
 
