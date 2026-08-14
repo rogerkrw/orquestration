@@ -25,6 +25,7 @@ um repositório de configuração de IA, não um produto de software com release
 
 ### Fixed
 
+- **`sync.sh` deixava agente aposentado vivo em Codex, Gemini e Antigravity.** O `.build/` é regenerado pelos conversores, mas eles só escrevem — nunca apagam. Agente renomeado continuava lá e era copiado para os três CLIs a cada sync: a primeira execução desta leva deixou **12 agentes** nesses ambientes (os 7 corretos + `pm-senior`, `pm-senior-delivery`, `pm-senior-discovery`, `ux-senior`, `ux-ui-designer`), sendo que `pm-senior-discovery` vinha de um rename de junho e sobreviveu a todos os syncs desde então. O Claude escapava porque copia de `agents/` direto. Corrigido com `rm -rf` do `.build/` antes de gerar. Sintoma que isso produzia: auto-routing sorteando um agente que não existe mais no repositório.
 - **`sync.sh` não removia skill renomeada ou aposentada do destino.** O `rsync --delete` limpa o *conteúdo* de cada pasta, mas itera sobre a origem — pasta que deixou de existir no canônico sobrevivia como órfã em `~/.claude/skills` e nos demais ambientes, e seguia sendo carregada pelo trigger. Adicionada varredura reversa que remove o que não tem contraparte na origem, com log do que foi apagado. Sem isso, `pm-software` continuaria ativa ao lado de `product-management`.
 
 ### Changed (templates)

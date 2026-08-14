@@ -22,6 +22,9 @@ AGENTS_GEMINI="$BUILD/agents-gemini"
 #    - Codex needs TOML (no `tools` allowlist; sandbox_mode derived)
 #    - Gemini needs .md with YAML array tools + snake_case names + Gemini model IDs
 # ---------------------------------------------------------------------------
+# .build/ is regenerated from scratch: the generators only write, never delete,
+# so a renamed/retired agent would linger there and get copied to every CLI.
+rm -rf "$AGENTS_TOML" "$AGENTS_GEMINI"
 mkdir -p "$AGENTS_TOML" "$AGENTS_GEMINI"
 python3 "$ROOT/scripts/md-to-codex-toml.py"  "$AGENTS_MD" "$AGENTS_TOML"   >/dev/null
 python3 "$ROOT/scripts/md-to-gemini-md.py"   "$AGENTS_MD" "$AGENTS_GEMINI" >/dev/null
