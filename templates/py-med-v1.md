@@ -44,14 +44,14 @@ SQLite (via SQLModel)
   - `nomic-embed-text-v2-moe:latest`: embedding model;
 - **Interfaces:**
   - [`Typer`](https://typer.tiangolo.com/) (`>=0.26`): CLI (scripts, comandos de manutenção, entrada de dados);
-  - [`NiceGUI`](https://nicegui.io/) (`>=3.14`): UI web padrão (chama o core Python direto). Alternativas por projeto: [`Chainlit`](https://docs.chainlit.io/) quando a interface for essencialmente chat; [`Gradio`](https://www.gradio.app/) para demos rápidas de ML;
+  - [`Chainlit`](https://docs.chainlit.io/) ou [`NiceGUI`](https://nicegui.io/) (`>=3.14`): UI web, a ser decidida pelo TPM conforme a natureza do projeto, pode ser dispensada no início.
 - [`pytest`](https://docs.pytest.org/en/stable/) (`>=8.4`) + [`pytest-asyncio`](https://pytest-asyncio.readthedocs.io/) (`>=1.2`): testes (TDD/EDD, ver *Regras*).
 
 > **Nota:** LLMs proprietários, se introduzidos, o serão sob decisão do TPM. O projeto nasce local e pode permanecer local, mas o TPM pode decidir por publicá-lo no Railway, para uso via web.
 
 ## **Arquitetura Base**
 
-Monorepo flat: um único pacote com um submódulo `ui/` para a camada NiceGUI dentro dele — um processo só, um deploy só.
+Monorepo flat:
 
 ```
 [nome-do-projeto]/
@@ -65,20 +65,20 @@ Monorepo flat: um único pacote com um submódulo `ui/` para a camada NiceGUI de
 │       ├── tools/                # Funções/ferramentas dos agentes
 │       ├── services/             # Lógica de domínio (use cases)
 │       ├── database/             # Persistência (SQLModel + engine SQLite)
-│       └── ui/                   # Camada NiceGUI (páginas, componentes)
+│       └── ui/                   # Camada de UI (Chainlit, NiceGUI etc., se decidida pelo TPM)
 ├── tests/                        # Testes determinísticos (pytest)
 │   ├── unit/
 │   └── integration/
-├── evals/                        # Evals dos LLMs (Pydantic AI Evals)
-├── oth/                          # Dados, artefatos, docs etc. (gitignored)
-│   ├── artifacts/                # Requisitos, specs, chats do TPM
+├── evals/                        # Scripts de evals dos LLMs (Pydantic AI Evals)
+├── xyz/                          # Dados, artefatos, docs etc. (gitignored)
+│   ├── artifacts/                # Requisitos, specs, inputs do TPM
 │   ├── docs/                     # Memória do projeto, TODOs arquivados
 │   ├── db/                       # SQLite local
 │   ├── evals/                    # Outputs de evals (quando houver)
-│   ├── logs/                     # Logs (se necessários)
+│   ├── logs/                     # Logs rápidos (se necessários)
 │   ├── inputs/                   # Entradas de dados processáveis (.csv, ,json, .md etc.)
 │   ├── outputs/                  # Saídas de dados processados (.csv, ,json, .md etc.)
-│   └── scripts/                  # Scripts ad-hoc/one-off e experimentos
+│   └── scripts/                  # Scripts ad-hoc/one-off e experimentos rápidos e isolados
 ├── .env
 ├── pyproject.toml
 ├── Procfile / railway.toml       # Config de deploy (Railway, quando solicitado pelo TPM)

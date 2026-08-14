@@ -7,6 +7,11 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-08-13]
+
+### Changed (templates)
+- **`py-med-v1` — UI opcional e renomeação de `oth/` → `xyz/`.** A camada de UI deixa de ter NiceGUI como padrão: agora é **Chainlit ou NiceGUI, decidida pelo TPM conforme a natureza do projeto, e dispensável no início** (Gradio sai da lista). O comentário de `src/<pkg>/ui/` acompanha ("Camada de UI (Chainlit, NiceGUI etc., se decidida pelo TPM)") e a frase da arquitetura perde o pressuposto de NiceGUI/processo único. A pasta gitignored de trabalho local passa de `oth/` para `xyz/`, e alguns rótulos ficam mais precisos: `evals/` = "scripts de evals", `artifacts/` = "inputs do TPM", `logs/` = "logs rápidos", `scripts/` = "experimentos rápidos e isolados".
+
 ## [2026-07-12]
 
 ### Added
