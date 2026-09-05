@@ -12,8 +12,8 @@ Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada de
 
 ```
 orquestration/
-├── agents/               # 8 subagentes (.md, formato canônico Claude)
-├── skills/               # 24 skills (pasta/SKILL.md + references/)
+├── agents/               # 9 subagentes (.md, formato canônico Claude)
+├── skills/               # 27 skills (pasta/SKILL.md + references/)
 ├── scripts/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
 │   ├── md-to-codex-toml.py     # gera variantes .toml (Codex)
@@ -28,7 +28,7 @@ orquestration/
 
 ---
 
-## Os 8 agentes
+## Os 9 agentes
 
 | Agente | Papel | Tier |
 |---|---|---|
@@ -40,10 +40,11 @@ orquestration/
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
 | **product-manager** | Produto ponta a ponta: premissa, viabilidade de negócio, PRD, roadmap, OKR, sprints | opus |
 | **marketing-ui** | Superfícies de marketing: mensagem, conversão, direção visual e auditoria | opus |
+| **ai-engineer** | Aplicações com LLMs: arquitetura, contexto, tools, RAG, evals, operação e segurança | opus |
 
-## As 24 skills
+## As 27 skills
 
-`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `ux-ui-design` · `ux-writing` · `conversion-copywriting` · `minimalist-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `product-management` · `systematic-debugging` · `domain-modeling` · `handoff` · `browser-e2e-testing`
+`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `ai-application-engineering` · `context-engineering` · `llm-evaluation` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `ux-ui-design` · `ux-writing` · `conversion-copywriting` · `minimalist-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `product-management` · `systematic-debugging` · `domain-modeling` · `handoff` · `browser-e2e-testing`
 
 As skills carregam automaticamente quando a `description` casa com o contexto/stack — não precisam ser invocadas à mão.
 
@@ -112,6 +113,7 @@ swe-senior (sessão principal)  ◄─┤────► swe-senior (orquestra)
 ux-designer          (opus)      │      ├── swe-frontend
 product-manager      (opus)      │      ├── ux-designer
                                  │      ├── marketing-ui
+                                 │      ├── ai-engineer
                                  │      ├── code-reviewer
                                  │      ├── qa-tester
                                  │      └── devsecops
@@ -139,6 +141,7 @@ product-manager      (opus)      │      ├── ux-designer
 | **swe-backend** | API, modelo de dados, lógica de negócio, integrações, jobs | sonnet |
 | **swe-frontend** | Componentes, rotas, forms, state, fetch | sonnet |
 | **marketing-ui** | Landing pages, pricing e outras superfícies comerciais | opus |
+| **ai-engineer** | Arquitetura e engenharia de aplicações com LLMs e agentes | opus |
 | **code-reviewer** | Pós-feature, pré-merge, read-only, "o que pode dar errado?" | sonnet |
 | **qa-tester** | Escrever testes faltantes, rodar suite, investigar falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |

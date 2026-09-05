@@ -16,6 +16,15 @@ um repositório de configuração de IA, não um produto de software com release
   lançamentos. Separa brief, mensagem, direção visual, implementação, auditoria
   e experimentos de conversão, sem assumir branding amplo, UX de produto ou
   claims sem evidência.
+- **Agente `ai-engineer`** (opus) para a engenharia transversal de aplicações
+  com LLMs e agentes: arquitetura, contexto, tools, RAG, memória, evals,
+  observabilidade, custo, operação e segurança. Integra os agentes existentes
+  sem substituí-los em backend, frontend, QA, infraestrutura ou produto.
+- **Três skills de Applied AI Engineering:** `ai-application-engineering` para
+  decisões de arquitetura e limites entre modelo e código; `context-engineering`
+  para seleção, estado, memória, provenance, compaction e tool context; e
+  `llm-evaluation` para datasets, evals de contrato/trajetória/tarefa,
+  segurança, operação e regressão.
 
 ## [2026-09-04]
 

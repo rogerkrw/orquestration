@@ -95,12 +95,14 @@ Monorepo flat: um pacote em `src/`, um processo, um deploy. A UI (se houver) é 
 | `qa-tester` | Testes, evals, investigação de falhas |
 | `devsecops` | Deploy Railway, secrets, auditoria de segurança |
 | `product-manager` | Validar premissa, viabilidade de negócio, PRD, roadmap, sprint |
+| `ai-engineer` | Arquitetura de aplicações LLM, contexto, tools, RAG, evals e operação |
 
 | Quem usa | Skill | Para que |
 | --- | --- | --- |
 | `swe-backend` | `pydantic-ai` | Agentes, tools, structured output, streaming |
 | `swe-frontend` | `python-ui` | NiceGUI/Chainlit/Gradio: escolha, layout, async |
 | `qa-tester` | `qa-testing` | pytest + `pytest-asyncio` + `TestModel` |
+| `ai-engineer` | `ai-application-engineering`, `context-engineering`, `llm-evaluation` | Arquitetura aplicada, contexto e evals |
 | `qa-tester` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Investigação de falhas, jornadas web e troca de contexto |
 | `devsecops` | `cybersecurity`, `llm-security`, `railway-ops` | Segurança e deploy |
 | Todos | `clean-code-principles`, `senior-swe-intuition` | Transversais |
@@ -195,7 +197,7 @@ Separação `api/` + `web/` + `docker/` + `xyz/`. Nem todo projeto precisa de to
 
 ## **Agentes e Skills**
 
-O Principal Engineer orquestra **7 subagentes** e consome **24 skills** on-demand (ver base). Invocação via `@nome` ou auto-routing.
+O Principal Engineer orquestra **9 subagentes** e consome **27 skills** on-demand (ver base). Invocação via `@nome` ou auto-routing.
 
 | Subagente | Quando delegar |
 | --- | --- |
@@ -206,10 +208,13 @@ O Principal Engineer orquestra **7 subagentes** e consome **24 skills** on-deman
 | `devsecops` | Deploy, infra, secrets, auditoria de segurança, incidentes |
 | `ux-designer` | UX/UI ponta a ponta: discovery, direção visual, copy, auditoria |
 | `product-manager` | Pressure-test de decisão, viabilidade de negócio, PRD, roadmap, OKR, sprints |
+| `marketing-ui` | Landing pages, pricing e superfícies comerciais |
+| `ai-engineer` | Arquitetura e engenharia de aplicações com LLMs e agentes |
 
 | Quem usa | Skill | Para que |
 | --- | --- | --- |
 | `swe-backend` | `pydantic-ai` | Agentes, tools, structured output, streaming, testing |
+| `ai-engineer` | `ai-application-engineering`, `context-engineering`, `llm-evaluation` | Arquitetura aplicada, contexto e avaliação de sistemas LLM |
 | `swe-backend` | `fastapi` | Convenções da API, rotas, DI, Pydantic models |
 | `swe-backend` | `logfire` | Observabilidade (já no stack base) |
 | `swe-frontend` / `ux-designer` | `ux-ui-design`, `sveltekit`, `sveltekit-ui` | UX/UI geral; SvelteKit + shadcn-svelte + Tailwind v4 |

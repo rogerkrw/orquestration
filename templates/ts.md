@@ -102,12 +102,14 @@ App SvelteKit única — um processo, um deploy. Lógica de servidor em `lib/ser
 | `qa-tester` | Vitest, evals, investigação de falhas |
 | `devsecops` | Deploy, secrets, auditoria de segurança |
 | `product-manager` | Validar premissa, viabilidade de negócio, PRD, roadmap, sprint |
+| `ai-engineer` | Arquitetura de aplicações LLM, contexto, tools, RAG, evals e operação |
 
 | Quem usa | Skill | Para que |
 | --- | --- | --- |
 | `swe-backend` | `mastra` | Agents, workflows, tools, scorers, evals |
 | `swe-frontend` | `sveltekit`, `sveltekit-ui` | Routing, SSR, load functions; shadcn-svelte + Tailwind v4 |
 | `qa-tester` | `qa-testing` | Vitest, Playwright, prevenção de flaky tests |
+| `ai-engineer` | `ai-application-engineering`, `context-engineering`, `llm-evaluation` | Arquitetura aplicada, contexto e evals |
 | `qa-tester` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Investigação de falhas, jornadas web e troca de contexto |
 | `devsecops` | `cybersecurity`, `llm-security`, `railway-ops` | Segurança e deploy |
 | Todos | `clean-code-principles`, `senior-swe-intuition` | Transversais |
@@ -190,7 +192,7 @@ Separação `api/` + `web/` + `docker/` + `xyz/`. Nem todo projeto precisa de to
 
 ## **Agentes e Skills**
 
-Os 7 subagentes e 24 skills, invocados por `@nome` ou auto-routing (ver base).
+Os 9 subagentes e 27 skills, invocados por `@nome` ou auto-routing (ver base).
 
 | Subagente | Quando delegar |
 | --- | --- |
@@ -201,10 +203,13 @@ Os 7 subagentes e 24 skills, invocados por `@nome` ou auto-routing (ver base).
 | `devsecops` | Deploy, infra, secrets, auditoria de segurança, incidentes |
 | `ux-designer` | UX/UI ponta a ponta: discovery, direção visual, copy, auditoria |
 | `product-manager` | Validar premissa, viabilidade de negócio, PRD, roadmap, sprint |
+| `marketing-ui` | Landing pages, pricing e superfícies comerciais |
+| `ai-engineer` | Arquitetura e engenharia de aplicações com LLMs e agentes |
 
 | Quem usa | Skill | Para que |
 | --- | --- | --- |
 | `swe-backend` | `mastra` | Agents, workflows, tools, scorers, evals, observability |
+| `ai-engineer` | `ai-application-engineering`, `context-engineering`, `llm-evaluation` | Arquitetura aplicada, contexto e avaliação de sistemas LLM |
 | `swe-frontend` | `sveltekit` | Routing, SSR, load functions, form actions, hooks |
 | `swe-frontend` / `ux-designer` | `ux-ui-design`, `sveltekit-ui` | UX/UI geral; shadcn-svelte + Svelte 5 runes + Tailwind v4 |
 | `swe-frontend` / `ux-designer` | `ux-writing`, `conversion-copywriting` | Microcopy/IA de produto; copy explicativa ou comercial para páginas e apresentações |

@@ -25,8 +25,8 @@
 ## Estrutura
 
 ```
-agents/   8 subagentes .md (canônico)   → todos os ambientes
-skills/   24 skills (pasta/SKILL.md)     → todos os ambientes
+agents/   9 subagentes .md (canônico)   → todos os ambientes
+skills/   27 skills (pasta/SKILL.md)     → todos os ambientes
 scripts/sync.sh       instalador idempotente
 scripts/*.py          geradores de variantes Codex/Gemini
 templates/            BASE.md + py.md / ts.md (bootstrap de projeto novo)
