@@ -38,7 +38,7 @@ Na dúvida, comece em `min`. Promover para `max` é barato; desinflar não é.
 - [`Pydantic v2`](https://pydantic.dev/docs/validation/latest/get-started) (`>=2.13`): modelagem e validação de dados;
 - [`Pydantic AI`](https://pydantic.dev/docs/ai/llms.txt) (`>=2.9`): framework de agentes;
 - [`Typer`](https://typer.tiangolo.com/) (`>=0.26`): CLI (entry point padrão, scripts e comandos de manutenção);
-- **UI web (opcional, decidida pelo TPM conforme a natureza do projeto e dispensável no início):** [`Chainlit`](https://docs.chainlit.io/) quando a interface for essencialmente chat, [`NiceGUI`](https://nicegui.io/) (`>=3.14`) quando for uma app web comum. Mora **dentro do pacote**, não em projeto separado;
+- **UI web (opcional, decidida pelo TPM conforme a natureza do projeto e dispensável no início):** [`Chainlit`](https://docs.chainlit.io/) quando a interface for essencialmente chat, [`NiceGUI`](https://nicegui.io/) quando for uma app web comum. Verificar a versão suportada no lockfile e na documentação oficial. Mora **dentro do pacote**, não em projeto separado;
 - **Persistência:** arquivo (JSON/MD em `xyz/db/`) enquanto bastar; [`SQLModel`](https://sqlmodel.tiangolo.com/) (`>=0.0.39`) sobre **SQLite** quando aparecer relação/consulta de verdade — aí JSON/MD viram só exports, não fonte de verdade;
 - [`Ollama`](https://docs.ollama.com/): provider para LLMs locais;
 - LLMs: `qwen3:4b-instruct` (default), `qwen3:8b` (LLM-as-a-judge), `nomic-embed-text-v2-moe:latest` (embeddings);
@@ -76,7 +76,7 @@ Monorepo flat: um pacote em `src/`, um processo, um deploy. A UI (se houver) é 
 │   └── scripts/                  # Scripts ad-hoc/one-off e experimentos isolados
 ├── .env
 ├── pyproject.toml
-├── Procfile / railway.toml       # Deploy (Railway), quando solicitado pelo TPM
+├── Procfile / configuração IaC   # Deploy (Railway), quando solicitado pelo TPM
 ├── README.md
 ├── TODO.md
 ├── HANDOFF.md
@@ -101,8 +101,14 @@ Monorepo flat: um pacote em `src/`, um processo, um deploy. A UI (se houver) é 
 | `swe-backend` | `pydantic-ai` | Agentes, tools, structured output, streaming |
 | `swe-frontend` | `python-ui` | NiceGUI/Chainlit/Gradio: escolha, layout, async |
 | `qa-tester` | `qa-testing` | pytest + `pytest-asyncio` + `TestModel` |
+| `qa-tester` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Investigação de falhas, jornadas web e troca de contexto |
 | `devsecops` | `cybersecurity`, `llm-security`, `railway-ops` | Segurança e deploy |
 | Todos | `clean-code-principles`, `senior-swe-intuition` | Transversais |
+| `swe-backend` | `systematic-debugging`, `domain-modeling`, `handoff` | Causa-raiz, domínio e continuidade |
+| `swe-frontend` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Regressões UI, browser e continuidade |
+| `devsecops` | `systematic-debugging`, `handoff` | Incidentes e continuidade |
+| `code-reviewer` | `handoff` | Continuidade de revisão |
+| `product-manager` | `domain-modeling`, `handoff` | Vocabulário do domínio e continuidade |
 
 ## **Regras específicas do perfil**
 
@@ -189,7 +195,7 @@ Separação `api/` + `web/` + `docker/` + `xyz/`. Nem todo projeto precisa de to
 
 ## **Agentes e Skills**
 
-O Principal Engineer orquestra **7 subagentes** e consome **17 skills** on-demand (ver base). Invocação via `@nome` ou auto-routing.
+O Principal Engineer orquestra **7 subagentes** e consome **24 skills** on-demand (ver base). Invocação via `@nome` ou auto-routing.
 
 | Subagente | Quando delegar |
 | --- | --- |
@@ -207,12 +213,22 @@ O Principal Engineer orquestra **7 subagentes** e consome **17 skills** on-deman
 | `swe-backend` | `fastapi` | Convenções da API, rotas, DI, Pydantic models |
 | `swe-backend` | `logfire` | Observabilidade (já no stack base) |
 | `swe-frontend` / `ux-designer` | `ux-ui-design`, `sveltekit`, `sveltekit-ui` | UX/UI geral; SvelteKit + shadcn-svelte + Tailwind v4 |
+| `swe-frontend` / `ux-designer` | `ux-writing`, `conversion-copywriting` | Microcopy/IA de produto; copy explicativa ou comercial para páginas e apresentações |
+| `swe-frontend` / `ux-designer` | `minimalist-ui` | Direção minimalista somente por pedido explícito do TPM |
 | `qa-tester` | `qa-testing` | pytest + `pytest-asyncio` + `TestModel` (essencial p/ evals) |
+| `qa-tester` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Investigação de falhas, jornadas web e troca de contexto |
 | `devsecops` | `cybersecurity` | OWASP Top 10, secrets, audit-checklist pré-deploy |
 | `devsecops` / `code-reviewer` | `llm-security` | OWASP LLM Top 10, prompt injection, guardrails, PII |
 | `devsecops` | `railway-ops` / `hetzner-coolify-ops` | Deploy conforme a infra escolhida |
 | `code-reviewer` | `rigorous-code-review`, `senior-swe-intuition` | Carregadas automaticamente |
 | Todos | `clean-code-principles`, `senior-swe-intuition` | Transversais |
+| `swe-backend` | `systematic-debugging`, `domain-modeling`, `handoff` | Causa-raiz, domínio e continuidade |
+| `swe-frontend` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Regressões UI, browser e continuidade |
+| `swe-frontend` | `ux-writing`, `conversion-copywriting`, `minimalist-ui` | Texto/IA e copy de páginas; minimalismo apenas sob demanda explícita |
+| `product-manager` / `ux-designer` | `domain-modeling`, `handoff` | Vocabulário do domínio e continuidade |
+| `product-manager` / `ux-designer` | `ux-writing`, `conversion-copywriting` | Terminologia/IA e mensagem de produto, páginas ou apresentações |
+| `devsecops` | `systematic-debugging`, `handoff` | Incidentes e continuidade |
+| `code-reviewer` | `handoff` | Continuidade de revisão |
 
 **Utilitário (manual copiável, não é skill):** `~/dev/orquestration/utils/RAILWAY.md` — deploy no Railway; copiar para a raiz do projeto (ver *Protocolo de Documentação* na base). Mantido pelo `devsecops`.
 

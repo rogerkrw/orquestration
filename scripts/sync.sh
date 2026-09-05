@@ -5,7 +5,7 @@
 #
 # CANONICAL SOURCE LAYOUT (this repo):
 #   agents/*.md       <- 7 agents, Claude .md format (PascalCase tools, alias model)
-#   skills/<name>/    <- 17 skills, expanded folders (SKILL.md + references/)
+#   skills/<name>/    <- 24 skills, expanded folders (SKILL.md + references/)
 #
 # Per-CLI agent variants (Codex .toml, Gemini .md) are GENERATED into .build/ at sync time.
 set -euo pipefail

@@ -16,14 +16,22 @@ For Python-first projects (FastAPI backends, AI demos, data tools, internal apps
 | Chat UI for an LLM agent | **Chainlit** ⚠️ or NiceGUI | Chainlit has chat-first primitives but **security/maintenance concerns** (see below). NiceGUI's `ui.chat_message` is a viable alternative. |
 | Real production app with auth, multi-page, complex state | **None of these — use SvelteKit/React** | All three are best for tools and demos, not customer-facing products. |
 
-## ⚠️ Chainlit status (verified 2026)
+## Chainlit status
 
-- Founding team left in May 2025; pivoted to a separate startup
-- Now community-maintained
-- Security vulnerabilities surfaced in late 2025
-- **Do not use** for anything customer-facing or handling sensitive data
-- **Acceptable** for internal LLM experimentation behind auth
-- For new chat UIs, prefer NiceGUI's chat primitives or a small SvelteKit app
+- Chainlit remains an actively released, chat-focused framework. Check its current
+  release notes and security advisories before adopting it; do not rely on this skill
+  for a permanent maintenance or vulnerability verdict.
+- It provides chat/step primitives, but not a complete application security boundary.
+  Put deployments behind authentication, authorization, TLS and rate limits.
+- It remains a good fit for internal LLM experimentation and prototypes. For a
+  customer-facing product with complex auth/state, prefer SvelteKit/React; for a
+  Python-first internal tool, compare its current release with NiceGUI and Gradio.
+
+## Python baseline
+
+Keep the project's declared Python range and lockfile authoritative. For new projects,
+prefer a currently supported Python release; uv's current Tier 1 range is Python 3.10–3.14.
+Do not raise an existing project's minimum version without checking its dependencies.
 
 ## Core rules
 1. **NiceGUI is built on FastAPI.** If the project already has FastAPI, NiceGUI mounts cleanly — no duplicate servers.

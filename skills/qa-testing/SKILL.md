@@ -7,6 +7,13 @@ description: Test authorship and quality across Python (pytest + httpx) and Type
 
 For `qa-tester` (primary) and `code-reviewer` (when assessing test coverage).
 
+## Runtime baseline
+
+Use the project's declared runtime and lockfile as the source of truth. For new TypeScript
+projects, Node 24 LTS is a safe default; current Vitest/Playwright versions may require a
+newer Node and Vite combination, so check their official compatibility notes before upgrading.
+Do not introduce a second test runner merely to follow a newer version.
+
 ## Testing philosophy
 
 **Test behavior, not implementation.** A test that asserts "function X calls function Y" breaks on every refactor and protects nothing. A test that asserts "user can register and log in" survives refactors and catches real regressions.

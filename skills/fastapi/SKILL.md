@@ -7,6 +7,16 @@ description: FastAPI best practices and conventions. Use when working with FastA
 
 Official FastAPI skill to write code with best practices, keeping up to date with new versions and features.
 
+For a new project, install the CLI through the standard extra so `fastapi dev` and `fastapi run`
+are available:
+
+```bash
+uv add "fastapi[standard]"
+```
+
+For an existing project, respect its lockfile and consult the [official release notes](https://fastapi.tiangolo.com/release-notes/)
+before adopting a newly introduced API.
+
 ## Use the `fastapi` CLI
 
 Run the development server on localhost with reload:

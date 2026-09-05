@@ -13,7 +13,7 @@ Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada de
 ```
 orquestration/
 ├── agents/               # 7 subagentes (.md, formato canônico Claude)
-├── skills/               # 17 skills (pasta/SKILL.md + references/)
+├── skills/               # 24 skills (pasta/SKILL.md + references/)
 ├── scripts/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
 │   ├── md-to-codex-toml.py     # gera variantes .toml (Codex)
@@ -40,9 +40,9 @@ orquestration/
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
 | **product-manager** | Produto ponta a ponta: premissa, viabilidade de negócio, PRD, roadmap, OKR, sprints | opus |
 
-## As 17 skills
+## As 24 skills
 
-`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `product-management`
+`clean-code-principles` · `senior-swe-intuition` · `rigorous-code-review` · `qa-testing` · `cybersecurity` · `llm-security` · `fastapi` · `pydantic-ai` · `mastra` · `logfire` · `sveltekit` · `sveltekit-ui` · `ux-ui-design` · `ux-writing` · `conversion-copywriting` · `minimalist-ui` · `python-ui` · `railway-ops` · `hetzner-coolify-ops` · `product-management` · `systematic-debugging` · `domain-modeling` · `handoff` · `browser-e2e-testing`
 
 As skills carregam automaticamente quando a `description` casa com o contexto/stack — não precisam ser invocadas à mão.
 

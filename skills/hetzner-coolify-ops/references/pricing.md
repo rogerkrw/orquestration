@@ -1,6 +1,6 @@
 # Hetzner — preços e modelo de billing
 
-Esta reference dá fórmulas e tabelas para estimar custo total mensal de uma stack Hetzner. **Confirme preços via web search antes de cotar para cliente** — a Hetzner reestruturou preços e tráfego incluso 2x nos últimos 18 meses (corte de tráfego US em dez/2024; deprecação de CX/CPX antigos e CX Gen3/CPX Gen2 em out/2025).
+Esta reference dá fórmulas e tabelas para estimar custo total mensal de uma stack Hetzner. **Confirme preços via web search ou API antes de cotar para cliente** — a Hetzner reestrutura preços e tráfego com frequência. O reajuste de 15/06/2026 tornou os valores numéricos abaixo históricos; use-os apenas para entender dimensões e fórmulas, nunca como cotação.
 
 ## Princípios gerais
 
@@ -21,13 +21,13 @@ Compute    = preço plano servidor
            
 Storage    = (GB de Volume × €0.044)
            + (GB de Snapshot × €0.011)
-           + (€4.99 base + uso pay-as-you-go se Object Storage)
+           + (tarifa base vigente + uso pay-as-you-go se Object Storage)
            
 Network    = max(0, TB_egress_real - TB_incluído_no_plano) × tarifa_por_TB_da_zona
            # tarifa = €1.00/TB em eu-central e us-east/west, €7.40/TB em ap-southeast
            
-Add-ons    = Load Balancer (LB11 €5.39, LB21 €16.40, LB31 €32.90)
-           + Floating IPs (~€1/mês cada)
+Add-ons    = Load Balancer (plano escolhido, tarifa vigente)
+           + Floating IPs (tarifa vigente)
 ```
 
 ## Preços de Cloud Servers (EUR/mês, EU-central, excl. VAT)
@@ -38,8 +38,8 @@ Valores de referência para projetar — **sempre confirmar via web** antes de c
 
 | Plano | vCPU | RAM | Disco | Traffic | Preço |
 |---|---|---|---|---|---|
-| CX23 | 2 | 4 GB | 40 GB | 20 TB | €3.49 |
-| CX33 | 4 | 8 GB | 80 GB | 20 TB | €5.49 |
+| CX23 | 2 | 4 GB | 40 GB | 20 TB | confirmar |
+| CX33 | 4 | 8 GB | 80 GB | 20 TB | confirmar |
 | CX43 | 8 | 16 GB | 160 GB | 20 TB | €11.49 |
 | CX53 | 16 | 32 GB | 320 GB | 20 TB | €22.49 |
 
@@ -47,7 +47,7 @@ Valores de referência para projetar — **sempre confirmar via web** antes de c
 
 | Plano | vCPU | RAM | Disco | Traffic EU | Traffic US | Traffic SIN | Preço EU |
 |---|---|---|---|---|---|---|---|
-| CPX22 | 2 | 4 GB | 80 GB | 20 TB | 1 TB | 0.5 TB | €7.05 |
+| CPX22 | 2 | 4 GB | 80 GB | 20 TB | 1 TB | 0.5 TB | confirmar |
 | CPX32 | 4 | 8 GB | 160 GB | 20 TB | 2 TB | 1 TB | €13.10 |
 | CPX42 | 8 | 16 GB | 240 GB | 20 TB | 3 TB | 2 TB | €24.70 |
 | CPX52 | 16 | 32 GB | 360 GB | 20 TB | 4 TB | 3 TB | €54.40 |
@@ -60,7 +60,7 @@ Singapore: adicionar ~20-30% sobre preço EU.
 
 | Plano | vCPU | RAM | Disco | Traffic | Preço |
 |---|---|---|---|---|---|
-| CAX11 | 2 | 4 GB | 40 GB | 20 TB | €3.79 |
+| CAX11 | 2 | 4 GB | 40 GB | 20 TB | confirmar |
 | CAX21 | 4 | 8 GB | 80 GB | 20 TB | €6.49 |
 | CAX31 | 8 | 16 GB | 160 GB | 20 TB | €12.49 |
 | CAX41 | 16 | 32 GB | 320 GB | 20 TB | €24.49 |
@@ -69,12 +69,12 @@ Singapore: adicionar ~20-30% sobre preço EU.
 
 | Plano | vCPU ded. | RAM | Disco | Traffic EU | Traffic US | Traffic SIN | Preço EU |
 |---|---|---|---|---|---|---|---|
-| CCX13 | 2 | 8 GB | 80 GB | 20 TB | 1 TB | (verificar) | €12.99 |
-| CCX23 | 4 | 16 GB | 160 GB | 20 TB | 2 TB | (verificar) | €25.99 |
-| CCX33 | 8 | 32 GB | 240 GB | 30 TB | 3 TB | (verificar) | €49.99 |
-| CCX43 | 16 | 64 GB | 360 GB | 40 TB | 4 TB | (verificar) | €99.99 |
-| CCX53 | 32 | 128 GB | 600 GB | 50 TB | 6 TB | (verificar) | €199.99 |
-| CCX63 | 48 | 192 GB | 960 GB | 60 TB | 8 TB | (verificar) | €299.99 |
+| CCX13 | 2 | 8 GB | 80 GB | 20 TB | 1 TB | (verificar) | confirmar |
+| CCX23 | 4 | 16 GB | 160 GB | 20 TB | 2 TB | (verificar) | confirmar |
+| CCX33 | 8 | 32 GB | 240 GB | 30 TB | 3 TB | (verificar) | confirmar |
+| CCX43 | 16 | 64 GB | 360 GB | 40 TB | 4 TB | (verificar) | confirmar |
+| CCX53 | 32 | 128 GB | 600 GB | 50 TB | 6 TB | (verificar) | confirmar |
+| CCX63 | 48 | 192 GB | 960 GB | 60 TB | 8 TB | (verificar) | confirmar |
 
 ## Adicionais comuns
 
@@ -86,12 +86,12 @@ Singapore: adicionar ~20-30% sobre preço EU.
 | Backups (servidor) | +20% do preço do plano | 7 slots rolling diários |
 | Snapshots | €0.011/GB-mês | Persistem até deletar manualmente |
 | Volume (block storage) | €0.044/GB-mês | Mín 10 GB; mín billable 10 GB mesmo se menor |
-| Object Storage base | €4.99/mês | 1 TB storage + 1 TB egress incluso |
+| Object Storage base | confirmar | franquia e uso conforme tabela vigente |
 | Object Storage extra storage | €0.0067/TB-hora (~€4.96/TB-mês contínuo) | Mínimo objeto 64 KB para billing |
 | Object Storage extra egress | €1.00/TB | |
-| Load Balancer LB11 | €5.39/mês | 25 targets, 10k conexões, 5 services |
-| Load Balancer LB21 | €16.40/mês | 75 targets, 20k conexões, 10 services |
-| Load Balancer LB31 | €32.90/mês | 200 targets, 50k conexões, 25 services |
+| Load Balancer LB11 | confirmar | 25 targets, 10k conexões, 5 services |
+| Load Balancer LB21 | confirmar | 75 targets, 20k conexões, 10 services |
+| Load Balancer LB31 | confirmar | 200 targets, 50k conexões, 25 services |
 | Cloud Firewall | grátis | Stateful, no hipervisor |
 | Placement Group | grátis | Anti-affinity entre hosts físicos |
 | DDoS protection | grátis | Camada 3-4, ativa sempre |
@@ -114,7 +114,7 @@ Sem cap mensal — você paga o mês cheio sempre. Setup fee único nos modelos 
 
 **Setup fees** em modelos não-Auction: tipicamente igual ao preço de 1 mês, cobrado uma única vez. Auction sempre 0.
 
-**Verificar preço atual** em https://www.hetzner.com/dedicated-rootserver/ e https://www.hetzner.com/sb/ (Auction).
+**Verificar preço atual** na [página oficial de Cloud](https://www.hetzner.com/cloud) e na [API/Console](https://docs.hetzner.com/cloud/api/). Para dedicados, consulte também a [página de root servers](https://www.hetzner.com/dedicated-rootserver/) e a Auction.
 
 ## Storage Box (não confundir com Object Storage)
 
@@ -166,7 +166,7 @@ Isso favorece muito iteração: teste configurações reais, não dimensione "no
 
 1. **Auditoria mensal**: rodar `hcloud server list`, `hcloud volume list`, `hcloud primary-ip list`, `hcloud snapshot list` e identificar recursos órfãos. Snapshots esquecidos e Primary IPs não-anexados são as causas mais comuns de "fatura cresceu sem motivo".
 2. **Rescale para baixo**: se monitoramento (Coolify Sentinel, Netdata, Grafana) mostra CPU médio < 20% e RAM média < 40% por 2 semanas, considerar plano menor. Rescale para baixo precisa caber no disco — pode requerer cleanup antes.
-3. **CX/CAX em vez de CPX** quando workload é leve. CX23 e CAX11 partem de €3.49-3.79.
+3. **CX/CAX em vez de CPX** quando workload é leve. Compare o preço vigente e a compatibilidade da imagem antes de escolher.
 4. **Migrar de US para EU** se latência for tolerável (CDN na frente resolve UX). Mesmo plano custa 15-25% menos.
 5. **Mover egress pesado para Object Storage com CDN externa**. CDN (Cloudflare grátis, Bunny ~$0.01/GB) com cache hit rate alto reduz egress de origem drasticamente.
 6. **Considerar Auction em vez de Dedicated novo** pra workloads grandes — desconto 20-40%, mesmo hardware, só refurbished.
@@ -178,7 +178,7 @@ Para um app típico "produção pequena" (2 vCPU, 4 GB, 80 GB, 20 TB egress):
 
 | Provedor | Plano comparável | Preço mensal aprox. (excl. tax) |
 |---|---|---|
-| **Hetzner Cloud CPX22 EU** | shared 2 vCPU AMD EPYC | €7-9 |
+| **Hetzner Cloud CPX22 EU** | shared 2 vCPU AMD EPYC | confirmar |
 | AWS EC2 t3.medium | shared 2 vCPU + 80 GB EBS + 20 TB egress | ~$80-120 |
 | DigitalOcean Basic Premium AMD | shared 2 vCPU 4 GB | ~$24 |
 | Vultr High Performance | shared 2 vCPU 4 GB | ~$24 |

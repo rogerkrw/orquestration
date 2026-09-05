@@ -2,7 +2,7 @@
 name: llm-security
 description: >
   Security knowledge for web applications that serve as harnesses for LLMs and AI
-  agents. Covers OWASP LLM Top 10:2025, prompt injection defense, input/output
+  agents. Covers OWASP GenAI LLM Top 10:2026, prompt injection defense, input/output
   guardrails, PII redaction, excessive agency prevention, RAG access control, secrets
   management for AI stacks, HTTP hardening, audit logging, and pre-deploy security
   checklists. Trigger on: any mention of LLM security, prompt injection, guardrails,
@@ -20,26 +20,26 @@ layers (NiceGUI / Gradio / Chainlit), SvelteKit frontends, local models via Olla
 and cloud LLM APIs. Complements the `cybersecurity` skill (web app baseline) with the
 AI-specific threat layer.
 
-> ⚠️ **Chainlit caveat:** Chainlit is community-maintained with known security issues
-> (see the `python-ui` skill). Treat it as internal-only behind auth; never customer-facing.
-> Prefer NiceGUI or a small SvelteKit app for production LLM UIs.
+> ⚠️ **UI caveat:** Chainlit, NiceGUI and Gradio are application frameworks, not
+> authentication or authorization boundaries. Check the current release/security
+> posture before adoption and put any non-local deployment behind explicit auth.
 
-## OWASP LLM Top 10:2025 — quick map
+## OWASP GenAI LLM Top 10:2026 — quick map
 
 | # | Risk | Harness-level mitigation |
 |---|---|---|
 | LLM01 | Prompt Injection (direct + indirect) | Input guardrails, context isolation, structured output enforcement |
 | LLM02 | Sensitive Information Disclosure | PII redaction pre-LLM, output scanning, no secrets in system prompts |
-| LLM03 | Supply Chain (models, datasets, plugins) | Pin model versions, verify checksums, vet third-party tools |
-| LLM04 | Data & Model Poisoning | Audit RAG sources, anomaly detection on retrieval, signed training data |
-| LLM05 | Improper Output Handling | Sanitize/encode outputs before downstream use; prevent XSS/RCE |
-| LLM06 | Excessive Agency | Least-privilege tools, human-in-the-loop for high-impact actions |
-| LLM07 | System Prompt Leakage | Never store secrets in system prompt; enforce at infra layer |
-| LLM08 | Vector/Embedding Weaknesses | Tenant isolation in vector DBs, ACL at retrieval layer |
-| LLM09 | Misinformation | Groundedness checks, source citation enforcement, confidence gating |
-| LLM10 | Unbounded Consumption | Token budgets, rate limiting, cost alerts, prompt length caps |
+| LLM03 | Excessive Agency | Least-privilege tools, human-in-the-loop for high-impact actions |
+| LLM04 | Supply Chain | Pin model versions, verify checksums, vet third-party tools |
+| LLM05 | Data & Model Poisoning | Audit RAG sources, anomaly detection on retrieval, signed training data |
+| LLM06 | Unbounded Consumption | Token budgets, rate limiting, cost alerts, prompt length caps |
+| LLM07 | Misinformation | Groundedness checks, source citation enforcement, confidence gating |
+| LLM08 | Hidden Context Exposure | Isolate system prompts, tool context and retrieved content; do not expose internal context |
+| LLM09 | Vector/Embedding Weaknesses | Tenant isolation in vector DBs, ACL at retrieval layer |
+| LLM10 | Improper Output Handling | Sanitize/encode outputs before downstream use; prevent XSS/RCE |
 
-> **Critical insight (2025):** System prompts are not security boundaries. LLMs are
+> **Critical insight:** System prompts are not security boundaries. LLMs are
 > stochastic and cannot be audited line-by-line. All security controls must live
 > outside the model in deterministic, auditable application code.
 

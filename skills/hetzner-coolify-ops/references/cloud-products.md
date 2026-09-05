@@ -22,7 +22,7 @@ Leia esta reference quando precisar de specs detalhadas de Cloud Servers, Storag
 
 ## Cloud Servers
 
-Quatro famílias ativas. Em out/2025, a Hetzner deprecou as gerações antigas de CX e CPX, substituindo-as por CX Gen3 e CPX Gen2. Servidores antigos continuam funcionando, mas pelo Console só dá pra criar das novas gerações. Sempre verificar nome exato (ex.: `cx23` é a Gen3 do antigo `cx21`).
+Quatro famílias ativas. As gerações e os preços mudam; confirme o nome exato, disponibilidade e tarifa na [documentação oficial](https://docs.hetzner.com/cloud/servers/overview/) e na API antes de provisionar. Servidores antigos podem continuar funcionando sem aceitar novas criações.
 
 ### CX (Cost-Optimized x86, shared vCPU, EU-only)
 
@@ -32,8 +32,8 @@ Planos típicos Gen3 (sempre confirmar antes de cotar):
 
 | Plano | vCPU | RAM | Disco | Traffic incluso | Preço aprox. |
 |---|---|---|---|---|---|
-| CX23 | 2 | 4 GB | 40 GB | 20 TB | €3.49/mês |
-| CX33 | 4 | 8 GB | 80 GB | 20 TB | €5.49/mês |
+| CX23 | 2 | 4 GB | 40 GB | 20 TB | confirmar |
+| CX33 | 4 | 8 GB | 80 GB | 20 TB | confirmar |
 | CX43 | 8 | 16 GB | 160 GB | 20 TB | €11.49/mês |
 | CX53 | 16 | 32 GB | 320 GB | 20 TB | €22.49/mês |
 
@@ -47,7 +47,7 @@ Planos típicos Gen2:
 
 | Plano | vCPU | RAM | Disco | Traffic EU | Traffic US | Traffic SIN | Preço aprox. EU |
 |---|---|---|---|---|---|---|---|
-| CPX22 | 2 | 4 GB | 80 GB | 20 TB | 1 TB | 0.5 TB | €7.05/mês |
+| CPX22 | 2 | 4 GB | 80 GB | 20 TB | 1 TB | 0.5 TB | confirmar |
 | CPX32 | 4 | 8 GB | 160 GB | 20 TB | 2 TB | 1 TB | €13.10/mês |
 | CPX42 | 8 | 16 GB | 240 GB | 20 TB | 3 TB | 2 TB | €24.70/mês |
 | CPX52 | 16 | 32 GB | 360 GB | 20 TB | 4 TB | 3 TB | €54.40/mês |
@@ -63,7 +63,7 @@ Hardware Ampere Altra (ARM64). ~10-15% mais barato que CPX equivalente, mais efi
 
 | Plano | vCPU | RAM | Disco | Traffic | Preço aprox. |
 |---|---|---|---|---|---|
-| CAX11 | 2 | 4 GB | 40 GB | 20 TB | €3.79/mês |
+| CAX11 | 2 | 4 GB | 40 GB | 20 TB | confirmar |
 | CAX21 | 4 | 8 GB | 80 GB | 20 TB | €6.49/mês |
 | CAX31 | 8 | 16 GB | 160 GB | 20 TB | €12.49/mês |
 | CAX41 | 16 | 32 GB | 320 GB | 20 TB | €24.49/mês |
@@ -78,12 +78,12 @@ Cores dedicados sem vizinhos brigando por CPU. ~3x preço do CPX equivalente. Di
 
 | Plano | vCPU dedicado | RAM | Disco | Traffic EU | Preço aprox. EU |
 |---|---|---|---|---|---|
-| CCX13 | 2 | 8 GB | 80 GB | 20 TB | €12.99/mês |
-| CCX23 | 4 | 16 GB | 160 GB | 20 TB | €25.99/mês |
-| CCX33 | 8 | 32 GB | 240 GB | 30 TB | €49.99/mês |
-| CCX43 | 16 | 64 GB | 360 GB | 40 TB | €99.99/mês |
-| CCX53 | 32 | 128 GB | 600 GB | 50 TB | €199.99/mês |
-| CCX63 | 48 | 192 GB | 960 GB | 60 TB | €299.99/mês |
+| CCX13 | 2 | 8 GB | 80 GB | 20 TB | confirmar |
+| CCX23 | 4 | 16 GB | 160 GB | 20 TB | confirmar |
+| CCX33 | 8 | 32 GB | 240 GB | 30 TB | confirmar |
+| CCX43 | 16 | 64 GB | 360 GB | 40 TB | confirmar |
+| CCX53 | 32 | 128 GB | 600 GB | 50 TB | confirmar |
+| CCX63 | 48 | 192 GB | 960 GB | 60 TB | confirmar |
 
 Bom para: bancos críticos com IO sustentado, CI/CD, jobs longos, multitenant SaaS, jogos online, anything onde noisy neighbor é inaceitável.
 
@@ -192,9 +192,9 @@ Planos:
 
 | Plano | Targets | Conexões | Services | SSL termination | Preço aprox. |
 |---|---|---|---|---|---|
-| LB11 | 25 | 10k | 5 | sim | €5.39/mês |
-| LB21 | 75 | 20k | 10 | sim | €16.40/mês |
-| LB31 | 200 | 50k | 25 | sim | €32.90/mês |
+| LB11 | 25 | 10k | 5 | sim | confirmar |
+| LB21 | 75 | 20k | 10 | sim | confirmar |
+| LB31 | 200 | 50k | 25 | sim | confirmar |
 
 Suporta **target IPs** (público IPv4 ou privado IPv4 de servidores na mesma zona; IP-based targets apenas em `eu-central`). Suporta **target label selector** (auto-adicionar servidores que matchem labels). Health checks HTTP/TCP. SSL com Certificate Hetzner gerenciado ou próprio (Let's Encrypt automático ou upload custom).
 

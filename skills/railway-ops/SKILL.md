@@ -5,7 +5,7 @@ description: Habilidades para operar a plataforma Railway (railway.com) — prov
 
 # Railway Ops
 
-Skill para operar a Railway (railway.com) — uma plataforma de cloud "all-in-one" que provisiona infra, builda e faz deploy de apps via Railpack (sucessor do Nixpacks) ou Dockerfile. O foco aqui é fazer você operar o Railway via **CLI**, entendendo o modelo mental, configurações, secrets, deploys, custos e alocação de recursos.
+Skill para operar a Railway (railway.com) — uma plataforma de cloud "all-in-one" que provisiona infra, builda e faz deploy de apps via Railpack ou Dockerfile. O foco aqui é fazer você operar o Railway via **CLI**, entendendo o modelo mental, configurações, secrets, deploys, custos e alocação de recursos.
 
 A documentação oficial completa vive em [docs.railway.com](https://docs.railway.com). Esta skill condensa o que importa no dia a dia, com pointers para a referência oficial quando precisar de detalhe.
 
@@ -15,7 +15,7 @@ A skill segue _progressive disclosure_. Este SKILL.md cobre o modelo mental e os
 
 - **`references/cli-reference.md`** — tabela completa dos comandos `railway *`, com subcomandos, aliases e flags. Consulte sempre que precisar de um comando que não está nos exemplos deste SKILL.md, ou quando precisar saber as flags exatas de um comando.
 - **`references/pricing-and-costs.md`** — preços por recurso, planos, limites por plano, mecanismos de cost control, otimizações de custo. Consulte quando o usuário perguntar sobre custos, billing, planos, limites ou como economizar.
-- **`references/config-as-code.md`** — schema completo de `railway.toml` / `railway.json`, environment overrides, PR environment overrides, deployment teardown. Consulte quando o usuário pedir para criar ou modificar config-as-code.
+- **`references/config-as-code.md`** — legado `railway.toml` / `railway.json`, seus overrides e a migração para Infrastructure as Code. Consulte quando o usuário pedir para manter ou migrar config-as-code.
 - **`references/secrets-and-variables.md`** — variáveis de serviço, variáveis compartilhadas, reference variables, sealed variables, variáveis providas pela Railway. Consulte quando o trabalho envolver configurar secrets entre serviços ou variáveis derivadas.
 - **`references/troubleshooting.md`** — erros comuns (deploy lento, SIGTERM no Node, "no start command found", "application failed to respond", ENOTFOUND no DNS interno, problemas de SSL). Consulte quando algo quebrar.
 
@@ -42,16 +42,24 @@ Pontos-chave que costumam confundir:
 
 1. **Serviços dentro de um mesmo projeto compartilham automaticamente uma rede privada.** É por isso que `${{ Postgres.DATABASE_URL }}` referenciando outro serviço funciona "magicamente" — e é por isso que usar **private networking** entre serviços (`*.railway.internal`) em vez de URLs públicas reduz custo de network egress.
 2. **Variables são versionadas como _staged changes_** — adicionar, alterar ou remover uma variável não aplica imediatamente; ela vira uma mudança pendente que dispara um redeploy.
-3. **Configuration as code (railway.toml/json) sempre sobrescreve o dashboard.** Mudar settings no dashboard não atualiza o arquivo, e o arquivo ganha quando há conflito.
-4. **Builder padrão é Railpack** (sucessor do Nixpacks). Se houver Dockerfile no repo, Railway usa o Dockerfile.
+3. **`railway.toml/json` é o mecanismo legado de Configuration as Code.** Ele ainda funciona durante a transição, mas a Railway recomenda Infrastructure as Code e informa encerramento do suporte legado em **01/12/2026**. Verifique a documentação antes de criar arquivos novos.
+4. **Builder padrão é Railpack.** Se houver Dockerfile no repo, Railway usa o Dockerfile.
 
 ## Instalação e autenticação
 
-O CLI roda em macOS, Linux e Windows via WSL. Instalação em uma linha (também configura agent skills se disponível):
+O CLI roda em macOS, Linux e Windows via WSL. Instalação recomendada do CLI:
 
 ```bash
-bash <(curl -fsSL railway.com/install.sh) --agents -y
+curl -fsSL agents.railway.com | sh
 ```
+
+Para configurar MCP, autenticação e a skill oficial no agente local:
+
+```bash
+railway setup agent
+```
+
+Sem integração com agentes, use `bash <(curl -fsSL railway.com/install.sh)`.
 
 Outros métodos: `brew install railway` (macOS), `npm i -g @railway/cli`, `scoop install railway` (Windows), `cargo install railwayapp --locked`, ou binários pré-compilados em [github.com/railwayapp/cli/releases](https://github.com/railwayapp/cli/releases). Requer Node ≥16 quando via npm.
 
@@ -310,7 +318,7 @@ Pra estimar custo de um workload: pegue CPU e RAM alocados em média (não os pi
 Atue como um SRE pragmático em todas as tarefas de Railway:
 
 1. **Nunca commite tokens em código.** `RAILWAY_TOKEN` e `RAILWAY_API_TOKEN` vão em secrets do CI ou em `~/.bashrc`/`.zshrc` local — nunca no repo.
-2. **Prefira config-as-code para qualquer setting não-trivial.** Mudança em arquivo é versionada e auditável; mudança em dashboard é fantasma. Quando o usuário pedir mudança ad-hoc no dashboard, sugira mover pra `railway.toml`.
+2. **Prefira Infrastructure as Code para settings não-triviais.** `railway.toml/json` permanece útil para projetos legados, mas está deprecated; para arquivos novos consulte a abordagem IaC atual e registre a migração quando necessário.
 3. **Antes de qualquer mudança destrutiva** (`railway down`, `railway delete`, `railway variables delete`, wipe de volume), confirme com o usuário e mostre o que vai ser afetado.
 4. **Para deploys de produção, prefira `railway up --ci` em pipeline ao invés de máquina local.** Local funciona pra dev, mas auditabilidade e rollback são melhores via Git + Actions.
 5. **Ative usage limit hard limit em produção.** Sem isso, um bug que vaze memória ou faça loop pode gerar conta de quatro dígitos. Hard limit é a rede de segurança.

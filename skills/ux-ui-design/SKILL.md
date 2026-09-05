@@ -37,6 +37,8 @@ Antes de escrever CSS, produzir um plano curto e criticá-lo.
 
 Piso de qualidade, sem anunciar: responsivo até mobile, foco de teclado visível, movimento reduzido respeitado.
 
+**Fidelidade ao brief** — antes de implementar, transforme o pedido em checklist: telas/seções, conteúdo obrigatório, hierarquia, ação primária, estados, interações, restrições e artefatos esperados. Preserve copy, dados e componentes pedidos. Não invente funcionalidades, seções, claims ou referências para completar o visual. Antes de entregar, percorra a mesma checklist e registre qualquer desvio e sua razão.
+
 **Estados** — todo elemento interativo tem `default`, `hover`, `focus`, `active`, `disabled` e `loading` quando faz I/O. Todo container de dados tem estado vazio, de carregamento e de erro. Estado vazio é convite à ação, não espaço em branco.
 
 **Hierarquia** — a ordem de leitura deve ser deliberada. Um elemento primário por tela; se dois competem, nenhum vence. Espaço em branco é ferramenta de agrupamento, não sobra.
@@ -72,6 +74,8 @@ Palavras existem na interface por um motivo: tornar o uso mais fácil. São mate
 - **Erro = o que aconteceu + por quê + como resolver.** Erro não pede desculpa nem é vago.
 - **Confirmação nomeia a ação e a consequência:** "Excluir 3 arquivos? Isso não pode ser desfeito", com botões "Excluir arquivos" / "Manter arquivos" — nunca "OK" / "Cancelar".
 - **Cada elemento faz um trabalho.** Rótulo rotula, exemplo demonstra; nada acumula função em silêncio.
+
+Para escrever microcopy e revisar a arquitetura da informação, carregue `ux-writing`. Para homepages, landing pages, pricing, apresentações HTML e mensagens de marketing, carregue `conversion-copywriting`. `minimalist-ui` é uma direção visual opt-in: só carregue quando Rogério a invocar explicitamente.
 
 Padrões por contexto (CTA, empty state, tooltip, onboarding, tom): `references/copy.md`.
 

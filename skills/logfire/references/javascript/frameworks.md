@@ -15,12 +15,12 @@ logfire.configure()
 Launch:
 
 ```bash
-node --require ./instrumentation.js app.js
+node --import ./instrumentation.js app.js
 # or with ts-node:
-npx ts-node --require ./instrumentation.ts app.ts
+npx tsx --import ./instrumentation.ts app.ts
 ```
 
-The SDK auto-instruments common libraries (http, fetch, express, etc.) when loaded before the app via `--require`.
+The SDK auto-instruments common libraries (http, fetch, express, etc.) when loaded before the app via `--import`.
 
 ## Cloudflare Workers
 

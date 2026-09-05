@@ -7,6 +7,20 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-09-04]
+
+### Changed
+
+- **Atualização de stacks e referências oficiais.** `pydantic-ai` agora orienta Pydantic AI V2 e a migração V1→V2, com links no domínio atual; `llm-security` acompanha o OWASP GenAI LLM Top 10:2026; `railway-ops` prioriza Infrastructure as Code e marca `railway.toml/json` como legado até 01/12/2026; `logfire` usa o fluxo atual de preload TypeScript; `sveltekit`/`sveltekit-ui` reforçam Svelte 5, `$app/state` e o bootstrap atual do shadcn-svelte; QA/E2E e Mastra registram Node 24 LTS como baseline para projetos novos, sem ignorar o lockfile.
+- **Referências de infraestrutura corrigidas.** Preços hardcoded de Hetzner/Coolify foram removidos das tabelas de decisão e receitas; continuam apenas fórmulas, dimensões e instrução de consulta à tabela/API vigente. A skill `python-ui` deixou de carregar um diagnóstico permanente e sem fonte sobre Chainlit, passando a exigir verificação de releases e segurança.
+
+### Added
+
+- **Quatro skills de workflow de engenharia:** `systematic-debugging` para investigação por causa-raiz; `domain-modeling` para vocabulário, estados e invariantes; `handoff` para continuidade entre sessões e agentes; e `browser-e2e-testing` para jornadas reais no navegador.
+- **Três skills de linguagem e direção visual:** `ux-writing` para microcopy e arquitetura da informação em produtos; `conversion-copywriting` para mensagens explicativas ou comerciais em LPs, sites e apresentações HTML; e `minimalist-ui` para uma direção minimalista opt-in, invocada somente por pedido explícito do TPM.
+- **Referências editoriais canônicas** em `ux-writing/references/principles.md`, baseadas em Microsoft Writing Style/Brand Voice, GOV.UK Design Principles e Material Design Writing.
+- **Roteamento explícito nos agentes e templates.** Backend, frontend, QA, DevSecOps, produto, UX e code review passaram a apontar para as skills complementares aplicáveis, mantendo a distribuição pelos quatro CLIs via `sync.sh`.
+
 ## [2026-08-13]
 
 ### Added

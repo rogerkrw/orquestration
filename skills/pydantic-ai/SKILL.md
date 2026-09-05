@@ -5,9 +5,8 @@ description: >
   multi-agent patterns. Use when the user mentions Pydantic AI, imports pydantic_ai, or asks to build
   an AI agent, add tools/capabilities, stream output, define agents from YAML, or test agent behavior.
 license: MIT
-compatibility: Requires Python 3.10+
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   author: pydantic
 ---
 
@@ -15,6 +14,13 @@ metadata:
 
 Pydantic AI is a Python agent framework for building production-grade Generative AI applications.
 This skill provides patterns, architecture guidance, and tested code examples for building applications with Pydantic AI.
+
+## Version and documentation baseline
+
+- The current stable major is **Pydantic AI V2**. Start with the project's package manager (`uv add pydantic-ai` for a new uv project), then inspect the lockfile and installed package before applying an example.
+- For an existing V1 project, read the [V1 → V2 migration map](https://pydantic.dev/docs/ai/overview/migration/) before changing imports or behavior.
+- Provider model identifiers in examples are illustrative, not a compatibility guarantee. Confirm the provider's current model name, capability support, and required extra in the [official model documentation](https://pydantic.dev/docs/ai/models/) before shipping.
+- Prefer the current `pydantic.dev/docs/ai` documentation. Older `ai.pydantic.dev` links may redirect, but should not be added to new code or references.
 
 ## When to Use This Skill
 
@@ -214,52 +220,52 @@ agent = Agent.from_file('agent.yaml')
 
 | I want to... | Documentation |
 |---|---|
-| Create or configure agents | [Agents](https://ai.pydantic.dev/agents/) |
-| Bundle reusable behavior (tools, hooks, instructions) | [Capabilities](https://ai.pydantic.dev/capabilities/) |
-| Intercept model requests, tool calls, or runs | [Hooks](https://ai.pydantic.dev/hooks/) |
-| Define agents in YAML/JSON without Python code | [Agent Specs](https://ai.pydantic.dev/agent-spec/) |
-| Use template strings in agent instructions | [Template Strings](https://ai.pydantic.dev/agent-spec/#template-strings) |
-| Let my agent call external APIs or functions | [Tools](https://ai.pydantic.dev/tools/) |
-| Organize or restrict which tools an agent can use | [Toolsets](https://ai.pydantic.dev/toolsets/) |
-| Give my agent web search with automatic provider fallback | [WebSearch Capability](https://ai.pydantic.dev/capabilities/#provider-adaptive-tools) |
-| Give my agent URL fetching with automatic provider fallback | [WebFetch Capability](https://ai.pydantic.dev/capabilities/#provider-adaptive-tools) |
-| Give my agent web search or code execution (builtin tools) | [Built-in Tools](https://ai.pydantic.dev/builtin-tools/) |
-| Search with DuckDuckGo/Tavily/Exa | [Common Tools](https://ai.pydantic.dev/common-tools/) |
-| Ensure my agent returns data in a specific format | [Structured Output](https://ai.pydantic.dev/output/#structured-output) |
-| Pass database connections, API clients, or config to tools | [Dependencies](https://ai.pydantic.dev/dependencies/) |
-| Access usage stats, message history, or retry count in tools | [RunContext](https://ai.pydantic.dev/tools/) |
-| Choose or configure models | [Models](https://ai.pydantic.dev/models/) |
-| Automatically switch to backup model when primary fails | [Fallback Model](https://ai.pydantic.dev/models/#fallback-model) |
-| Show real-time progress as my agent works | [Streaming Events and Final Output](https://ai.pydantic.dev/agents/#streaming-events-and-final-output) |
-| Work with messages and multimedia | [Message History](https://ai.pydantic.dev/message-history/) |
-| Reduce token costs by trimming or filtering conversation history | [Processing Message History](https://ai.pydantic.dev/message-history/#processing-message-history) |
-| Keep long conversations manageable without losing context | [Summarize Old Messages](https://ai.pydantic.dev/message-history/#summarize-old-messages) |
-| Use MCP servers | [MCP](https://ai.pydantic.dev/mcp/) |
-| Build multi-step graphs | [Graph](https://ai.pydantic.dev/graph/) |
-| Debug a failed agent run or see what went wrong | [Model Errors](https://ai.pydantic.dev/agents/#model-errors) |
-| Make my agent resilient to temporary failures | [Retries](https://ai.pydantic.dev/retries/) |
-| Understand why my agent made specific decisions | [Using Logfire](https://ai.pydantic.dev/logfire/#using-logfire) |
-| Write deterministic tests for my agent | [Unit testing with TestModel](https://ai.pydantic.dev/testing/#unit-testing-with-testmodel) |
-| Enable thinking/reasoning across any provider | [Thinking](https://ai.pydantic.dev/thinking/) · [Thinking Capability](https://ai.pydantic.dev/capabilities/#thinking) |
-| Systematically verify my agent works correctly | [Evals](https://ai.pydantic.dev/evals/) |
-| Use embeddings for RAG | [Embeddings](https://ai.pydantic.dev/embeddings/) |
-| Use durable execution | [Durable Execution](https://ai.pydantic.dev/durable_execution/overview/) |
-| Have one agent delegate tasks to another | [Agent Delegation](https://ai.pydantic.dev/multi-agent-applications/#agent-delegation) |
-| Route requests to different agents based on intent | [Programmatic Agent Hand-off](https://ai.pydantic.dev/multi-agent-applications/#programmatic-agent-hand-off) |
-| Require tool approval (human-in-the-loop) | [Deferred Tools](https://ai.pydantic.dev/deferred-tools/) |
-| Use images, audio, video, or documents | [Input](https://ai.pydantic.dev/input/) |
-| Use advanced tool features | [Advanced Tools](https://ai.pydantic.dev/tools-advanced/) |
-| Validate or require approval before tool execution | [Advanced Tools](https://ai.pydantic.dev/tools-advanced/) |
-| Call the model without using an agent | [Direct API](https://ai.pydantic.dev/direct/) |
-| Expose agents as HTTP servers (A2A) | [A2A](https://ai.pydantic.dev/a2a/) |
-| Handle network errors and rate limiting automatically | [Retries](https://ai.pydantic.dev/retries/) |
-| Use LangChain or ACI.dev tools | [Third-Party Tools](https://ai.pydantic.dev/third-party-tools/) |
-| Publish reusable agent extensions as packages | [Extensibility](https://ai.pydantic.dev/extensibility/) |
-| Build custom toolsets, models, or agents | [Extensibility](https://ai.pydantic.dev/extensibility/) |
-| Debug common issues | [Troubleshooting](https://ai.pydantic.dev/troubleshooting/) |
-| Migrate from deprecated APIs | [Changelog](https://ai.pydantic.dev/changelog/) |
-| See advanced real-world examples | [Examples](https://ai.pydantic.dev/examples/) |
-| Look up an import path | [API Reference](https://ai.pydantic.dev/api/) |
+| Create or configure agents | [Agents](https://pydantic.dev/docs/ai/agents/) |
+| Bundle reusable behavior (tools, hooks, instructions) | [Capabilities](https://pydantic.dev/docs/ai/capabilities/) |
+| Intercept model requests, tool calls, or runs | [Hooks](https://pydantic.dev/docs/ai/hooks/) |
+| Define agents in YAML/JSON without Python code | [Agent Specs](https://pydantic.dev/docs/ai/agent-spec/) |
+| Use template strings in agent instructions | [Template Strings](https://pydantic.dev/docs/ai/agent-spec/#template-strings) |
+| Let my agent call external APIs or functions | [Tools](https://pydantic.dev/docs/ai/tools/) |
+| Organize or restrict which tools an agent can use | [Toolsets](https://pydantic.dev/docs/ai/toolsets/) |
+| Give my agent web search with automatic provider fallback | [WebSearch Capability](https://pydantic.dev/docs/ai/capabilities/#provider-adaptive-tools) |
+| Give my agent URL fetching with automatic provider fallback | [WebFetch Capability](https://pydantic.dev/docs/ai/capabilities/#provider-adaptive-tools) |
+| Give my agent web search or code execution (builtin tools) | [Built-in Tools](https://pydantic.dev/docs/ai/builtin-tools/) |
+| Search with DuckDuckGo/Tavily/Exa | [Common Tools](https://pydantic.dev/docs/ai/common-tools/) |
+| Ensure my agent returns data in a specific format | [Structured Output](https://pydantic.dev/docs/ai/output/#structured-output) |
+| Pass database connections, API clients, or config to tools | [Dependencies](https://pydantic.dev/docs/ai/dependencies/) |
+| Access usage stats, message history, or retry count in tools | [RunContext](https://pydantic.dev/docs/ai/tools/) |
+| Choose or configure models | [Models](https://pydantic.dev/docs/ai/models/) |
+| Automatically switch to backup model when primary fails | [Fallback Model](https://pydantic.dev/docs/ai/models/#fallback-model) |
+| Show real-time progress as my agent works | [Streaming Events and Final Output](https://pydantic.dev/docs/ai/agents/#streaming-events-and-final-output) |
+| Work with messages and multimedia | [Message History](https://pydantic.dev/docs/ai/message-history/) |
+| Reduce token costs by trimming or filtering conversation history | [Processing Message History](https://pydantic.dev/docs/ai/message-history/#processing-message-history) |
+| Keep long conversations manageable without losing context | [Summarize Old Messages](https://pydantic.dev/docs/ai/message-history/#summarize-old-messages) |
+| Use MCP servers | [MCP](https://pydantic.dev/docs/ai/mcp/) |
+| Build multi-step graphs | [Graph](https://pydantic.dev/docs/ai/graph/) |
+| Debug a failed agent run or see what went wrong | [Model Errors](https://pydantic.dev/docs/ai/agents/#model-errors) |
+| Make my agent resilient to temporary failures | [Retries](https://pydantic.dev/docs/ai/retries/) |
+| Understand why my agent made specific decisions | [Using Logfire](https://pydantic.dev/docs/ai/logfire/#using-logfire) |
+| Write deterministic tests for my agent | [Unit testing with TestModel](https://pydantic.dev/docs/ai/testing/#unit-testing-with-testmodel) |
+| Enable thinking/reasoning across any provider | [Thinking](https://pydantic.dev/docs/ai/thinking/) · [Thinking Capability](https://pydantic.dev/docs/ai/capabilities/#thinking) |
+| Systematically verify my agent works correctly | [Evals](https://pydantic.dev/docs/ai/evals/) |
+| Use embeddings for RAG | [Embeddings](https://pydantic.dev/docs/ai/embeddings/) |
+| Use durable execution | [Durable Execution](https://pydantic.dev/docs/ai/capabilities/durable_execution/overview/) |
+| Have one agent delegate tasks to another | [Agent Delegation](https://pydantic.dev/docs/ai/multi-agent-applications/#agent-delegation) |
+| Route requests to different agents based on intent | [Programmatic Agent Hand-off](https://pydantic.dev/docs/ai/multi-agent-applications/#programmatic-agent-hand-off) |
+| Require tool approval (human-in-the-loop) | [Deferred Tools](https://pydantic.dev/docs/ai/deferred-tools/) |
+| Use images, audio, video, or documents | [Input](https://pydantic.dev/docs/ai/input/) |
+| Use advanced tool features | [Advanced Tools](https://pydantic.dev/docs/ai/tools-advanced/) |
+| Validate or require approval before tool execution | [Advanced Tools](https://pydantic.dev/docs/ai/tools-advanced/) |
+| Call the model without using an agent | [Direct API](https://pydantic.dev/docs/ai/direct/) |
+| Expose agents as HTTP servers (A2A) | [A2A](https://pydantic.dev/docs/ai/a2a/) |
+| Handle network errors and rate limiting automatically | [Retries](https://pydantic.dev/docs/ai/retries/) |
+| Use LangChain or ACI.dev tools | [Third-Party Tools](https://pydantic.dev/docs/ai/third-party-tools/) |
+| Publish reusable agent extensions as packages | [Extensibility](https://pydantic.dev/docs/ai/extensibility/) |
+| Build custom toolsets, models, or agents | [Extensibility](https://pydantic.dev/docs/ai/extensibility/) |
+| Debug common issues | [Troubleshooting](https://pydantic.dev/docs/ai/troubleshooting/) |
+| Migrate from deprecated APIs | [Changelog](https://pydantic.dev/docs/ai/project/changelog/) |
+| See advanced real-world examples | [Examples](https://pydantic.dev/docs/ai/examples/) |
+| Look up an import path | [API Reference](https://pydantic.dev/docs/ai/api/) |
 
 ## Architecture and Decisions
 

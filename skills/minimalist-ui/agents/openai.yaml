@@ -1,0 +1,6 @@
+interface:
+  display_name: "Minimalist UI"
+  short_description: "Direção visual minimalista sob demanda"
+  default_prompt: "Use $minimalist-ui para aplicar uma direção visual minimalista a esta interface."
+policy:
+  allow_implicit_invocation: false

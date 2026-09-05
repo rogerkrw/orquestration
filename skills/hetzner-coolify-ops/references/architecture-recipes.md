@@ -2,6 +2,10 @@
 
 Quatro receitas prontas para os cenários mais comuns. Cada uma tem (a) quem é o cliente típico, (b) o desenho, (c) custo mensal estimado, (d) onde costuma quebrar primeiro.
 
+> Os custos são modelos de composição, não cotações. Os valores numéricos antigos foram
+> removidos para evitar decisões baseadas em preços históricos; consulte a tabela oficial antes
+> de cada estimativa.
+
 Use estas como ponto-de-partida; ajustar para o caso específico. Sempre validar preços atuais antes de cotar.
 
 ## Índice
@@ -47,13 +51,13 @@ Use estas como ponto-de-partida; ajustar para o caso específico. Sempre validar
 
 | Item | Custo |
 |---|---|
-| CPX22 EU (2 vCPU, 4 GB, 80 GB, 20 TB) | €7.05 |
+| CPX22 EU (2 vCPU, 4 GB, 80 GB, 20 TB) | confirmar |
 | Primary IPv4 | €0.50 |
 | Backups +20% | €1.51 |
-| Object Storage (1 TB incluso) | €4.99 |
-| **Total** | **~€14/mês** |
+| Object Storage (1 TB incluso) | confirmar |
+| **Total** | **calcular com preços atuais** |
 
-Variação ARM: CAX21 (€6.49) + IPv4 + backups + storage = ~€13.50/mês.
+Variação ARM: CAX21 + IPv4 + backups + storage; calcular com preços atuais.
 
 **Quando cresce, quebra**:
 - Build de Next.js / Nuxt come toda a RAM → OOM (→ Receita 2)
@@ -84,7 +88,7 @@ Variação ARM: CAX21 (€6.49) + IPv4 + backups + storage = ~€13.50/mês.
 
 | Item | Custo |
 |---|---|
-| Coolify+apps server CPX22 | €7.05 |
+| Coolify+apps server CPX22 | confirmar |
 | Build Server CPX32 (4 vCPU, 8 GB) | €13.10 |
 | IPv4 + Backups + Object Storage | ~€7 |
 | **Total** | **~€27/mês** |
@@ -130,14 +134,15 @@ Variação ARM: CAX21 (€6.49) + IPv4 + backups + storage = ~€13.50/mês.
 | Item | Custo |
 |---|---|
 | App server CPX42 (8 vCPU, 16 GB) | €24.70 |
-| DB server CCX23 (4 vCPU dedicado, 16 GB) | €25.99 |
+| DB server CCX23 (4 vCPU dedicado, 16 GB) | confirmar |
 | IPv4s (×2) | €1.00 |
 | Backups +20% no app | €4.94 |
 | Backups +20% no DB (ou snapshots manuais) | €5.20 |
-| Object Storage (backups DB) | €4.99 |
+| Object Storage (backups DB) | confirmar |
 | **Total** | **~€67/mês** |
 
-Versão híbrida (DB em dedicado): substituir CCX23 (€25.99) por AX42 (€39-46) — custo total ~€80/mês, mas hardware muito mais robusto e tráfego inter-Cloud-Robot grátis via vSwitch. Ver Receita 5.
+Versão híbrida (DB em dedicado): substituir CCX23 por AX42 — consultar cotação atual e validar
+o tráfego inter-Cloud-Robot via vSwitch. Ver Receita 5.
 
 **Quando cresce, quebra**:
 - App server CPU/RAM satura → rescale (instant via Hetzner Cloud) ou virar Receita 4
@@ -184,12 +189,12 @@ Versão híbrida (DB em dedicado): substituir CCX23 (€25.99) por AX42 (€39-4
 
 | Item | Custo |
 |---|---|
-| Hetzner LB21 | €16.40 |
+| Hetzner LB21 | confirmar |
 | 2× CPX32 (app, em placement group) | €26.20 |
-| 1× CCX23 (DB) | €25.99 |
+| 1× CCX23 (DB) | confirmar |
 | IPv4s + IPs do LB | ~€2 |
 | Backups | ~€11 |
-| Object Storage | €4.99 |
+| Object Storage | confirmar |
 | **Total** | **~€87/mês** |
 
 3 nodes app em vez de 2: +€13/mês.
@@ -235,11 +240,11 @@ Versão híbrida (DB em dedicado): substituir CCX23 (€25.99) por AX42 (€39-4
 
 | Item | Custo |
 |---|---|
-| Coolify CPX22 | €7.05 |
+| Coolify CPX22 | confirmar |
 | 2× App CPX32 | €26.20 |
 | Dedicated AX102 | €119.00 |
 | IPv4s, backups (Cloud only) | ~€7 |
-| Object Storage | €4.99 |
+| Object Storage | confirmar |
 | **Total** | **~€164/mês** |
 
 Para mesmo poder em Cloud-only: ~€300-400/mês.

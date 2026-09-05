@@ -20,6 +20,20 @@ Estas flags funcionam na maioria dos comandos:
 
 ## Autenticação
 
+### `railway setup agent`
+
+Configura a integração oficial do Railway com agentes de código, incluindo autenticação,
+MCP e skills quando suportados pelo ambiente.
+
+```bash
+railway setup agent
+railway setup agent --oauth
+railway setup agent --local
+```
+
+Para instalar ou atualizar somente as skills oficiais, consulte `railway skills install` e
+`railway skills update`. Verifique as opções na documentação atual antes de automatizar.
+
 ### `railway login`
 Login interativo (abre navegador).
 

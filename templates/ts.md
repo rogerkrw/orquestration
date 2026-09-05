@@ -40,6 +40,7 @@ Na dúvida, comece em `min`.
 - [`Ollama`](https://docs.ollama.com/): provider para LLMs locais;
 - LLMs: `qwen3:4b-instruct` (default), `qwen3:8b` (LLM-as-a-judge), `nomic-embed-text-v2-moe:latest` (embeddings);
 - Env via `$env/dynamic/private` e `$env/static/public` do SvelteKit;
+- Estado de página via `$app/state`; evitar `$app/stores` em código novo;
 - Testes: [`vitest`](https://vitest.dev/), quando houver suite.
 
 > **Nota:** LLMs proprietários, se introduzidos, o serão sob decisão do TPM. APIs externas exigem secrets no `.env` e justificativa de uso.
@@ -107,8 +108,14 @@ App SvelteKit única — um processo, um deploy. Lógica de servidor em `lib/ser
 | `swe-backend` | `mastra` | Agents, workflows, tools, scorers, evals |
 | `swe-frontend` | `sveltekit`, `sveltekit-ui` | Routing, SSR, load functions; shadcn-svelte + Tailwind v4 |
 | `qa-tester` | `qa-testing` | Vitest, Playwright, prevenção de flaky tests |
+| `qa-tester` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Investigação de falhas, jornadas web e troca de contexto |
 | `devsecops` | `cybersecurity`, `llm-security`, `railway-ops` | Segurança e deploy |
 | Todos | `clean-code-principles`, `senior-swe-intuition` | Transversais |
+| `swe-backend` | `systematic-debugging`, `domain-modeling`, `handoff` | Causa-raiz, domínio e continuidade |
+| `swe-frontend` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Regressões UI, browser e continuidade |
+| `devsecops` | `systematic-debugging`, `handoff` | Incidentes e continuidade |
+| `code-reviewer` | `handoff` | Continuidade de revisão |
+| `product-manager` | `domain-modeling`, `handoff` | Vocabulário do domínio e continuidade |
 
 ## **Regras específicas do perfil**
 
@@ -183,7 +190,7 @@ Separação `api/` + `web/` + `docker/` + `xyz/`. Nem todo projeto precisa de to
 
 ## **Agentes e Skills**
 
-Os 7 subagentes e 17 skills, invocados por `@nome` ou auto-routing (ver base).
+Os 7 subagentes e 24 skills, invocados por `@nome` ou auto-routing (ver base).
 
 | Subagente | Quando delegar |
 | --- | --- |
@@ -200,12 +207,22 @@ Os 7 subagentes e 17 skills, invocados por `@nome` ou auto-routing (ver base).
 | `swe-backend` | `mastra` | Agents, workflows, tools, scorers, evals, observability |
 | `swe-frontend` | `sveltekit` | Routing, SSR, load functions, form actions, hooks |
 | `swe-frontend` / `ux-designer` | `ux-ui-design`, `sveltekit-ui` | UX/UI geral; shadcn-svelte + Svelte 5 runes + Tailwind v4 |
+| `swe-frontend` / `ux-designer` | `ux-writing`, `conversion-copywriting` | Microcopy/IA de produto; copy explicativa ou comercial para páginas e apresentações |
+| `swe-frontend` / `ux-designer` | `minimalist-ui` | Direção minimalista somente por pedido explícito do TPM |
 | `qa-tester` | `qa-testing` | Vitest (browser mode), Playwright, MSW, flaky tests |
+| `qa-tester` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Investigação de falhas, jornadas web e troca de contexto |
 | `devsecops` | `cybersecurity` | OWASP Top 10, secrets, CSP, audit pré-deploy |
 | `devsecops` / `code-reviewer` | `llm-security` | OWASP LLM Top 10, prompt injection, guardrails, PII |
 | `devsecops` | `railway-ops` / `hetzner-coolify-ops` | Deploy conforme a infra escolhida |
 | `code-reviewer` | `rigorous-code-review`, `senior-swe-intuition` | Carregadas automaticamente |
 | Todos | `clean-code-principles`, `senior-swe-intuition` | Transversais |
+| `swe-backend` | `systematic-debugging`, `domain-modeling`, `handoff` | Causa-raiz, domínio e continuidade |
+| `swe-frontend` | `systematic-debugging`, `browser-e2e-testing`, `handoff` | Regressões UI, browser e continuidade |
+| `swe-frontend` | `ux-writing`, `conversion-copywriting`, `minimalist-ui` | Texto/IA e copy de páginas; minimalismo apenas sob demanda explícita |
+| `product-manager` / `ux-designer` | `domain-modeling`, `handoff` | Vocabulário do domínio e continuidade |
+| `product-manager` / `ux-designer` | `ux-writing`, `conversion-copywriting` | Terminologia/IA e mensagem de produto, páginas ou apresentações |
+| `devsecops` | `systematic-debugging`, `handoff` | Incidentes e continuidade |
+| `code-reviewer` | `handoff` | Continuidade de revisão |
 
 **Utilitário (manual copiável, não é skill):** `~/dev/orquestration/utils/RAILWAY.md` — deploy no Railway; copiar para a raiz do projeto (ver *Protocolo de Documentação* na base).
 

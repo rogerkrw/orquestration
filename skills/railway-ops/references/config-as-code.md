@@ -1,8 +1,12 @@
-# Config as Code — railway.toml e railway.json
+# Config as Code legado — railway.toml e railway.json
 
-Railway suporta declarar as configurações de **build** e **deploy** de um serviço em um arquivo versionado no repositório. O arquivo sobrescreve as configurações do dashboard para aquele deployment. É o padrão recomendado para qualquer setting não-trivial: versionado, auditável, reproduzível.
+Railway ainda suporta declarar configurações de **build** e **deploy** em `railway.toml` ou
+`railway.json`, mas esse mecanismo está **deprecated**. A documentação recomenda
+Infrastructure as Code para novos projetos; o formato legado permanece funcionando durante a
+transição, com suporte indicado até **01/12/2026**. Não crie novos arquivos nesse formato sem
+confirmar a orientação atual para o projeto.
 
-Documentação oficial: [docs.railway.com/config-as-code](https://docs.railway.com/config-as-code) e [reference](https://docs.railway.com/config-as-code/reference).
+Documentação oficial: [Config as Code reference](https://docs.railway.com/config-as-code/reference) e [Railway docs](https://docs.railway.com).
 
 ## Onde colocar
 

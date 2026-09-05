@@ -1,8 +1,11 @@
 # Chainlit ⚠️
 
-> **Status check first:** Founding team left May 2025, now community-maintained, security CVEs in late 2025. Verify the package has been patched (check release notes since the CVE date) before adding to any project that handles sensitive data or is customer-facing.
+> **Status check first:** Check the [official release history](https://github.com/Chainlit/chainlit/releases)
+> and security advisories before adding Chainlit to a sensitive or customer-facing project.
 >
-> **Default recommendation in 2026:** prefer NiceGUI's chat primitives for new chat UIs unless Chainlit-specific features (chain-of-thought UI, retrieval tracing) are critical.
+> **Default recommendation:** choose by product boundary. Chainlit is chat-first; NiceGUI is
+> broader for Python-first internal tools; SvelteKit/React are stronger for customer-facing
+> applications with complex auth and state.
 
 ## When Chainlit is still the right choice
 - Internal LLM experimentation behind auth
@@ -116,13 +119,14 @@ def auth_callback(username: str, password: str):
     return None
 ```
 
-**Don't ship without auth.** Chainlit's CVEs in 2025 involved unauthenticated endpoints.
+**Don't ship without auth.** Chainlit does not replace application authentication or
+authorization; check current advisories and protect every non-local deployment.
 
 ## Deployment
 
 - **Always behind a reverse proxy with TLS** (Caddy, nginx, Traefik)
 - **Always with auth enabled**
-- **Pin the version explicitly** and read changelog before upgrading (community-maintained, breaking changes possible)
+- **Pin the version explicitly** and read the changelog before upgrading
 - **Audit `chainlit.md` and config** for any features that expose internal state
 
 ## Gotchas

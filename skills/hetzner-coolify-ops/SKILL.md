@@ -19,16 +19,16 @@ A skill tem 3 camadas: este SKILL.md é o ponto de partida com decisão, atalhos
 | Arquitetura — single VPS vs multi-server vs banco separado vs híbrido? | `references/architecture-recipes.md` |
 | Backups, snapshots, volumes, object storage, traffic overage, IPs, firewall, load balancer? | `references/cloud-products.md` + `references/pricing.md` |
 
-Antes de responder qualquer coisa específica sobre **preço atual**, **disponibilidade de localização** ou **especificações de plano novo** (como "CX Gen3"), faça uma busca web rápida — a Hetzner reestrutura linhas e preços com frequência (a última grande reestruturação foi a deprecação de CX/CPX antigos em favor de CX Gen3 / CPX Gen2 em out/2025, e a redução de tráfego incluído nos EUA em dez/2024). Os valores nas references aqui são bases de raciocínio, não fontes-de-verdade atemporais.
+Antes de responder qualquer coisa específica sobre **preço atual**, **disponibilidade de localização** ou **especificações de plano novo** (como "CX Gen3"), faça uma busca web rápida — a Hetzner reestrutura linhas, preços e tráfego com frequência. Após o reajuste de 15/06/2026, os valores numéricos nas references são apenas histórico/ordem de grandeza, não fontes de verdade. Nunca faça cotação usando-os sem confirmar a tabela oficial ou a API.
 
 ## O essencial em uma página
 
 ### Hetzner — produtos que importam
 
 **Cloud** (`console.hetzner.cloud`): VPS por hora, criados em segundos. 4 famílias:
-- **CX** — Cost-Optimized x86 (Intel/AMD), shared vCPU, EU-only. Mais barato. Começa em ~€3.49/mês.
+- **CX** — Cost-Optimized x86 (Intel/AMD), shared vCPU, EU-only. Mais barato. Consulte a tabela oficial antes de cotar.
 - **CPX** — Regular Performance AMD EPYC, shared vCPU, disponível global. Performance single-core melhor que CX. Padrão para produção pequena/média.
-- **CAX** — ARM64 Ampere Altra, shared vCPU, EU-only. ~10-15% mais barato que CPX equivalente, ~30% mais eficiente energeticamente. **Atenção:** software precisa suportar ARM64.
+- **CAX** — ARM64 Ampere Altra, shared vCPU, EU-only. Pode ser mais econômico que CPX equivalente. **Atenção:** software precisa suportar ARM64.
 - **CCX** — Dedicated vCPU AMD EPYC, sem vizinhos brigando por CPU. Global. ~3x preço do CPX equivalente. Use quando consistência de performance importa (banco, CI, jobs pesados).
 
 **Robot** (`robot.hetzner.com`): servidores dedicados físicos, contrato mensal, setup fee comum. Linhas:
@@ -36,7 +36,7 @@ Antes de responder qualquer coisa específica sobre **preço atual**, **disponib
 - Disponível apenas em FSN/NBG/HEL (Alemanha + Finlândia). **Não há dedicados em US/Singapore.**
 - 1 Gbit/s com tráfego ilimitado (10 Gbit/s = 20 TB incluso, €1/TB excedente).
 
-**Storage**: Object Storage S3-compatível (€4.99/mês base com 1 TB storage + 1 TB egress, pay-as-you-go acima), Storage Box (file storage tradicional via SMB/SFTP/WebDAV), Volumes (block storage anexável a um Cloud server).
+**Storage**: Object Storage S3-compatível (tarifa e franquia a confirmar), Storage Box (file storage tradicional via SMB/SFTP/WebDAV), Volumes (block storage anexável a um Cloud server).
 
 **Networking**: Networks privadas, vSwitch (conecta Cloud + Robot), Load Balancers (LB11/21/31), Floating IPs, Primary IPs (IPv4 €0.50/mês, IPv6 grátis), Firewalls cloud (gratuitos).
 
@@ -61,13 +61,13 @@ Pense em três eixos: **carga (estável vs picos)**, **localização (latência 
 
 | Cenário | Recomendação inicial | Por quê |
 |---|---|---|
-| Dev/staging, side project, MVP solo | **CX22** ou **CAX11** (~€3.49–€4.49/mês, 2 vCPU/4 GB/40 GB) | Cabe Coolify (mínimo 2 vCPU/2 GB) + 1-2 apps leves. CAX se app é ARM-compatível. |
-| App produção pequena, ~10k usuários/mês | **CPX22** ou **CAX21** (~€7-8/mês, 2-3 vCPU/4 GB/80 GB) | Headroom para Coolify + 2-3 apps + um banco pequeno. |
+| Dev/staging, side project, MVP solo | **CX23** ou **CAX11** (2 vCPU/4 GB; preço a confirmar) | Cabe Coolify (mínimo 2 vCPU/2 GB) + 1-2 apps leves. CAX se app é ARM-compatível. |
+| App produção pequena, ~10k usuários/mês | **CPX22** ou **CAX21** (2–4 vCPU; preço a confirmar) | Headroom para Coolify + 2-3 apps + um banco pequeno. |
 | App produção média, banco + workers, ~100k usuários/mês | **CPX31/41** ou **CCX13** dedicada (~€16-30/mês) | Quando começa a faltar CPU em horários de pico. CCX se latência tem que ser consistente. |
 | App produção grande, vários serviços, ML/AI | **AX42 a AX102** dedicado (~€40-120/mês) ou **EX44/EX63** | Hardware físico, sem vizinhos, RAM grande (64-128 GB), disco grande. |
 | Banco crítico, alto IO sustentado | **CCX** ou **AX/EX dedicado** | Dedicado evita "barulho" de vizinhos no IO. |
 | Workload AI/ML CPU-pesado | **AX162** (EPYC 32 cores) ou Auction com Xeon + muita RAM | Hetzner não oferece GPUs cloud em larga escala — para GPU, considerar Auction GPU server pontual. |
-| Storage de backups, dumps, assets estáticos pesados | **Object Storage** (€4.99/mês base, 1 TB incluso) + CDN externa | S3-compatible. Para hot serving, pôr Cloudflare ou Bunny CDN na frente. |
+| Storage de backups, dumps, assets estáticos pesados | **Object Storage** (tarifa a confirmar) + CDN externa | S3-compatible. Para hot serving, pôr Cloudflare ou Bunny CDN na frente. |
 
 ## Decisão: localização
 
@@ -129,15 +129,15 @@ Soma de 4 linhas:
 Compute    = (preço plano servidor) + IPv4 (€0.50 se usar) + Backups (+20% opcional)
 Storage    = Volumes anexos (€0.044/GB-mês, mín 10 GB) + Snapshots (€0.011/GB-mês)
 Network    = max(0, traffic_real_TB − traffic_incluso_TB) × €1/TB (EU/US) ou €7.40/TB (SIN)
-Add-ons    = Load Balancer (LB11 €5.39, LB21 €16.40, LB31 €32.90) + Object Storage (€4.99 base + uso)
+Add-ons    = Load Balancer (plano escolhido, tarifa vigente) + Object Storage (tarifa vigente + uso)
 ```
 
 Adicionar 19-20% de VAT para clientes EU PJ sem VAT ID válido, ou 0% se Reverse Charge aplicável. Para Brasil, geralmente Hetzner não retém IVA mas o cliente pode incidir tributação local na aquisição de serviço do exterior (IRRF, PIS/COFINS-importação) — não é papel desta skill aconselhar tributariamente; deixar claro que é estimativa de fornecedor, não custo final ao caixa do cliente.
 
 **Exemplo** — stack típica "produção pequena com Coolify":
-- 1× CPX22 em FSN (€7.05) + IPv4 (€0.50) + Backups +20% (€1.51) = **€9.06/mês**
-- 1× Object Storage (€4.99/mês base, dentro do 1 TB incluso) = **€4.99/mês**
-- Total = **~€14/mês** (sem VAT)
+- 1× servidor Cloud em FSN (preço consultado na data) + IPv4 + backups = **calcular com a tabela oficial**
+- Object Storage e demais add-ons = **calcular com a tabela oficial**
+- Total: calcular com os preços vigentes e o uso projetado (sem VAT)
 
 Detalhes: `references/pricing.md`.
 

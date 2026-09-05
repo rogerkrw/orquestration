@@ -17,6 +17,15 @@ description: >
 
 SvelteKit is Svelte's full-stack framework — filesystem-based routing, SSR/CSR/prerendering, server endpoints, form actions, adapters for any deployment target. Built on Vite; uses Svelte 5 runes by default.
 
+## Version and migration baseline
+
+Use the project's installed SvelteKit/Svelte/Vite versions as the source of truth. For new
+projects, use the current SvelteKit 2 + Svelte 5 toolchain and a supported Node LTS. In existing
+projects, do not mix Svelte 4 examples into rune-mode components. `$app/stores` is deprecated in
+modern SvelteKit; prefer `$app/state` and use the official `sv migrate app-state` migration when
+upgrading. Check the [SvelteKit migration guide](https://svelte.dev/docs/kit/migrating-to-sveltekit-2)
+before changing framework APIs.
+
 ## Mental Model
 
 Every route is a **directory** under `src/routes/`. Files with `+` prefix are special. The key insight: SvelteKit blurs the server/client boundary — the same `load` function can run on server or client depending on context.

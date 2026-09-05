@@ -125,6 +125,9 @@ For PydanticAI, each agent run becomes a parent span containing child spans for 
 
 ## JavaScript / TypeScript
 
+Use Node.js 24 LTS or newer for new projects. Respect the runtime declared by an existing
+project and verify SDK compatibility before raising it.
+
 ### Install
 
 ```bash
@@ -147,7 +150,8 @@ import * as logfire from '@pydantic/logfire-node'
 logfire.configure()
 ```
 
-Launch with: `node --require ./instrumentation.js app.js`
+Launch TypeScript with: `npx tsx --import ./instrumentation.ts server.ts`.
+For plain JavaScript, use the equivalent preload mechanism supported by the project.
 
 The SDK auto-instruments common libraries when loaded before the app. Set `LOGFIRE_TOKEN` in your environment or pass `token` to `configure()`.
 
@@ -239,6 +243,6 @@ If traces aren't appearing: check that `configure()` is called before `instrumen
 
 Detailed patterns and integration tables, organized by language:
 
-- **Python**: `${CLAUDE_PLUGIN_ROOT}/skills/instrumentation/references/python/logging-patterns.md` (log levels, spans, stdlib integration, metrics, capfire testing) and `${CLAUDE_PLUGIN_ROOT}/skills/instrumentation/references/python/integrations.md` (full instrumentor table with extras)
-- **JavaScript/TypeScript**: `${CLAUDE_PLUGIN_ROOT}/skills/instrumentation/references/javascript/patterns.md` (log levels, spans, error handling, config) and `${CLAUDE_PLUGIN_ROOT}/skills/instrumentation/references/javascript/frameworks.md` (Node.js, Cloudflare Workers, Next.js, Deno setup)
-- **Rust**: `${CLAUDE_PLUGIN_ROOT}/skills/instrumentation/references/rust/patterns.md` (macros, spans, tracing/log crate integration, async, shutdown)
+- **Python**: [logging patterns](references/python/logging-patterns.md) and [integrations](references/python/integrations.md)
+- **JavaScript/TypeScript**: [patterns](references/javascript/patterns.md) and [frameworks](references/javascript/frameworks.md)
+- **Rust**: [patterns](references/rust/patterns.md)

@@ -3,8 +3,10 @@
 ## Installation pattern
 
 ```bash
-npx shadcn-svelte@latest init
-npx shadcn-svelte@latest add button card dialog input
+pnpm dlx sv create my-app --add tailwindcss
+cd my-app
+pnpm dlx shadcn-svelte@latest init
+pnpm dlx shadcn-svelte@latest add button card dialog input
 ```
 
 Components land in `src/lib/components/ui/<name>/` — each as its own folder with an `index.ts` barrel and individual `.svelte` files. **You own them.** Edit freely.
@@ -13,8 +15,8 @@ Components land in `src/lib/components/ui/<name>/` — each as its own folder wi
 
 ```svelte
 <script lang="ts">
-  import * as Dialog from "$lib/components/ui/dialog";
-  import { Button } from "$lib/components/ui/button";
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import { Button } from "$lib/components/ui/button/index.js";
 </script>
 
 <Dialog.Root>

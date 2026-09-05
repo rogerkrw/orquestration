@@ -127,7 +127,7 @@ Need deterministic, fast tests?
 | Cerebras | `cerebras:` | `cerebras:llama-4-scout-17b-16e-instruct` |
 | Heroku | `heroku:` | `heroku:claude-sonnet-4-6` |
 
-**Additional prefixes:** `litellm:`, `nebius:`, `ovhcloud:`, `alibaba:`, `sambanova:`, `vercel:`, `outlines:`, `moonshotai:`. For truly custom providers, subclass `Model` or use `OpenAIChatModel` with a custom `base_url`. See [Models](https://ai.pydantic.dev/models/).
+**Additional prefixes:** `litellm:`, `nebius:`, `ovhcloud:`, `alibaba:`, `sambanova:`, `vercel:`, `outlines:`, `moonshotai:`. For truly custom providers, subclass `Model` or use `OpenAIChatModel` with a custom `base_url`. See [Models](https://pydantic.dev/docs/ai/models/).
 
 ### Tool Decorator Comparison
 
@@ -165,7 +165,7 @@ Need deterministic, fast tests?
 | Receiving an async iterable of typed events (tool calls, results, final output) | `agent.run_stream_events()` |
 | Inspecting or modifying state between agent steps, human-in-the-loop approval | `agent.iter()` |
 
-See [Streaming All Events](https://ai.pydantic.dev/agents/#streaming-all-events) for `event_stream_handler` details.
+See [Streaming All Events](https://pydantic.dev/docs/ai/agents/#streaming-all-events) for `event_stream_handler` details.
 
 ## Architecture Overview
 

@@ -15,6 +15,10 @@ The frontend visual layer for SvelteKit projects. Pairs with the `sveltekit` ski
 - **Formsnap + Superforms + Zod** for forms
 - **mode-watcher** for dark/light mode
 
+For a new project, follow the current shadcn-svelte bootstrap flow (`sv create` with Tailwind,
+then `shadcn-svelte init`) and preserve the project's package manager. Do not copy an install
+command from an older template without checking the [official SvelteKit installation guide](https://www.shadcn-svelte.com/docs/installation/sveltekit).
+
 ## Core rules
 1. Components are **owned, not imported from a package**. If you need to modify behavior, edit the file in `$lib/components/ui/`.
 2. Use **design tokens** (`bg-primary`, `text-muted-foreground`) — never arbitrary classes (`bg-[#3b82f6]`, `text-[14px]`).

@@ -20,6 +20,7 @@
 ### Stores → runes
 - Stores still work for cross-component state, but for component-local state use `$state`.
 - `$state` is shallow-reactive by default. Use `$state.raw` for non-reactive references (e.g., a large dataset you mutate elsewhere).
+- In SvelteKit page/layout state, prefer `$app/state`; `$app/stores` is deprecated in modern SvelteKit. Use `sv migrate app-state` when upgrading an existing app.
 
 ## Tailwind v3 → v4
 

@@ -8,6 +8,16 @@ description: |
 
 Mastra is an opinionated **TypeScript** framework for building AI-powered applications. It wraps the Vercel AI SDK and adds agents, workflows, memory, RAG, evals, observability, and a local Studio UI.
 
+## Version and compatibility baseline
+
+- Mastra evolves quickly within its 1.x line. Use `npm create mastra@latest` only for a new
+  scaffold; for an existing project, inspect `package.json` and the lockfile first.
+- Keep all `@mastra/*` packages on the same compatible release line. Do not upgrade one package
+  in isolation unless its release notes explicitly permit it.
+- Node 24 LTS is a safe baseline for new TypeScript projects, but the repository's declared
+  runtime remains authoritative. Before changing an API example, check the [current Mastra docs](https://mastra.ai/docs)
+  and [release notes](https://github.com/mastra-ai/mastra/releases).
+
 ## Quick mental model
 
 | Primitive  | When to use |

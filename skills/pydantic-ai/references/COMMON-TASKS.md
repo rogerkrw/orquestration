@@ -22,7 +22,7 @@ agent = Agent(
 
 **WebSearch** auto-detects whether the model supports builtin web search. If so, it uses the native tool; otherwise, it falls back to a local implementation (e.g., DuckDuckGo). Same pattern applies to `WebFetch`, `ImageGeneration`, and `MCP`.
 
-**Docs:** [Capabilities](https://ai.pydantic.dev/capabilities/) · [Built-in Capabilities](https://ai.pydantic.dev/capabilities/#built-in-capabilities)
+**Docs:** [Capabilities](https://pydantic.dev/docs/ai/capabilities/) · [Built-in Capabilities](https://pydantic.dev/docs/ai/capabilities/#built-in-capabilities)
 
 ---
 
@@ -55,7 +55,7 @@ agent = Agent('openai:gpt-5.2', capabilities=[hooks])
 
 **Hook types:** `before_run`/`after_run`, `run` (wrap), `run_error`, `before_node_run`/`after_node_run`, `node_run` (wrap), `node_run_error`, `before_model_request`/`after_model_request`, `model_request` (wrap), `model_request_error`, `before_tool_validate`/`after_tool_validate`, `tool_validate` (wrap), `tool_validate_error`, `before_tool_execute`/`after_tool_execute`, `tool_execute` (wrap), `tool_execute_error`, `prepare_tools`, `run_event_stream`, `event`.
 
-**Docs:** [Hooks](https://ai.pydantic.dev/hooks/) · [Hooking into the Lifecycle](https://ai.pydantic.dev/capabilities/#hooking-into-the-lifecycle)
+**Docs:** [Hooks](https://pydantic.dev/docs/ai/hooks/) · [Hooking into the Lifecycle](https://pydantic.dev/docs/ai/capabilities/#hooking-into-the-lifecycle)
 
 ---
 
@@ -92,7 +92,7 @@ result = agent.run_sync('Find recent papers on AI safety', deps=UserContext(user
 
 **Capability spec syntax:** `'WebSearch'` (no args), `{'Thinking': {'effort': 'high'}}` (kwargs), `{'Thinking': 'high'}` (single arg).
 
-**Docs:** [Agent Specs](https://ai.pydantic.dev/agent-spec/) · [Template Strings](https://ai.pydantic.dev/agent-spec/#template-strings)
+**Docs:** [Agent Specs](https://pydantic.dev/docs/ai/agent-spec/) · [Template Strings](https://pydantic.dev/docs/ai/agent-spec/#template-strings)
 
 ---
 
@@ -113,7 +113,7 @@ agent = Agent('anthropic:claude-opus-4-6', model_settings={'thinking': 'high'})
 
 **Effort levels:** `True` (default effort), `False` (disable), `'minimal'`, `'low'`, `'medium'`, `'high'`, `'xhigh'`. Automatically mapped to each provider's native format (Anthropic adaptive thinking, OpenAI reasoning_effort, Google thinking_level, etc.).
 
-**Docs:** [Thinking](https://ai.pydantic.dev/thinking/) · [Unified Thinking Settings](https://ai.pydantic.dev/thinking/#unified-thinking-settings)
+**Docs:** [Thinking](https://pydantic.dev/docs/ai/thinking/) · [Unified Thinking Settings](https://pydantic.dev/docs/ai/thinking/#unified-thinking-settings)
 
 ---
 
@@ -134,7 +134,7 @@ agent = Agent('openai:gpt-5.2', history_processors=[keep_recent])
 
 **Also use for:** Privacy filtering (remove PII), summarizing old messages, role-based access.
 
-**Docs:** [Processing Message History](https://ai.pydantic.dev/message-history/#processing-message-history) · [Summarize Old Messages](https://ai.pydantic.dev/message-history/#summarize-old-messages)
+**Docs:** [Processing Message History](https://pydantic.dev/docs/ai/message-history/#processing-message-history) · [Summarize Old Messages](https://pydantic.dev/docs/ai/message-history/#summarize-old-messages)
 
 ---
 
@@ -162,7 +162,7 @@ async def main():
 
 **Also use for:** Logging, analytics, debugging, progress bars in UIs.
 
-**Docs:** [Streaming Events and Final Output](https://ai.pydantic.dev/agents/#streaming-events-and-final-output) · [Streaming All Events](https://ai.pydantic.dev/agents/#streaming-all-events)
+**Docs:** [Streaming Events and Final Output](https://pydantic.dev/docs/ai/agents/#streaming-events-and-final-output) · [Streaming All Events](https://pydantic.dev/docs/ai/agents/#streaming-all-events)
 
 ---
 
@@ -185,7 +185,7 @@ agent = Agent(fallback)
 
 **Also use for:** Cost optimization (expensive → cheap), rate limit handling, regional failover.
 
-**Docs:** [Fallback Model](https://ai.pydantic.dev/models/#fallback-model) · [Per-Model Settings](https://ai.pydantic.dev/models/#per-model-settings)
+**Docs:** [Fallback Model](https://pydantic.dev/docs/ai/models/#fallback-model) · [Per-Model Settings](https://pydantic.dev/docs/ai/models/#per-model-settings)
 
 ---
 
@@ -223,7 +223,7 @@ with agent.override(model=FunctionModel(custom_model)):
 
 **Also use for:** Capturing requests for assertions, simulating errors, testing retries.
 
-**Docs:** [Unit testing with TestModel](https://ai.pydantic.dev/testing/#unit-testing-with-testmodel) · [Unit testing with FunctionModel](https://ai.pydantic.dev/testing/#unit-testing-with-functionmodel)
+**Docs:** [Unit testing with TestModel](https://pydantic.dev/docs/ai/testing/#unit-testing-with-testmodel) · [Unit testing with FunctionModel](https://pydantic.dev/docs/ai/testing/#unit-testing-with-functionmodel)
 
 ---
 
@@ -246,7 +246,7 @@ async def research(ctx: RunContext, topic: str) -> str:
 
 **Also use for:** Triage/routing, specialist hand-off, graph-based workflows.
 
-**Docs:** [Agent Delegation](https://ai.pydantic.dev/multi-agent-applications/#agent-delegation) · [Programmatic Agent Hand-off](https://ai.pydantic.dev/multi-agent-applications/#programmatic-agent-hand-off)
+**Docs:** [Agent Delegation](https://pydantic.dev/docs/ai/multi-agent-applications/#agent-delegation) · [Programmatic Agent Hand-off](https://pydantic.dev/docs/ai/multi-agent-applications/#programmatic-agent-hand-off)
 
 ---
 
@@ -271,4 +271,4 @@ logfire.instrument_httpx(capture_all=True)
 
 **Use for:** Debugging unexpected behavior, validating tool schemas, understanding what's sent to providers, production monitoring.
 
-**Docs:** [Using Logfire](https://ai.pydantic.dev/logfire/#using-logfire) · [Monitoring HTTP Requests](https://ai.pydantic.dev/logfire/#monitoring-http-requests)
+**Docs:** [Using Logfire](https://pydantic.dev/docs/ai/logfire/#using-logfire) · [Monitoring HTTP Requests](https://pydantic.dev/docs/ai/logfire/#monitoring-http-requests)
