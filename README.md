@@ -12,7 +12,7 @@ Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada de
 
 ```
 orquestration/
-├── agents/               # 7 subagentes (.md, formato canônico Claude)
+├── agents/               # 8 subagentes (.md, formato canônico Claude)
 ├── skills/               # 24 skills (pasta/SKILL.md + references/)
 ├── scripts/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
@@ -28,7 +28,7 @@ orquestration/
 
 ---
 
-## Os 7 agentes
+## Os 8 agentes
 
 | Agente | Papel | Tier |
 |---|---|---|
@@ -39,6 +39,7 @@ orquestration/
 | **qa-tester** | Escreve e roda testes, investiga falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |
 | **product-manager** | Produto ponta a ponta: premissa, viabilidade de negócio, PRD, roadmap, OKR, sprints | opus |
+| **marketing-ui** | Superfícies de marketing: mensagem, conversão, direção visual e auditoria | opus |
 
 ## As 24 skills
 
@@ -110,6 +111,7 @@ swe-senior (sessão principal)  ◄─┤────► swe-senior (orquestra)
                                  │      ├── swe-backend
 ux-designer          (opus)      │      ├── swe-frontend
 product-manager      (opus)      │      ├── ux-designer
+                                 │      ├── marketing-ui
                                  │      ├── code-reviewer
                                  │      ├── qa-tester
                                  │      └── devsecops
@@ -136,6 +138,7 @@ product-manager      (opus)      │      ├── ux-designer
 |---|---|---|
 | **swe-backend** | API, modelo de dados, lógica de negócio, integrações, jobs | sonnet |
 | **swe-frontend** | Componentes, rotas, forms, state, fetch | sonnet |
+| **marketing-ui** | Landing pages, pricing e outras superfícies comerciais | opus |
 | **code-reviewer** | Pós-feature, pré-merge, read-only, "o que pode dar errado?" | sonnet |
 | **qa-tester** | Escrever testes faltantes, rodar suite, investigar falhas | sonnet |
 | **devsecops** | Deploy, infra, secrets, auditoria de segurança | sonnet |

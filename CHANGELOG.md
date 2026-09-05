@@ -7,6 +7,16 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-09-05]
+
+### Added
+
+- **Agente `marketing-ui`** (opus) para superfícies comerciais de software:
+  landing pages, homepages de aquisição, pricing, páginas de produto e
+  lançamentos. Separa brief, mensagem, direção visual, implementação, auditoria
+  e experimentos de conversão, sem assumir branding amplo, UX de produto ou
+  claims sem evidência.
+
 ## [2026-09-04]
 
 ### Changed

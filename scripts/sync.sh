@@ -4,7 +4,7 @@
 # Idempotent — safe to run multiple times.
 #
 # CANONICAL SOURCE LAYOUT (this repo):
-#   agents/*.md       <- 7 agents, Claude .md format (PascalCase tools, alias model)
+#   agents/*.md       <- 8 agents, Claude .md format (PascalCase tools, alias model)
 #   skills/<name>/    <- 24 skills, expanded folders (SKILL.md + references/)
 #
 # Per-CLI agent variants (Codex .toml, Gemini .md) are GENERATED into .build/ at sync time.
