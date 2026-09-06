@@ -1,0 +1,5 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "orquestration",
+  "description": "Agentes, skills e referências de engenharia de software e produto de Rogério Kreidlow."
+}

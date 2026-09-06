@@ -11,7 +11,7 @@ Ordem: cabeçalho + Responsáveis + Visão/Objetivos/Funcionamento (aqui)
 -->
 
 > Este arquivo descreve **como** trabalhar neste projeto. O **que** construir vive no `TODO.md`.
-> Complementa o contexto global do CLI (`~/.claude/CLAUDE.md`); em conflito, este prevalece para este projeto.
+> Complementa o contexto global do CLI; em conflito, este prevalece para este projeto.
 > Precedência geral: **global < este arquivo < o código real.** Onde o código diverge do que está escrito aqui, o código é o fato — corrigir o doc, não o código.
 
 ## **Por onde começar**
@@ -25,7 +25,7 @@ Ordem: cabeçalho + Responsáveis + Visão/Objetivos/Funcionamento (aqui)
 ## **Responsáveis**
 
 * **Technical Product Manager (TPM):** Rogério Kreidlow, humano. Decisões de produto, arquitetura, direcionamento e aprovação de mudanças críticas.
-* **Principal Engineer:** você (Claude Code, Codex, Antigravity CLI etc.). Arquitetura detalhada, engenharia e desenvolvimento técnico, sob supervisão do TPM. Orquestra os subagentes especializados.
+* **Principal Engineer:** você (OpenCode, Claude Code, Codex, Antigravity CLI etc.). Arquitetura detalhada, engenharia e desenvolvimento técnico, sob supervisão do TPM. Orquestra os subagentes especializados.
 
 ## **Visão Geral**
 
@@ -193,7 +193,7 @@ O TPM é product builder, não engenheiro de código do dia a dia.
 ```
 ---
 date: %Y%m%d_%H%M%S
-author: [Claude Code, Codex etc.]
+author: [OpenCode, Claude Code, Codex etc.]
 task_ref: [ID da tarefa no TODO.md]
 ---
 

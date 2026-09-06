@@ -7,9 +7,26 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 As entradas são organizadas por data (não por versão semântica), já que este é
 um repositório de configuração de IA, não um produto de software com releases.
 
+## [2026-09-06]
+
+### Changed
+
+- **Documentação alinhada à distribuição atual.** Os arquivos de contexto, os
+  templates e o README agora incluem OpenCode nos destinos suportados, registram
+  a herança de modelo via Zen/Go e apontam o manifesto e a topologia do plugin
+  Antigravity.
+
 ## [2026-09-05]
 
 ### Added
+
+- **Distribuição para OpenCode e Antigravity CLI.** `sync.sh` agora gera agentes
+  Markdown nativos para OpenCode e Antigravity, instala os agentes OpenCode em
+  `~/.config/opencode/agents/`, skills em `~/.config/opencode/skills/` e cria um
+  plugin Antigravity completo em `~/.gemini/antigravity-cli/plugins/orquestration/`.
+  Os agentes OpenCode herdam o modelo da sessão para manter compatibilidade com
+  Zen e Go; os agentes Antigravity usam `flash`/`pro`, ferramentas e política
+  sandbox do formato próprio. A fonte canônica continua única.
 
 - **Agente `marketing-ui`** (opus) para superfícies comerciais de software:
   landing pages, homepages de aquisição, pricing, páginas de produto e

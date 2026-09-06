@@ -1,8 +1,8 @@
 # orquestration
 
-Fonte da verdade dos **agentes** e **skills de engenharia** de IA de Rogério Kreidlow, sincronizados para os quatro assistentes de linha de comando que ele usa: **Claude Code**, **Codex CLI**, **Gemini CLI** e **Antigravity** (`agy` CLI + IDE).
+Fonte da verdade dos **agentes** e **skills de engenharia** de IA de Rogério Kreidlow, sincronizados para **OpenCode**, **Antigravity** (`agy` CLI + IDE), **Claude Code**, **Codex CLI** e **Gemini CLI**.
 
-Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada deve ser editado direto em `~/.claude`, `~/.codex` ou `~/.gemini` — essas cópias são geradas.
+Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada deve ser editado diretamente nos diretórios globais das ferramentas — essas cópias são geradas.
 
 > Esta pasta cobre **só engenharia**. Skills de negócio (BeTalent) e pessoais vivem no Claude Chat/Projects pessoal e de trabalho — não nos CLIs de código.
 
@@ -14,17 +14,21 @@ Edita-se aqui; um script propaga para os diretórios de cada ferramenta. Nada de
 orquestration/
 ├── agents/               # 9 subagentes (.md, formato canônico Claude)
 ├── skills/               # 27 skills (pasta/SKILL.md + references/)
+├── antigravity/
+│   └── plugin.json            # Manifesto do pacote Antigravity
 ├── scripts/
 │   ├── sync.sh                 # instala agents + skills nos ambientes
 │   ├── md-to-codex-toml.py     # gera variantes .toml (Codex)
-│   └── md-to-gemini-md.py      # gera variantes .md (Gemini/Antigravity)
+│   ├── md-to-gemini-md.py      # gera variantes .md (Gemini)
+│   ├── md-to-opencode-md.py    # gera agentes .md (OpenCode)
+│   └── md-to-antigravity-md.py # gera agentes .md (Antigravity CLI)
 ├── templates/            # bootstrap de projeto novo: BASE.md + py.md / ts.md (perfis min/max)
 ├── CLAUDE.md             # instruções para o agente que abrir ESTA pasta
 ├── AGENTS.md             # (mesmo conteúdo de CLAUDE.md; lido por Codex/Antigravity)
 └── GEMINI.md             # (mesmo conteúdo de CLAUDE.md; lido por Gemini CLI)
 ```
 
-> `.build/` aparece após o primeiro sync — são as variantes geradas por CLI (efêmeras, não versionar).
+> `.build/` aparece após o primeiro sync — são as variantes geradas por CLI e o plugin empacotado (efêmeros, não versionar).
 
 ---
 
@@ -60,12 +64,21 @@ O sync é idempotente (usa `rsync --delete` por skill e regenera as variantes po
 
 | Ambiente | Agents | Skills |
 |---|---|---|
+| OpenCode | `~/.config/opencode/agents/*.md` | `~/.config/opencode/skills/*/` |
 | Claude Code | `~/.claude/agents/*.md` | `~/.claude/skills/*/` |
 | Codex CLI | `~/.codex/agents/*.toml` | `~/.codex/skills/*/` |
 | Gemini CLI | `~/.gemini/agents/*.md` | `~/.gemini/skills/*/` |
-| Antigravity | `~/.gemini/antigravity-cli/agents/*.md` | `~/.gemini/skills/*/` (shared) |
+| Antigravity CLI | `~/.gemini/config/agents/*.md` + plugin | plugin em `~/.gemini/antigravity-cli/plugins/orquestration/` |
 
-> **Antigravity** não usa `~/.antigravity` (isso é só o perfil do editor). Lê tudo de `~/.gemini`. Migração Gemini→Antigravity tem prazo **18/jun/2026** para contas não-enterprise.
+> O plugin Antigravity completo fica em `~/.gemini/antigravity-cli/plugins/orquestration/` e preserva as referências das skills. O caminho legado `~/.gemini/antigravity-cli/agents/` continua sendo preenchido para instalações antigas.
+
+### OpenCode e providers Zen/Go
+
+Os agentes gerados para OpenCode não fixam um `model`. Subagentes herdam o modelo do agente primário, permitindo alternar entre Zen e Go sem regenerar a biblioteca. As skills são instaladas no diretório global `~/.config/opencode/skills/`.
+
+### Antigravity CLI
+
+O sync gera o frontmatter próprio do Antigravity (`model: pro|flash`, `subagent`, ferramentas e política sandbox) e instala um plugin local com agents, skills e referências. Use `/agents` para selecionar ou monitorar agentes, `/skills` para conferir as skills carregadas e `/tasks` para acompanhar tarefas em background.
 
 ---
 
@@ -73,10 +86,10 @@ O sync é idempotente (usa `rsync --delete` por skill e regenera as variantes po
 
 Os `.md` canônicos usam **alias** (`opus`/`sonnet`); os conversores resolvem para o modelo real de cada ferramenta. O valor entre parênteses é o reasoning effort (emitido no `.toml` do Codex; documental no Claude e no Gemini):
 
-| Alias | Claude | Codex | Gemini / Antigravity |
-|---|---|---|---|
-| `opus` | Opus 5 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
-| `sonnet` | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
+| Alias | OpenCode | Claude | Codex | Gemini / Antigravity |
+|---|---|---|---|---|
+| `opus` | herda o modelo da sessão (Zen/Go) | Opus 5 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
+| `sonnet` | herda o modelo da sessão (Zen/Go) | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
 
 ---
 
@@ -94,7 +107,7 @@ Os `.md` canônicos usam **alias** (`opus`/`sonnet`); os conversores resolvem pa
 
 ## Backups e versionamento
 
-Os snapshots locais antigos (`~/Downloads/orquestration_backup_pre-reorg/` e `~/orquestration_env_backup_pre-sync/`) **foram removidos**. Esta pasta passou a ser a **fonte canônica** dos agents e skills de engenharia; os ambientes (`~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis a qualquer momento pelo `sync.sh` (idempotente).
+Os snapshots locais antigos (`~/Downloads/orquestration_backup_pre-reorg/` e `~/orquestration_env_backup_pre-sync/`) **foram removidos**. Esta pasta passou a ser a **fonte canônica** dos agents e skills de engenharia; os ambientes (`~/.config/opencode`, `~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis a qualquer momento pelo `sync.sh` (idempotente).
 
 A rede de segurança agora é o **Git**: este ecossistema é versionado em [github.com/rogerkrw/orquestration](https://github.com/rogerkrw/orquestration) e replicável em outras máquinas (clone + `sync.sh`). O histórico de ações relevantes fica em [`CHANGELOG.md`](CHANGELOG.md) — atualize-o a cada mudança significativa.
 
@@ -152,6 +165,7 @@ product-manager      (opus)      │      ├── ux-designer
 
 | Ferramenta | Auto-routing | Explícito | Gerenciar |
 |---|---|---|---|
+| **OpenCode** | description do agent primário | `@code-reviewer ...` | `Tab`, `opencode agent list` |
 | **Claude Code** | descreve a tarefa, swe-senior delega pela `description` | `@swe-backend ...` | `/agents` |
 | **Gemini CLI** | idem | `@code-reviewer ...` | `/agents` |
 | **Codex CLI** | match por descrição | spawn no prompt | `/agent` (switch) |

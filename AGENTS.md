@@ -1,10 +1,10 @@
 # Instruções — pasta `orquestration`
 
-> Este arquivo orienta qualquer agente de IA (Claude Code, Codex, Gemini CLI, Antigravity) que abrir **esta pasta**. Versões `AGENTS.md` e `GEMINI.md` têm conteúdo idêntico.
+> Este arquivo orienta qualquer agente de IA (OpenCode, Claude Code, Codex, Gemini CLI, Antigravity) que abrir **esta pasta**. Versões `AGENTS.md` e `GEMINI.md` têm conteúdo idêntico.
 
 ## O que é esta pasta
 
-`orquestration/` é a **fonte da verdade** da biblioteca de agentes e skills **de engenharia e da gestão de produto/projetos de software (PM/PMO/TPM)** de IA de Rogério Kreidlow. O conteúdo daqui é sincronizado, via `scripts/sync.sh`, para `~/.claude`, `~/.codex`, `~/.gemini` e Antigravity (`~/.gemini/antigravity-cli`). Não é um projeto de software — é um repositório de configuração de IA.
+`orquestration/` é a **fonte da verdade** da biblioteca de agentes e skills **de engenharia e da gestão de produto/projetos de software (PM/PMO/TPM)** de IA de Rogério Kreidlow. O conteúdo daqui é sincronizado, via `scripts/sync.sh`, para OpenCode (`~/.config/opencode`), `~/.claude`, `~/.codex`, `~/.gemini` e Antigravity (`~/.gemini/antigravity-cli`). Não é um projeto de software — é um repositório de configuração de IA.
 
 > Escopo: **engenharia + a camada de PM/PMO de software adjacente a ela** (discovery, delivery, roadmap, OKR, sprints — o que orbita a construção do produto). Skills de negócio puro (BeTalent) e pessoais ficam no Claude Chat/Projects pessoal e de trabalho — não entram aqui nem nos CLIs de código.
 
@@ -15,20 +15,21 @@
 
 ## Regras ao trabalhar AQUI
 
-1. **A fonte canônica é `agents/*.md` e `skills/*/`.** Nunca edite as cópias em `~/.claude`, `~/.codex`, `~/.gemini` — elas são geradas e serão sobrescritas pelo próximo sync.
-2. **Os `.toml` (Codex) e os `.md` de Gemini/Antigravity são GERADOS** pelos scripts em `scripts/`. Não edite à mão; edite o `.md` canônico em `agents/` e rode o sync.
-3. **`name:` no frontmatter == nome da pasta/arquivo.** Divergência faz o Antigravity ignorar a skill/agente em silêncio. Exceção intencional e única: `pydantic-ai` usa `name: building-pydantic-ai-agents` (nome upstream; idêntico nos 3 ambientes — não "consertar").
+1. **A fonte canônica é `agents/*.md` e `skills/*/`.** Nunca edite as cópias em `~/.config/opencode`, `~/.claude`, `~/.codex`, `~/.gemini` ou `~/.gemini/antigravity-cli` — elas são geradas e serão sobrescritas pelo próximo sync.
+2. **Os `.toml` (Codex) e os `.md` derivados de OpenCode/Gemini/Antigravity são GERADOS** pelos scripts em `scripts/`. Não edite à mão; edite o `.md` canônico em `agents/` e rode o sync.
+3. **`name:` no frontmatter == nome da pasta/arquivo.** Divergência faz o Antigravity ignorar a skill/agente em silêncio. Exceção intencional e única: `pydantic-ai` usa `name: building-pydantic-ai-agents` (nome upstream; idêntico nos cinco ambientes — não "consertar").
 4. **`model:` sempre por alias** (`opus`/`sonnet`), nunca ID completo — os conversores dependem do alias para mapear por engine. ID hardcoded quebra a geração multi-CLI.
-5. **Antes de propor sync ou mudança ampla, reporte ao TPM** em linguagem de produto/comportamento. Mudança em agente/skill afeta 4 ferramentas de uma vez.
-6. **Não há mais backup local.** Os snapshots pré-reorg/pré-sync foram removidos — **esta pasta é a fonte canônica** e os ambientes (`~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis via `sync.sh` (idempotente). Em mudança destrutiva, confirme com o TPM antes; o versionamento de longo prazo deve vir de `git init` (ainda pendente).
+5. **Antes de propor sync ou mudança ampla, reporte ao TPM** em linguagem de produto/comportamento. Mudança em agente/skill afeta 5 ferramentas de uma vez.
+6. **Não há mais backup local.** Os snapshots pré-reorg/pré-sync foram removidos — **esta pasta é a fonte canônica** e os ambientes (`~/.config/opencode`, `~/.claude`, `~/.codex`, `~/.gemini`) são regeneráveis via `sync.sh` (idempotente). Em mudança destrutiva, confirme com o TPM antes; o versionamento de longo prazo deve vir de `git init` (ainda pendente).
 
 ## Estrutura
 
 ```
 agents/   9 subagentes .md (canônico)   → todos os ambientes
 skills/   27 skills (pasta/SKILL.md)     → todos os ambientes
+antigravity/plugin.json                  manifesto do plugin
 scripts/sync.sh       instalador idempotente
-scripts/*.py          geradores de variantes Codex/Gemini
+scripts/*.py          geradores de variantes Codex/OpenCode/Gemini/Antigravity
 templates/            BASE.md + py.md / ts.md (bootstrap de projeto novo)
 ```
 
@@ -36,12 +37,12 @@ templates/            BASE.md + py.md / ts.md (bootstrap de projeto novo)
 
 ## Mapeamento de modelos (alias → engine)
 
-| Alias | Claude | Codex | Gemini / Antigravity |
-|---|---|---|---|
-| `opus` | Opus 5 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
-| `sonnet` | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
+| Alias | OpenCode | Claude | Codex | Gemini / Antigravity |
+|---|---|---|---|---|
+| `opus` | herda o modelo da sessão (Zen/Go) | Opus 5 (low) | gpt-5.6-sol (low) | gemini-3.5-flash (high) |
+| `sonnet` | herda o modelo da sessão (Zen/Go) | Sonnet 5 (low) | gpt-5.6-luna (low) | gemini-3.5-flash (low) |
 
-Diretiva TPM (jul/2026): só dois aliases — `opus` (supervisão) e `sonnet` (execução); `haiku` foi removido. O valor entre parênteses é o reasoning effort. No Codex ele é emitido no `.toml`; no Claude e no Gemini fica só documentado (não há campo de effort por subagente que possamos setar com segurança).
+Diretiva TPM (jul/2026): só dois aliases — `opus` (supervisão) e `sonnet` (execução); `haiku` foi removido. No OpenCode, o modelo é herdado da sessão para compatibilidade com Zen/Go. O valor entre parênteses é o reasoning effort. No Codex ele é emitido no `.toml`; no Claude e no Gemini fica só documentado (não há campo de effort por subagente que possamos setar com segurança).
 
 ## Fluxo de mudança
 
@@ -57,7 +58,7 @@ Diretiva TPM (jul/2026): só dois aliases — `opus` (supervisão) e `sonnet` (e
 
 ## Ambiente
 
-- Antigravity lê de `~/.gemini` (skills compartilhadas em `~/.gemini/skills`, agentes do CLI em `~/.gemini/antigravity-cli/agents`). **Não** usa `~/.antigravity`. Migração Gemini→Antigravity: prazo 18/jun/2026 (não-enterprise).
+- Antigravity CLI lê agents globais de `~/.gemini/config/agents`, skills globais e plugins de `~/.gemini/antigravity-cli`. **Não** usa `~/.antigravity`. As skills completas do orquestration são distribuídas pelo plugin em `~/.gemini/antigravity-cli/plugins/orquestration/` para preservar referências.
 - Há um hook `rtk` que às vezes engole/corrompe a saída do shell. Workaround: prefixar comandos com `RTK_DISABLE=1` e usar heredoc `<<'EOF'`.
 
 Para operação detalhada (quando chamar cada agente, receitas de orquestração), veja a seção **"Como operar o time no dia a dia"** no **README.md**.
